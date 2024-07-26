@@ -1,12 +1,9 @@
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
-
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.Timer;
 
 public class App {
     public static void main(String[] args) throws Exception {
@@ -25,7 +22,7 @@ public class App {
 }
 
 class Display extends JPanel {
-	Image camel = new ImageIcon("idle_animation (40x32).png").getImage();
+	Image camel = new ImageIcon("camelIdle.png").getImage();
 	//Timer timer;
 	
 	Display() {
