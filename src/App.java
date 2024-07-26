@@ -22,7 +22,7 @@ public class App {
 }
 
 class Display extends JPanel {
-	Image camel = new ImageIcon("camelIdle.png").getImage();
+	Image camel = new ImageIcon("assets/player/camelIdle.png").getImage();
 	//Timer timer;
 	
 	Display() {
