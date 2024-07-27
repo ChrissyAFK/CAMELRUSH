@@ -23,9 +23,9 @@ public class LevelFlipper {
             for(int i = 0; i<list.get(0).length; i++){
                 for(int j = 0; j<list.size(); j++){
                     if (file.createNewFile()) {
-                        writer.write(list.get(j)[list.get(0).length-1-i]);
+                        writer.write(list.get(list.size()-1-j)[i]);
                     } else {
-                        writer.write(list.get(j)[list.get(0).length-1-i]);
+                        writer.write(list.get(list.size()-1-j)[i]);
                     }
                 }
                 writer.write("\n");
