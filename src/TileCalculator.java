@@ -9,17 +9,24 @@ import javax.swing.ImageIcon;
 public class TileCalculator {
 	private long seed;
 	private int frameWidth;
-	private BufferedImage tile;
+	private BufferedImage sandTile;
+	private BufferedImage waterTile;
 	
 	
 	TileCalculator(long seed) {
 		this.seed = seed;
 		this.frameWidth = 600;
-		this.tile = toBufferedImage(new ImageIcon("CAMELRUSH/assets/player/sandtile.png").getImage());
+		//this.tile = toBufferedImage(new ImageIcon("CAMELRUSH/assets/player/sandtile.png").getImage());
+		this.sandTile = toBufferedImage(new ImageIcon("CAMELRUSH/assets/player/test_sand_tile.png").getImage());
+		this.waterTile = toBufferedImage(new ImageIcon("CAMELRUSH/assets/player/test_water_tile.png").getImage());
 	}
 	
-	public BufferedImage getTile() {
-		return this.tile;
+	public BufferedImage getSandTile() {
+		return this.sandTile;
+	}
+	
+	public BufferedImage getWaterTile() {
+		return this.waterTile;
 	}
 	
 	public ArrayList<String[]> getViewingSlice() {
