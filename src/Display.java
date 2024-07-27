@@ -39,7 +39,7 @@ public class Display extends JPanel {
 		
 		this.animateCamel = new Timer((1000/15),e->animate());
 		this.animateCamel.start();
-		this.scrollTimer = new Timer(1,e->scroll());
+		this.scrollTimer = new Timer((0),e->scroll());
 		this.scrollTimer.start();
 		this.spitCooldown = new Timer((0),e->spitCooldown.stop());
 		this.input = input;
@@ -63,14 +63,15 @@ public class Display extends JPanel {
 			this.startTime = System.currentTimeMillis();
 			this.frameCount = 0;
 		}
-		/*if (this.input.wKeyPressed()) {
-		Player.changeYcoord(this.playerSpeed);
-		}*/
+		boolean colliding = CollisionHandler.isColliding(this.tileList);
+		if (this.input.wKeyPressed()&&!colliding) {
+			Player.setVelocityY(5);
+		}
 		if (this.input.aKeyPressed()) {
 			Player.setVelocityX(-this.playerSpeed);
 		}
 		/*if (this.input.sKeyPressed()) {
-			Player.changeYcoord(-this.playerSpeed);
+			Player.setVelocityY(-2);
 		}*/
 		if (this.input.dKeyPressed()) {
 			Player.setVelocityX(this.playerSpeed);
@@ -83,17 +84,21 @@ public class Display extends JPanel {
 		} else {
 			Player.isNotMoving();
 		}
-		Player.fall();
-		System.out.println("Is colliding: " + CollisionHandler.isColliding(this.tileList));
-		if (!CollisionHandler.isColliding(this.tileList)) {
-			Player.updateCoordinates();
+		//System.out.println("Is colliding: " + CollisionHandler.isColliding(this.tileList));
+		if (!colliding) {
+			Player.isFalling();
+		} else {
+			Player.isNotFalling();
+			//Player.setYCoordinate(0);
+			//Player.setYCoordinate(-550+(colliding)*50);
+			System.out.println(colliding);
 		}
+		Player.updateCoordinates();
+		Player.fall();
 		if (this.input.spaceKeyPressed() && (!spitCooldown.isRunning())) {
-			if (this.input.spaceKeyPressed()) {
-				this.projectiles.add(new Projectile((new int[]{400,275}), 10, 1.0, 1, 1, "spit_ball (5x5).png", (new int[]{20, 20})));
-				this.spitCooldown = new Timer((1000),e->spitCooldown.stop());
-				this.spitCooldown.start();
-			}
+			this.projectiles.add(new Projectile((new int[]{400,275}), 10, 1.0, 1, 1, "spit_ball (5x5).png", (new int[]{20, 20})));
+			this.spitCooldown = new Timer((1000),e->spitCooldown.stop());
+			this.spitCooldown.start();
 		}
 		for (Projectile projectile : projectiles) {
 			projectile.move();
@@ -128,8 +133,8 @@ public class Display extends JPanel {
 			g.drawImage(proj.getSprite(), proj.getCoordinates()[0], proj.getCoordinates()[1], proj.getSize()[0], proj.getSize()[1], this);
 		}	
 		//hitboxes
-		g.setColor(new Color(255,0,0,90));
+		/*g.setColor(new Color(255,0,0,90));
 		g.fillRect(235,270,18*5,26*5);
-		g.fillRect(240+28*5,260,14*5,11*5);
+		g.fillRect(240+28*5,260,14*5,11*5);*/
 	}
 }

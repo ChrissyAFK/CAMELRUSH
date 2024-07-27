@@ -8,7 +8,7 @@ public class Player {
 	private static int[] coordinates = {0,0};
 	private static boolean inSun = false;
 	private static boolean inMotion = false;
-	private static boolean falling = false;
+	private static boolean falling = true;
 	private static int gravity = 2;
 	private static double velocityY = 0;
 	private static double velocityX = 0;
@@ -56,16 +56,23 @@ public class Player {
 	}
 	
 	public static void setVelocityX(double velocity) {
-		velocityX = (int)velocity;
+		velocityX = velocity;
 	}
 	
 	public static void setVelocityY(double velocity) {
-		velocityY = (int)velocity;
+		velocityY = velocity;
+	}
+	
+	public static void setYCoordinate(int y) {
+		coordinates[1]=y;
 	}
 	
 	public static void updateCoordinates() {
 		coordinates[0]+=(int)velocityX;
-		coordinates[1]+=(int)velocityY;
+		if (falling) {
+			coordinates[1]+=(int)velocityY;
+		}
+		//System.out.println(coordinates[1]);
 	}
 	
 	public static void isMoving() {
@@ -89,17 +96,18 @@ public class Player {
         return bimage;
     }
 	
-	private void isFalling(){
+	public static void isFalling(){
 		falling = true;
 	}
 
-	private void isNotFalling(){
+	public static void isNotFalling(){
 		falling = false;
 	}
 	public static void fall(){
 		if (falling){
-			velocityY-=0.5;
-			setVelocityY(velocityY*gravity);
+			/*velocityY-=0.9;
+			setVelocityY(velocityY*gravity);*/
+			velocityY-=0.2;
 		}
 		else{
 			velocityY = 0;

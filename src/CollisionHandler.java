@@ -28,7 +28,7 @@ public class CollisionHandler {
 		for (int j=0;j<tileList.get(0).length;j++) {
 			for (int i=0;i<tileList.size();i++) {
 				if (i<Player.getCoordinates()[0]/50+15 && i>Player.getCoordinates()[0]/50-3){
-					if (tileList.get(i)[j].equals("S")||tileList.get(i)[j].equals("W")) {
+					if (tileList.get(i)[j].equals("S")) {
 						if (willCollide(new int[]{i*50-Player.getCoordinates()[0],j*50-150+Player.getCoordinates()[1]},new int[]{},"Camel",new int[]{(int)Player.getVelocityX(),(int)Player.getVelocityY()})) {
 							return true;
 						}
