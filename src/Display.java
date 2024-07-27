@@ -7,10 +7,11 @@ import javax.swing.JPanel;
 import javax.swing.Timer;
 
 public class Display extends JPanel {
-	Timer animateCamel;
-	InputHandler input;
-	Player player;
-	TileCalculator tile;
+	private Timer animateCamel;
+	private InputHandler input;
+	private Player player;
+	private TileCalculator tile;
+	private int playerSpeed = 6;
 	
 	Display(InputHandler input,Player player) {
 		this.setPreferredSize(new Dimension(600,600));
@@ -24,16 +25,16 @@ public class Display extends JPanel {
 	
 	private void animate() {
 		if (this.input.wKeyPressed()) {
-			Player.changeYcoord(3);
+			Player.changeYcoord(this.playerSpeed);
 		}
 		if (this.input.aKeyPressed()) {
-			Player.changeXcoord(-3);
+			Player.changeXcoord(-this.playerSpeed);
 		}
 		if (this.input.sKeyPressed()) {
-			Player.changeYcoord(-3);
+			Player.changeYcoord(-this.playerSpeed);
 		}
 		if (this.input.dKeyPressed()) {
-			Player.changeXcoord(3);
+			Player.changeXcoord(this.playerSpeed);
 		}
 		if (this.input.inMotion()) {
 			Player.isMoving();
@@ -52,6 +53,7 @@ public class Display extends JPanel {
 		for (int i=0;i<tileList.size();i++) {
 			g.drawImage(this.tile.getTile(),tile.getOffset()+50*(i-3),400,50,50,this);
 		}
-		g.drawImage(this.player.getCurrentAnimation(),100+Player.getCoordinates()[0],100-Player.getCoordinates()[1],220,160,this);
+		//g.drawImage(this.player.getCurrentAnimation(),100+Player.getCoordinates()[0],100-Player.getCoordinates()[1],220,160,this);
+		g.drawImage(this.player.getCurrentAnimation(),this.getWidth()/2-110,240,220,160,this);
 	}
 }
