@@ -1,6 +1,5 @@
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-
 import javax.swing.JPanel;
 
 public class InputHandler extends JPanel implements KeyListener {
@@ -9,6 +8,7 @@ public class InputHandler extends JPanel implements KeyListener {
 	private boolean aKeyPressed = false;
 	private boolean sKeyPressed = false;
 	private boolean dKeyPressed = false;
+	private boolean spaceKeyPressed = false;
 	
 	// to ensure the class can get key input
 	InputHandler() {
@@ -35,6 +35,11 @@ public class InputHandler extends JPanel implements KeyListener {
 	public boolean dKeyPressed() {
 		return this.dKeyPressed;
 	}
+
+	// return if space is pressed
+	public boolean spaceKeyPressed() {
+		return this.spaceKeyPressed;
+	}
 	
 	// return if the player is moving
 	public boolean inMotion() {
@@ -55,7 +60,9 @@ public class InputHandler extends JPanel implements KeyListener {
 			this.sKeyPressed = true;
         } else if (e.getKeyCode() == KeyEvent.VK_D) {
 			this.dKeyPressed = true;
-        }
+        } else if (e.getKeyCode() == KeyEvent.VK_SPACE) {
+			this.spaceKeyPressed = true;
+		}
 	}
 
 	@Override
