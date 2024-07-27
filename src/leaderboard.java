@@ -15,7 +15,7 @@ public class leaderboard {
         } catch (IOException e) {
             System.out.println("An error occurred.");
     }
-
+    
 }
 public static void insertdata(String name, String time) throws IOException{
     FileWriter writer = new FileWriter("CAMELRUSH/local/leaderboard.csv", true);
