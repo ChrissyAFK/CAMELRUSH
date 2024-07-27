@@ -1,6 +1,7 @@
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.util.ArrayList;
 
 import javax.swing.JPanel;
 import javax.swing.Timer;
@@ -47,7 +48,10 @@ public class Display extends JPanel {
 		g.clearRect(0,0,this.getWidth(),this.getHeight());
 		g.setColor(Color.blue);
 		g.fillRect(0,0,600,600);
-		g.drawImage(this.tile.getTile(),400,400,50,50,this);
+		ArrayList<String[]> tileList = tile.getViewingSlice();
+		for (int i=0;i<tileList.size();i++) {
+			g.drawImage(this.tile.getTile(),tile.getOffset()+50*(i-3),400,50,50,this);
+		}
 		g.drawImage(this.player.getCurrentAnimation(),100+Player.getCoordinates()[0],100-Player.getCoordinates()[1],220,160,this);
 	}
 }
