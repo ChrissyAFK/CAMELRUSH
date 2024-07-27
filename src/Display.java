@@ -9,14 +9,16 @@ public class Display extends JPanel {
 	Timer animateCamel;
 	InputHandler input;
 	Player player;
+	TileCalculator tile;
 	
 	Display(InputHandler input,Player player) {
 		this.setPreferredSize(new Dimension(600,600));
-		setLayout(null); //40x32
+		setLayout(null); //44x32
 		this.animateCamel = new Timer((1000/15),e->animate());
 		this.animateCamel.start();
 		this.input = input;
 		this.player = player;
+		this.tile = new TileCalculator(System.currentTimeMillis());
 	}
 	
 	private void animate() {
@@ -45,6 +47,7 @@ public class Display extends JPanel {
 		g.clearRect(0,0,this.getWidth(),this.getHeight());
 		g.setColor(Color.blue);
 		g.fillRect(0,0,600,600);
+		g.drawImage(this.tile.getTile(),400,400,50,50,this);
 		g.drawImage(this.player.getCurrentAnimation(),100+Player.getCoordinates()[0],100-Player.getCoordinates()[1],220,160,this);
 	}
 }
