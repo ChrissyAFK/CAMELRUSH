@@ -27,9 +27,9 @@ public class Player {
 	
 	public BufferedImage getCurrentAnimation() {
 		if (inMotion) {
-			return this.walkingCamel.getSubimage(this.camelAnimation*40,0,40,32);
+			return this.walkingCamel.getSubimage(this.camelAnimation*44,0,44,32);
 		} else {
-			return this.idleCamel.getSubimage(this.camelAnimation*40,0,40,32);
+			return this.idleCamel.getSubimage(this.camelAnimation*44,0,44,32);
 		}
 	}
 	
