@@ -84,7 +84,7 @@ public class Player {
 	}
 	public static void fall(){
 		if (falling){
-			velocityY+=0.5;
+			velocityY-=0.5;
 			changeYcoord(velocityY*gravity);
 		}
 		else{

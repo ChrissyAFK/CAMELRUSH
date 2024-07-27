@@ -32,7 +32,7 @@ public class TileCalculator {
 	
 	public ArrayList<String[]> getViewingSlice() throws Exception {
 		//return generateViewingSlice(this.seed,600,Player.getCoordinates()[0]);
-		return generateRoom("CAMELRUSH/levels/test_level.txt");
+		return generateRoom("CAMELRUSH/levels/ftest_level.txt");
 	}
 	
 	public int getOffset() {
