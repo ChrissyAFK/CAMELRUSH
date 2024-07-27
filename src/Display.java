@@ -59,17 +59,20 @@ public class Display extends JPanel {
 			this.startTime = System.currentTimeMillis();
 			this.frameCount = 0;
 		}
-		if (this.input.wKeyPressed()) {
+		/*if (this.input.wKeyPressed()) {
 			Player.changeYcoord(this.playerSpeed);
-		}
+		}*/
 		if (this.input.aKeyPressed()) {
 			Player.changeXcoord(-this.playerSpeed);
 		}
-		if (this.input.sKeyPressed()) {
+		/*if (this.input.sKeyPressed()) {
 			Player.changeYcoord(-this.playerSpeed);
-		}
+		}*/
 		if (this.input.dKeyPressed()) {
 			Player.changeXcoord(this.playerSpeed);
+		}
+		if (!this.input.aKeyPressed()&&!this.input.dKeyPressed()) {
+			Player.changeXcoord(0);
 		}
 		if (this.input.inMotion()) {
 			Player.isMoving();
@@ -83,6 +86,7 @@ public class Display extends JPanel {
 		for (Projectile projectile : projectiles) {
 			projectile.move();
 		}
+		Player.updateCoordinates();
 		repaint();
 	}
 	
@@ -118,6 +122,7 @@ public class Display extends JPanel {
 		for (Projectile proj : projectiles) {
 			g.drawImage(proj.getSprite(), proj.getCoordinates()[0], proj.getCoordinates()[1], proj.getSize()[0], proj.getSize()[1], this);
 		}	
+		//hitboxes
 		g.setColor(new Color(255,0,0,90));
 		g.fillRect(235,270,18*5,26*5);
 		g.fillRect(240+28*5,260,14*5,11*5);

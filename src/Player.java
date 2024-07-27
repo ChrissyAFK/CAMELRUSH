@@ -11,12 +11,11 @@ public class Player {
 	private static boolean falling = false;
 	private static int gravity = 2;
 	private static double velocityY = 0;
+	private static double velocityX = 0;
 	private int camelAnimation = 0;
 	private BufferedImage idleCamel;
 	private BufferedImage walkingCamel;
 	private BufferedImage jumpingCamel;
-
-	
 	
 	Player() throws IOException {
 		this.idleCamel = toBufferedImage(new ImageIcon("CAMELRUSH/assets/player/camel_idle_animation (44x32).png").getImage());
@@ -49,11 +48,17 @@ public class Player {
 	}
 	
 	public static void changeXcoord(double change) {
-		coordinates[0]+=(int)change;
+		velocityX = (int)change;
 	}
 	
 	public static void changeYcoord(double change) {
-		coordinates[1]+=(int)change;
+		coordinates[1] = (int)change;
+	}
+	
+	public static void updateCoordinates() {
+		coordinates[0]+=(int)velocityX;
+		coordinates[1]+=(int)velocityY;
+		System.out.println(coordinates[0]);
 	}
 	
 	public static void isMoving() {
@@ -68,12 +73,12 @@ public class Player {
         if (img instanceof BufferedImage) {
             return (BufferedImage) img;
         }
-
+        
         BufferedImage bimage = new BufferedImage(img.getWidth(null),img.getHeight(null),BufferedImage.TYPE_INT_ARGB);
         Graphics2D bGr = bimage.createGraphics();
         bGr.drawImage(img,0,0,null);
         bGr.dispose();
-
+        
         return bimage;
     }
 	
