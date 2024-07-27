@@ -100,6 +100,11 @@ public class Display extends JPanel {
 			for (int i=0;i<tileList.size();i++) {
 				//g.drawImage(this.tile.getSandTile(),this.tile.getOffset()+50*(i-3),400-50*j,50,50,this);
 				if (i<Player.getCoordinates()[0]/50+15 && i>Player.getCoordinates()[0]/50-3){//render distance
+					if (tileList.get(i)[j].equals("S")||tileList.get(i)[j].equals("W")) {
+						if (CollisionHandler.willCollide(new int[]{i*50-Player.getCoordinates()[0],j*50-150+Player.getCoordinates()[1]},new int[]{},"Camel",new int[]{0,0})) {
+							//System.out.println("Colliding with something");
+						}
+					}
 					if (tileList.get(i)[j].equals("S")) {
 						g.drawImage(this.tile.getSandTile(),i*50-Player.getCoordinates()[0],j*50-150+Player.getCoordinates()[1],50,50,this);
 					} else if (tileList.get(i)[j].equals("W")) {
@@ -110,5 +115,8 @@ public class Display extends JPanel {
 		}
 		//g.drawImage(this.player.getCurrentAnimation(),100+Player.getCoordinates()[0],100-Player.getCoordinates()[1],220,160,this);
 		g.drawImage(this.player.getCurrentAnimation(),this.getWidth()/2-110,240,220,160,this);
+		g.setColor(new Color(255,0,0,90));
+		g.fillRect(235,270,18*5,26*5);
+		g.fillRect(240+28*5,260,14*5,11*5);
 	}
 }
