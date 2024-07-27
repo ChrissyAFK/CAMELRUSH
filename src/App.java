@@ -1,10 +1,6 @@
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Image;
-import java.awt.image.BufferedImage;
-
-import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.Timer;
@@ -16,9 +12,14 @@ public class App {
         frame.setResizable(true);
         frame.setLocationRelativeTo(null);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        //frame.setBackground(Color.blue);
         
-        Display display = new Display();
+        InputHandler input = new InputHandler();
+        input.requestFocus();
+        frame.add(input);
+        
+        Player player = new Player();
+        
+        Display display = new Display(input,player);
         frame.add(display);
 
         frame.setVisible(true);
@@ -26,50 +27,45 @@ public class App {
 }
 
 class Display extends JPanel {
-	Image camel1 = new ImageIcon("CAMELRUSH/assets/player/camelIdle.png").getImage();
-	Image camel2 = new ImageIcon("CAMELRUSH/assets/player/walking_animation (40x32).png").getImage();
-	int currentCamel = 0;
-	BufferedImage camelAnimation1 = toBufferedImage(camel1).getSubimage(currentCamel*40,0,40,32);
-	BufferedImage camelAnimation2 = toBufferedImage(camel2).getSubimage(currentCamel*40,0,40,32);
 	Timer animateCamel;
+	InputHandler input;
+	Player player;
 	
-	Display() {
+	Display(InputHandler input,Player player) {
 		this.setPreferredSize(new Dimension(600,600));
 		setLayout(null); //40x32
-		this.animateCamel = new Timer((1000/15),e->changeCamelAnimation());
+		this.animateCamel = new Timer((1000/15),e->animate());
 		this.animateCamel.start();
+		this.input = input;
+		this.player = player;
 	}
 	
-	private void changeCamelAnimation() {
-		if (currentCamel==14) {
-			this.currentCamel=0;
-		} else {
-			this.currentCamel++;
+	private void animate() {
+		if (this.input.wKeyPressed()) {
+			this.player.changeYcoord(3);
 		}
-		this.camelAnimation1 = toBufferedImage(this.camel1).getSubimage(currentCamel*40,0,40,32);
-		this.camelAnimation2 = toBufferedImage(this.camel2).getSubimage(currentCamel*40,0,40,32);
+		if (this.input.aKeyPressed()) {
+			this.player.changeXcoord(-3);
+		}
+		if (this.input.sKeyPressed()) {
+			this.player.changeYcoord(-3);
+		}
+		if (this.input.dKeyPressed()) {
+			this.player.changeXcoord(3);
+		}
+		if (this.input.inMotion()) {
+			this.player.isMoving();
+		} else {
+			this.player.isNotMoving();
+		}
+		this.player.changeCamelAnimation();
 		repaint();
 	}
 	
 	public void paintComponent(Graphics g) {
 		g.clearRect(0,0,this.getWidth(),this.getHeight());
-		g.drawImage(this.camelAnimation1,0,0,this.getWidth()/2,this.getHeight()/2,this);
-		g.drawImage(this.camelAnimation2,this.getWidth()/2,0,this.getWidth()/2,this.getHeight()/2,this);
+		g.setColor(Color.blue);
+		g.fillRect(0,0,600,600);
+		g.drawImage(this.player.getCurrentAnimation(),100+this.player.getCoordinates()[0],100-this.player.getCoordinates()[1],200,200,this);
 	}
-	
-	public static BufferedImage toBufferedImage(Image img) {
-        if (img instanceof BufferedImage) {
-            return (BufferedImage) img;
-        }
-
-        // Create a buffered image with transparency
-        BufferedImage bimage = new BufferedImage(img.getWidth(null), img.getHeight(null), BufferedImage.TYPE_INT_ARGB);
-
-        // Draw the image on to the buffered image
-        Graphics2D bGr = bimage.createGraphics();
-        bGr.drawImage(img, 0, 0, null);
-        bGr.dispose();
-
-        return bimage;
-    }
 }
