@@ -56,10 +56,20 @@ public class Display extends JPanel {
 		g.clearRect(0,0,this.getWidth(),this.getHeight());
 		g.setColor(new Color(18, 192, 227));
 		g.fillRect(0,0,600,600);
-		ArrayList<String[]> tileList = tile.getViewingSlice();
+		ArrayList<String[]> tileList = new ArrayList<>();
+		try {
+			tileList = this.tile.getViewingSlice();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		for (int i=0;i<tileList.size();i++) {
 			for (int j=0;j<tileList.get(i).length;j++) {
-				g.drawImage(this.tile.getSandTile(),tile.getOffset()+50*(i-3),400-50*j,50,50,this);
+				//g.drawImage(this.tile.getSandTile(),this.tile.getOffset()+50*(i-3),400-50*j,50,50,this);
+				if (tileList.get(i)[j].equals("S")) {
+					g.drawImage(this.tile.getSandTile(),j*50-Player.getCoordinates()[0],i*50,50,50,this);
+				} else if (tileList.get(i)[j].equals("W")) {
+					g.drawImage(this.tile.getWaterTile(),j*50-Player.getCoordinates()[0],i*50,50,50,this);
+				}
 			}
 		}
 		//g.drawImage(this.player.getCurrentAnimation(),100+Player.getCoordinates()[0],100-Player.getCoordinates()[1],220,160,this);

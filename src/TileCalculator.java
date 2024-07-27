@@ -31,8 +31,9 @@ public class TileCalculator {
 		return this.waterTile;
 	}
 	
-	public ArrayList<String[]> getViewingSlice() {
-		return generateViewingSlice(this.seed,600,Player.getCoordinates()[0]);
+	public ArrayList<String[]> getViewingSlice() throws Exception {
+		//return generateViewingSlice(this.seed,600,Player.getCoordinates()[0]);
+		return generateRoom("CAMELRUSH/levels/test_level.txt");
 	}
 	
 	public int getOffset() {
@@ -70,7 +71,7 @@ public class TileCalculator {
         return bimage;
     }
 
-	private ArrayList<String[]> generateRoom(String level) throws Exception{
+	private ArrayList<String[]> generateRoom(String level) throws Exception {
 		BufferedReader reader = new BufferedReader(new FileReader(level));
 		String line;
 		ArrayList<String[]> list = new ArrayList<>();
