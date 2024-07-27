@@ -65,8 +65,8 @@ public class Display extends JPanel {
 			this.frameCount = 0;
 		}
 		boolean colliding = CollisionHandler.isColliding(this.tileList);
-		if (this.input.wKeyPressed()&&!colliding) {
-			Player.setVelocityY(5);
+		if (this.input.wKeyPressed()&&!Player.getFallingStatus()) {
+			Player.setVelocityY(10);
 		}
 		if (this.input.aKeyPressed()) {
 			Player.setVelocityX(-this.playerSpeed);
