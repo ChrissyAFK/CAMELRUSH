@@ -9,6 +9,8 @@ public class InputHandler extends JPanel implements KeyListener {
 	private boolean sKeyPressed = false;
 	private boolean dKeyPressed = false;
 	private boolean spaceKeyPressed = false;
+	private boolean upKeyPressed = false;
+	private boolean downKeyPressed = false;
 	
 	// to ensure the class can get key input
 	InputHandler() {
@@ -40,6 +42,16 @@ public class InputHandler extends JPanel implements KeyListener {
 	public boolean spaceKeyPressed() {
 		return this.spaceKeyPressed;
 	}
+
+	// return if up arrow key is pressed
+	public boolean upKeyPressed() {
+		return this.upKeyPressed;
+	}
+
+	// return if down arrow key is pressed
+	public boolean downKeyPressed() {
+		return this.downKeyPressed;
+	}
 	
 	// return if the player is moving
 	public boolean inMotion() {
@@ -62,6 +74,10 @@ public class InputHandler extends JPanel implements KeyListener {
 			this.dKeyPressed = true;
         } else if (e.getKeyCode() == KeyEvent.VK_SPACE) {
 			this.spaceKeyPressed = true;
+		} else if (e.getKeyCode() == KeyEvent.VK_UP) {
+			this.upKeyPressed = true;
+		} else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
+			this.downKeyPressed = true;
 		}
 	}
 
@@ -76,6 +92,12 @@ public class InputHandler extends JPanel implements KeyListener {
 			this.sKeyPressed = false;
         } else if (e.getKeyCode() == KeyEvent.VK_D) {
 			this.dKeyPressed = false;
+        } else if (e.getKeyCode() == KeyEvent.VK_SPACE) {
+			this.spaceKeyPressed = false;
+        } else if (e.getKeyCode() == KeyEvent.VK_UP) {
+			this.upKeyPressed = false;
+        } else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
+			this.downKeyPressed = false;
         }
 	}
 	
