@@ -78,7 +78,7 @@ public class Display extends JPanel {
 		}
 		Player.fall();
 		if (this.input.spaceKeyPressed()) {
-			this.projectiles.add(new Projectile(Player.getCoordinates(), 10, 1.0, 1, 1, "spit_ball (5x5).png"));
+			this.projectiles.add(new Projectile((new int[]{400,275}), 10, 1.0, 1, 1, "spit_ball (5x5).png", (new int[]{20, 20})));
 		}
 		for (Projectile projectile : projectiles) {
 			projectile.move();
@@ -115,6 +115,9 @@ public class Display extends JPanel {
 		}
 		//g.drawImage(this.player.getCurrentAnimation(),100+Player.getCoordinates()[0],100-Player.getCoordinates()[1],220,160,this);
 		g.drawImage(this.player.getCurrentAnimation(),this.getWidth()/2-110,240,220,160,this);
+		for (Projectile proj : projectiles) {
+			g.drawImage(proj.getSprite(), proj.getCoordinates()[0], proj.getCoordinates()[1], proj.getSize()[0], proj.getSize()[1], this);
+		}	
 		g.setColor(new Color(255,0,0,90));
 		g.fillRect(235,270,18*5,26*5);
 		g.fillRect(240+28*5,260,14*5,11*5);
