@@ -22,8 +22,9 @@ public class Display extends JPanel {
 	private long prevTime;
 	private JLabel fpsCounter;
 	private ArrayList<Projectile> projectiles;
+	private ArrayList<String[]> tileList = new ArrayList<>();
 	
-	Display(InputHandler input,Player player) {
+	Display(InputHandler input,Player player) throws Exception {
 		this.setPreferredSize(new Dimension(600,600));
 		setLayout(null); //44x32
 		
@@ -33,6 +34,8 @@ public class Display extends JPanel {
 		this.fpsCounter.setFont(new Font("Dialog",Font.BOLD,20));
 		this.fpsCounter.setBounds(10,10,120,20);
 		this.add(fpsCounter);
+		this.tile = new TileCalculator();
+		this.tileList = this.tile.getViewingSlice();
 		
 		this.animateCamel = new Timer((1000/15),e->animate());
 		this.animateCamel.start();
@@ -41,7 +44,6 @@ public class Display extends JPanel {
 		this.spitCooldown = new Timer((0),e->spitCooldown.stop());
 		this.input = input;
 		this.player = player;
-		this.tile = new TileCalculator();
 		this.projectiles = new ArrayList<>();
 	}
 	
@@ -62,19 +64,19 @@ public class Display extends JPanel {
 			this.frameCount = 0;
 		}
 		/*if (this.input.wKeyPressed()) {
-			Player.changeYcoord(this.playerSpeed);
+		Player.changeYcoord(this.playerSpeed);
 		}*/
 		if (this.input.aKeyPressed()) {
-			Player.changeXcoord(-this.playerSpeed);
+			Player.setVelocityX(-this.playerSpeed);
 		}
 		/*if (this.input.sKeyPressed()) {
 			Player.changeYcoord(-this.playerSpeed);
 		}*/
 		if (this.input.dKeyPressed()) {
-			Player.changeXcoord(this.playerSpeed);
+			Player.setVelocityX(this.playerSpeed);
 		}
 		if (!this.input.aKeyPressed()&&!this.input.dKeyPressed()) {
-			Player.changeXcoord(0);
+			Player.setVelocityX(0);
 		}
 		if (this.input.inMotion()) {
 			Player.isMoving();
@@ -82,15 +84,20 @@ public class Display extends JPanel {
 			Player.isNotMoving();
 		}
 		Player.fall();
+		System.out.println("Is colliding: " + CollisionHandler.isColliding(this.tileList));
+		if (!CollisionHandler.isColliding(this.tileList)) {
+			Player.updateCoordinates();
+		}
 		if (this.input.spaceKeyPressed() && (!spitCooldown.isRunning())) {
-			this.projectiles.add(new Projectile((new int[]{400,275}), 10, 1.0, 1, 1, "spit_ball (5x5).png", (new int[]{20, 20})));
-			this.spitCooldown = new Timer((1000),e->spitCooldown.stop());
-			this.spitCooldown.start();
+			if (this.input.spaceKeyPressed()) {
+				this.projectiles.add(new Projectile((new int[]{400,275}), 10, 1.0, 1, 1, "spit_ball (5x5).png", (new int[]{20, 20})));
+				this.spitCooldown = new Timer((1000),e->spitCooldown.stop());
+				this.spitCooldown.start();
+			}
 		}
 		for (Projectile projectile : projectiles) {
 			projectile.move();
 		}
-		Player.updateCoordinates();
 		repaint();
 	}
 	
@@ -98,24 +105,18 @@ public class Display extends JPanel {
 		g.clearRect(0,0,this.getWidth(),this.getHeight());
 		g.setColor(new Color(18, 192, 227));
 		g.fillRect(0,0,600,600);
-		ArrayList<String[]> tileList = new ArrayList<>();
 		try {
-			tileList = this.tile.getViewingSlice();
+			this.tileList = this.tile.getViewingSlice();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		for (int j=0;j<tileList.get(0).length;j++) {
-			for (int i=0;i<tileList.size();i++) {
+		for (int j=0;j<this.tileList.get(0).length;j++) {
+			for (int i=0;i<this.tileList.size();i++) {
 				//g.drawImage(this.tile.getSandTile(),this.tile.getOffset()+50*(i-3),400-50*j,50,50,this);
 				if (i<Player.getCoordinates()[0]/50+15 && i>Player.getCoordinates()[0]/50-3){//render distance
-					if (tileList.get(i)[j].equals("S")||tileList.get(i)[j].equals("W")) {
-						if (CollisionHandler.willCollide(new int[]{i*50-Player.getCoordinates()[0],j*50-150+Player.getCoordinates()[1]},new int[]{},"Camel",new int[]{0,0})) {
-							//System.out.println("Colliding with something");
-						}
-					}
-					if (tileList.get(i)[j].equals("S")) {
+					if (this.tileList.get(i)[j].equals("S")) {
 						g.drawImage(this.tile.getSandTile(),i*50-Player.getCoordinates()[0],j*50-150+Player.getCoordinates()[1],50,50,this);
-					} else if (tileList.get(i)[j].equals("W")) {
+					} else if (this.tileList.get(i)[j].equals("W")) {
 						g.drawImage(this.tile.getWaterTile(),i*50-Player.getCoordinates()[0],j*50-150+Player.getCoordinates()[1],50,50,this);
 					}
 				}
