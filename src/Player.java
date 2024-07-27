@@ -90,6 +90,5 @@ public class Player {
 		else{
 			velocityY = 0;
 		}
-		System.out.println(getCoordinates()[0]+" "+getCoordinates()[1]);
 	}
 }
