@@ -103,6 +103,10 @@ public class Player {
 	public static void isNotFalling(){
 		falling = false;
 	}
+	public static boolean getFallingStatus(){
+		return falling;
+	}
+
 	public static void fall(){
 		if (falling){
 			/*velocityY-=0.9;
