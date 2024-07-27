@@ -8,9 +8,14 @@ public class Player {
 	private static int[] coordinates = {0,0};
 	private static boolean inSun = false;
 	private static boolean inMotion = false;
+	private static boolean falling = false;
+	private static int gravity = 2;
+	private double velocityY = 0;
 	private int camelAnimation = 0;
 	private BufferedImage idleCamel;
 	private BufferedImage walkingCamel;
+
+	
 	
 	Player() throws IOException {
 		this.idleCamel = toBufferedImage(new ImageIcon("CAMELRUSH/assets/player/camel_idle_animation (44x32).png").getImage());
@@ -41,12 +46,12 @@ public class Player {
 		return coordinates;
 	}
 	
-	public static void changeXcoord(int change) {
-		coordinates[0]+=change;
+	public static void changeXcoord(double change) {
+		coordinates[0]+=(int)change;
 	}
 	
-	public static void changeYcoord(int change) {
-		coordinates[1]+=change;
+	public static void changeYcoord(double change) {
+		coordinates[1]+=(int)change;
 	}
 	
 	public static void isMoving() {
@@ -69,4 +74,21 @@ public class Player {
 
         return bimage;
     }
+	
+	private void isFalling(){
+		falling = true;
+	}
+
+	private void isNotFalling(){
+		falling = false;
+	}
+	private void fall(){
+		if (falling){
+			velocityY+=0.5;
+			changeYcoord(velocityY*gravity);
+		}
+		else{
+			velocityY = 0;
+		}
+	}
 }
