@@ -64,21 +64,31 @@ public class InputHandler extends JPanel implements KeyListener {
 	@Override
 	// when a key is pressed, instance variable is set to true
 	public void keyPressed(KeyEvent e) {
-		if (e.getKeyCode() == KeyEvent.VK_W) {
-			this.wKeyPressed = true;
-        } else if (e.getKeyCode() == KeyEvent.VK_A) {
-			this.aKeyPressed = true;
-        } else if (e.getKeyCode() == KeyEvent.VK_S) {
-			this.sKeyPressed = true;
-        } else if (e.getKeyCode() == KeyEvent.VK_D) {
-			this.dKeyPressed = true;
-        } else if (e.getKeyCode() == KeyEvent.VK_SPACE) {
-			this.spaceKeyPressed = true;
-		} else if (e.getKeyCode() == KeyEvent.VK_UP) {
-			this.upKeyPressed = true;
-		} else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
-			this.downKeyPressed = true;
-		}
+            switch (e.getKeyCode()) {
+                case KeyEvent.VK_W:
+                    this.wKeyPressed = true;
+                    break;
+                case KeyEvent.VK_A:
+                    this.aKeyPressed = true;
+                    break;
+                case KeyEvent.VK_S:
+                    this.sKeyPressed = true;
+                    break;
+                case KeyEvent.VK_D:
+                    this.dKeyPressed = true;
+                    break;
+                case KeyEvent.VK_SPACE:
+                    this.spaceKeyPressed = true;
+                    break;
+				case KeyEvent.VK_UP:
+                    this.upKeyPressed = true;
+                    break;
+				case KeyEvent.VK_DOWN:
+                    this.downKeyPressed = true;
+                    break;
+                default:
+                    break;
+            }
 	}
 
 	@Override

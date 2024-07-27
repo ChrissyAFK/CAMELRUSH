@@ -8,9 +8,7 @@ public class leaderboard {
         try {
             if (file.createNewFile()) {
                 System.out.println("File created: " + file.getName());
-                insertdata("tom", "1:00");
-            } else {
-                insertdata("jerry", "2:00");
+                insertdata("NAME", "TIME");
             }
         } catch (IOException e) {
             System.out.println("An error occurred.");
