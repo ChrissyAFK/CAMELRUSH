@@ -47,7 +47,7 @@ public class Display extends JPanel {
 	
 	public void paintComponent(Graphics g) {
 		g.clearRect(0,0,this.getWidth(),this.getHeight());
-		g.setColor(Color.blue);
+		g.setColor(new Color(18, 192, 227));
 		g.fillRect(0,0,600,600);
 		ArrayList<String[]> tileList = tile.getViewingSlice();
 		for (int i=0;i<tileList.size();i++) {
