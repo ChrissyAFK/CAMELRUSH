@@ -3,23 +3,32 @@ import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Random;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.InputStreamReader;
 
 import javax.swing.ImageIcon;
 
 public class TileCalculator {
 	private long seed;
 	private int frameWidth;
-	private BufferedImage tile;
-	
+	private BufferedImage sandTile;
+	private BufferedImage waterTile;
 	
 	TileCalculator(long seed) {
 		this.seed = seed;
 		this.frameWidth = 600;
-		this.tile = toBufferedImage(new ImageIcon("CAMELRUSH/assets/player/sandtile.png").getImage());
+		//this.tile = toBufferedImage(new ImageIcon("CAMELRUSH/assets/player/sandtile.png").getImage());
+		this.sandTile = toBufferedImage(new ImageIcon("CAMELRUSH/assets/player/test_sand_tile.png").getImage());
+		this.waterTile = toBufferedImage(new ImageIcon("CAMELRUSH/assets/player/test_water_tile.png").getImage());
 	}
 	
-	public BufferedImage getTile() {
-		return this.tile;
+	public BufferedImage getSandTile() {
+		return this.sandTile;
+	}
+	
+	public BufferedImage getWaterTile() {
+		return this.waterTile;
 	}
 	
 	public ArrayList<String[]> getViewingSlice() {
@@ -60,4 +69,16 @@ public class TileCalculator {
 
         return bimage;
     }
+
+	private ArrayList<String[]> generateRoom(String level) throws Exception{
+		BufferedReader reader = new BufferedReader(new FileReader(level));
+		String line;
+		ArrayList<String[]> list = new ArrayList<>();
+		while ((line = reader.readLine())!=null) {
+			String[] tokens = line.split("");
+			list.add(tokens);
+		}
+		reader.close();
+		return list;
+	}
 }
