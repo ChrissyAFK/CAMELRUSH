@@ -88,13 +88,15 @@ public class Display extends JPanel {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		for (int i=0;i<tileList.size();i++) {
-			for (int j=0;j<tileList.get(i).length;j++) {
+		for (int j=0;j<tileList.get(0).length;j++) {
+			for (int i=0;i<tileList.size();i++) {
 				//g.drawImage(this.tile.getSandTile(),this.tile.getOffset()+50*(i-3),400-50*j,50,50,this);
-				if (tileList.get(i)[j].equals("S")) {
-					g.drawImage(this.tile.getSandTile(),j*50-Player.getCoordinates()[0],i*50-150+Player.getCoordinates()[1],50,50,this);
-				} else if (tileList.get(i)[j].equals("W")) {
-					g.drawImage(this.tile.getWaterTile(),j*50-Player.getCoordinates()[0],i*50-150+Player.getCoordinates()[1],50,50,this);
+				if (i<Player.getCoordinates()[0]/50+15 && i>Player.getCoordinates()[0]/50-3){//render distance
+					if (tileList.get(i)[j].equals("S")) {
+						g.drawImage(this.tile.getSandTile(),i*50-Player.getCoordinates()[0],j*50-150+Player.getCoordinates()[1],50,50,this);
+					} else if (tileList.get(i)[j].equals("W")) {
+						g.drawImage(this.tile.getWaterTile(),i*50-Player.getCoordinates()[0],j*50-150+Player.getCoordinates()[1],50,50,this);
+					}
 				}
 			}
 		}
