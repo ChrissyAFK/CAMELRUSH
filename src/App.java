@@ -4,6 +4,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -22,7 +23,9 @@ public class App {
         input.requestFocus();
         frame.add(input);
         
-        Display display = new Display(input);
+        Player player = new Player();
+        
+        Display display = new Display(input,player);
         frame.add(display);
 
         frame.setVisible(true);
@@ -30,31 +33,21 @@ public class App {
 }
 
 class Display extends JPanel {
-	Image camel1 = new ImageIcon("CAMELRUSH/assets/player/camelIdle.png").getImage();
-	Image camel2 = new ImageIcon("CAMELRUSH/assets/player/walking_animation (40x32).png").getImage();
-	int currentCamel = 0;
-	BufferedImage camelAnimation1 = toBufferedImage(camel1).getSubimage(currentCamel*40,0,40,32);
-	BufferedImage camelAnimation2 = toBufferedImage(camel2).getSubimage(currentCamel*40,0,40,32);
 	Timer animateCamel;
 	InputHandler input;
+	Player player;
 	
-	Display(InputHandler input) {
+	Display(InputHandler input,Player player) {
 		this.setPreferredSize(new Dimension(600,600));
 		setLayout(null); //40x32
-		this.animateCamel = new Timer((1000/15),e->changeCamelAnimation());
+		this.animateCamel = new Timer((1000/15),e->animate());
 		this.animateCamel.start();
 		this.input = input;
+		this.player = player;
 	}
 	
-	private void changeCamelAnimation() {
-		//System.out.println(input.wKeyPressed());
-		if (currentCamel==14) {
-			this.currentCamel=0;
-		} else {
-			this.currentCamel++;
-		}
-		this.camelAnimation1 = toBufferedImage(this.camel1).getSubimage(currentCamel*40,0,40,32);
-		this.camelAnimation2 = toBufferedImage(this.camel2).getSubimage(currentCamel*40,0,40,32);
+	private void animate() {
+		this.player.changeCamelAnimation();
 		repaint();
 	}
 	
@@ -62,20 +55,6 @@ class Display extends JPanel {
 		g.clearRect(0,0,this.getWidth(),this.getHeight());
 		g.setColor(Color.blue);
 		g.fillRect(0,0,600,600);
-		g.drawImage(this.camelAnimation1,0,0,this.getWidth()/2,this.getHeight()/2,this);
-		g.drawImage(this.camelAnimation2,this.getWidth()/2,0,this.getWidth()/2,this.getHeight()/2,this);
+		g.drawImage(this.player.getCurrentAnimation(),0,0,this.getWidth(),this.getHeight(),this);
 	}
-	
-	public static BufferedImage toBufferedImage(Image img) {
-        if (img instanceof BufferedImage) {
-            return (BufferedImage) img;
-        }
-        
-        BufferedImage bimage = new BufferedImage(img.getWidth(null), img.getHeight(null), BufferedImage.TYPE_INT_ARGB);
-        Graphics2D bGr = bimage.createGraphics();
-        bGr.drawImage(img, 0, 0, null);
-        bGr.dispose();
-
-        return bimage;
-    }
 }
