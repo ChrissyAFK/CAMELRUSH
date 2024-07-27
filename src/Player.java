@@ -47,18 +47,25 @@ public class Player {
 		return coordinates;
 	}
 	
-	public static void changeXcoord(double change) {
-		velocityX = (int)change;
+	public static double getVelocityY() {
+		return velocityY;
 	}
 	
-	public static void changeYcoord(double change) {
-		coordinates[1] = (int)change;
+	public static double getVelocityX() {
+		return velocityX;
+	}
+	
+	public static void setVelocityX(double velocity) {
+		velocityX = (int)velocity;
+	}
+	
+	public static void setVelocityY(double velocity) {
+		velocityY = (int)velocity;
 	}
 	
 	public static void updateCoordinates() {
 		coordinates[0]+=(int)velocityX;
 		coordinates[1]+=(int)velocityY;
-		System.out.println(coordinates[0]);
 	}
 	
 	public static void isMoving() {
@@ -92,7 +99,7 @@ public class Player {
 	public static void fall(){
 		if (falling){
 			velocityY-=0.5;
-			changeYcoord(velocityY*gravity);
+			setVelocityY(velocityY*gravity);
 		}
 		else{
 			velocityY = 0;
