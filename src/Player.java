@@ -14,12 +14,14 @@ public class Player {
 	private int camelAnimation = 0;
 	private BufferedImage idleCamel;
 	private BufferedImage walkingCamel;
+	private BufferedImage jumpingCamel;
 
 	
 	
 	Player() throws IOException {
 		this.idleCamel = toBufferedImage(new ImageIcon("CAMELRUSH/assets/player/camel_idle_animation (44x32).png").getImage());
         this.walkingCamel = toBufferedImage(new ImageIcon("CAMELRUSH/assets/player/camel_walking_animation (44x32).png").getImage());
+		this.jumpingCamel = toBufferedImage(new ImageIcon("CAMELRUSH/assets/player/camel_jump_animation (44x32).png").getImage());
 	}
 	
 	public void changeCamelAnimation() {
