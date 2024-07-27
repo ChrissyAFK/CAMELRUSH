@@ -2,7 +2,7 @@
 
 WELCOME TO CAMEL RUSH
 
-## DEVELLOPED BY:
+## DEVELOPED BY:
 
 froggytato, hansenhsu, pengwuin, and chrissyafk
 
