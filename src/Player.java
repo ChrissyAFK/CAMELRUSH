@@ -3,7 +3,6 @@ import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
-import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 
 public class Player {
@@ -33,6 +32,30 @@ public class Player {
 		} else {
 			return this.idleCamel.getSubimage(this.camelAnimation*40,0,40,32);
 		}
+	}
+	
+	public boolean inSun() {
+		return this.inSun;
+	}
+	
+	public int[] getCoordinates() {
+		return this.coordinates;
+	}
+	
+	public void changeXcoord(int change) {
+		this.coordinates[0]+=change;
+	}
+	
+	public void changeYcoord(int change) {
+		this.coordinates[1]+=change;
+	}
+	
+	public void isMoving() {
+		this.inMotion = true;
+	}
+	
+	public void isNotMoving() {
+		this.inMotion = false;
 	}
 	
 	private BufferedImage toBufferedImage(Image img) {

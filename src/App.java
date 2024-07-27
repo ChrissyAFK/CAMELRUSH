@@ -1,12 +1,6 @@
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Image;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
-
-import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.Timer;
@@ -47,6 +41,23 @@ class Display extends JPanel {
 	}
 	
 	private void animate() {
+		if (this.input.wKeyPressed()) {
+			this.player.changeYcoord(3);
+		}
+		if (this.input.aKeyPressed()) {
+			this.player.changeXcoord(-3);
+		}
+		if (this.input.sKeyPressed()) {
+			this.player.changeYcoord(-3);
+		}
+		if (this.input.dKeyPressed()) {
+			this.player.changeXcoord(3);
+		}
+		if (this.input.inMotion()) {
+			this.player.isMoving();
+		} else {
+			this.player.isNotMoving();
+		}
 		this.player.changeCamelAnimation();
 		repaint();
 	}
@@ -55,6 +66,6 @@ class Display extends JPanel {
 		g.clearRect(0,0,this.getWidth(),this.getHeight());
 		g.setColor(Color.blue);
 		g.fillRect(0,0,600,600);
-		g.drawImage(this.player.getCurrentAnimation(),0,0,this.getWidth(),this.getHeight(),this);
+		g.drawImage(this.player.getCurrentAnimation(),100+this.player.getCoordinates()[0],100-this.player.getCoordinates()[1],200,200,this);
 	}
 }
