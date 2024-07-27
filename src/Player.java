@@ -2,7 +2,6 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-
 import javax.swing.ImageIcon;
 
 public class Player {
@@ -14,8 +13,8 @@ public class Player {
 	private BufferedImage walkingCamel;
 	
 	Player() throws IOException {
-		this.idleCamel = toBufferedImage(new ImageIcon("CAMELRUSH/assets/player/camel_idle_animation (40x32).png").getImage());
-        this.walkingCamel = toBufferedImage(new ImageIcon("CAMELRUSH/assets/player/camel_walking_animation (40x32).png").getImage());
+		this.idleCamel = toBufferedImage(new ImageIcon("CAMELRUSH/assets/player/camel_idle_animation (44x32).png").getImage());
+        this.walkingCamel = toBufferedImage(new ImageIcon("CAMELRUSH/assets/player/camel_walking_animation (44x32).png").getImage());
 	}
 	
 	public void changeCamelAnimation() {
