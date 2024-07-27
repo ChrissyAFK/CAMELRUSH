@@ -39,13 +39,16 @@ class OverheatMeter{ //obj name: heat
     static float getMax(){
         return max_amount;
     }
+    float getPercentFilled(){
+        return getAmount()/getMax()*100;
+    }
     void setAmount(float amount){
         this.amount = amount;
     }
     private void heatRise(float amount){
-        if (Player.inSun()){ //change to Player.inSun()
+        if (Player.inSun()){
             this.setAmount(this.getAmount()+amount);
-            //System.out.println("heat: "+this.getAmount()); // debugging
+            //System.out.println("heat: "+this.getPercentFilled()); // debugging
         }
         if (this.getAmount() >= getMax()){
             System.out.println("Player has died."); // change this into a method which tells the player its dead
