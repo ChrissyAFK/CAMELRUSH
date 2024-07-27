@@ -49,6 +49,7 @@ public class Display extends JPanel {
 		} else {
 			Player.isNotMoving();
 		}
+		Player.fall();
 		repaint();
 	}
 	
