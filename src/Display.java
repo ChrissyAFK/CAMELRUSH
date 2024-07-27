@@ -41,7 +41,8 @@ public class Display extends JPanel {
 		this.animateCamel.start();
 		this.scrollTimer = new Timer((0),e->scroll());
 		this.scrollTimer.start();
-		this.spitCooldown = new Timer((0),e->spitCooldown.stop());
+		this.spitCooldown = new Timer((1000),e->spitCooldown.stop());
+		this.spitCooldown.start();
 		this.input = input;
 		this.player = player;
 		this.projectiles = new ArrayList<>();
