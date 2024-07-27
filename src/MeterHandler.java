@@ -15,6 +15,9 @@ class WaterMeter{ //obj name: water
     static float getMax(){
         return max_amount;
     }
+    float getPercentFilled(){
+        return getAmount()/getMax()*100;
+    }
     void setAmount(float amount){
         this.amount = amount;
     }

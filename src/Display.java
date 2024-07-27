@@ -20,6 +20,7 @@ public class Display extends JPanel {
 	private long startTime;
 	private long prevTime;
 	private JLabel fpsCounter;
+	private ArrayList<Projectile> projectiles;
 	
 	Display(InputHandler input,Player player) {
 		this.setPreferredSize(new Dimension(600,600));
@@ -39,6 +40,7 @@ public class Display extends JPanel {
 		this.input = input;
 		this.player = player;
 		this.tile = new TileCalculator();
+		this.projectiles = new ArrayList<>();
 	}
 	
 	private void animate() {
@@ -75,6 +77,12 @@ public class Display extends JPanel {
 			Player.isNotMoving();
 		}
 		Player.fall();
+		if (this.input.spaceKeyPressed()) {
+			this.projectiles.add(new Projectile(Player.getCoordinates(), 10, 1.0, 1, 1, "spit_ball (5x5).png"));
+		}
+		for (Projectile projectile : projectiles) {
+			projectile.move();
+		}
 		repaint();
 	}
 	
