@@ -8,22 +8,30 @@ import javax.swing.Timer;
 
 public class Display extends JPanel {
 	private Timer animateCamel;
+	private Timer scrollTimer;
 	private InputHandler input;
 	private Player player;
 	private TileCalculator tile;
-	private int playerSpeed = 6;
+	private int playerSpeed = 2;
 	
 	Display(InputHandler input,Player player) {
 		this.setPreferredSize(new Dimension(600,600));
 		setLayout(null); //44x32
 		this.animateCamel = new Timer((1000/15),e->animate());
 		this.animateCamel.start();
+		this.scrollTimer = new Timer(1,e->scroll());
+		this.scrollTimer.start();
 		this.input = input;
 		this.player = player;
 		this.tile = new TileCalculator(System.currentTimeMillis());
 	}
 	
 	private void animate() {
+		this.player.changeCamelAnimation();
+		repaint();
+	}
+	
+	private void scroll() {
 		if (this.input.wKeyPressed()) {
 			Player.changeYcoord(this.playerSpeed);
 		}
@@ -41,7 +49,6 @@ public class Display extends JPanel {
 		} else {
 			Player.isNotMoving();
 		}
-		this.player.changeCamelAnimation();
 		repaint();
 	}
 	
