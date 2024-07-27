@@ -15,8 +15,7 @@ public class TileCalculator {
 	private BufferedImage sandTile;
 	private BufferedImage waterTile;
 	
-	TileCalculator(long seed) {
-		this.seed = seed;
+	TileCalculator() {
 		this.frameWidth = 600;
 		//this.tile = toBufferedImage(new ImageIcon("CAMELRUSH/assets/player/sandtile.png").getImage());
 		this.sandTile = toBufferedImage(new ImageIcon("CAMELRUSH/assets/player/test_sand_tile.png").getImage());
