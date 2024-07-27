@@ -58,7 +58,9 @@ public class Display extends JPanel {
 		g.fillRect(0,0,600,600);
 		ArrayList<String[]> tileList = tile.getViewingSlice();
 		for (int i=0;i<tileList.size();i++) {
-			g.drawImage(this.tile.getTile(),tile.getOffset()+50*(i-3),400,50,50,this);
+			for (int j=0;j<tileList.get(i).length;j++) {
+				g.drawImage(this.tile.getTile(),tile.getOffset()+50*(i-3),400-50*j,50,50,this);
+			}
 		}
 		//g.drawImage(this.player.getCurrentAnimation(),100+Player.getCoordinates()[0],100-Player.getCoordinates()[1],220,160,this);
 		g.drawImage(this.player.getCurrentAnimation(),this.getWidth()/2-110,240,220,160,this);
