@@ -6,9 +6,9 @@ import java.io.IOException;
 import javax.swing.ImageIcon;
 
 public class Player {
-	private int[] coordinates = {0,0};
-	private boolean inSun = false;
-	private boolean inMotion = false;
+	private static int[] coordinates = {0,0};
+	private static boolean inSun = false;
+	private static boolean inMotion = false;
 	private int camelAnimation = 0;
 	private BufferedImage idleCamel;
 	private BufferedImage walkingCamel;
@@ -34,28 +34,28 @@ public class Player {
 		}
 	}
 	
-	public boolean inSun() {
-		return this.inSun;
+	public static boolean inSun() {
+		return inSun;
 	}
 	
-	public int[] getCoordinates() {
-		return this.coordinates;
+	public static int[] getCoordinates() {
+		return coordinates;
 	}
 	
-	public void changeXcoord(int change) {
-		this.coordinates[0]+=change;
+	public static void changeXcoord(int change) {
+		coordinates[0]+=change;
 	}
 	
-	public void changeYcoord(int change) {
-		this.coordinates[1]+=change;
+	public static void changeYcoord(int change) {
+		coordinates[1]+=change;
 	}
 	
-	public void isMoving() {
-		this.inMotion = true;
+	public static void isMoving() {
+		inMotion = true;
 	}
 	
-	public void isNotMoving() {
-		this.inMotion = false;
+	public static void isNotMoving() {
+		inMotion = false;
 	}
 	
 	private BufferedImage toBufferedImage(Image img) {

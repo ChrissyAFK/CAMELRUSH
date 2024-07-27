@@ -12,8 +12,8 @@ class WaterMeter{ //obj name: water
     float getAmount(){
         return this.amount;
     }
-    float getMax(){
-        return this.max_amount;
+    static float getMax(){
+        return max_amount;
     }
     void setAmount(float amount){
         this.amount = amount;
@@ -36,18 +36,18 @@ class OverheatMeter{ //obj name: heat
     float getAmount(){
         return this.amount;
     }
-    float getMax(){
-        return this.max_amount;
+    static float getMax(){
+        return max_amount;
     }
     void setAmount(float amount){
         this.amount = amount;
     }
     private void heatRise(float amount){
-        if (true){ //change to Player.inSun()
+        if (Player.inSun()){ //change to Player.inSun()
             this.setAmount(this.getAmount()+amount);
             //System.out.println("heat: "+this.getAmount()); // debugging
         }
-        if (this.getAmount() >= this.getMax()){
+        if (this.getAmount() >= getMax()){
             System.out.println("Player has died."); // change this into a method which tells the player its dead
             this.heat_rise_delay.cancel();
         }
