@@ -33,6 +33,11 @@ public class TileCalculator {
 	private ArrayList<String[]> generateViewingSlice(long seed,int width,int x) {
 		ArrayList<String[]> viewingSlice = new ArrayList<>();
 		for (int i=0;i<width/50+5;i++) {
+			//String[] stringToAdd = new String[randomInt(seed,x+i)];
+			//for (int j=0;j<stringToAdd.length;j++) {
+			//	stringToAdd[j] = "S";
+			//}
+			//viewingSlice.add(stringToAdd);
 			viewingSlice.add(new String[]{"S"});
 		}
 		return viewingSlice;
@@ -40,7 +45,7 @@ public class TileCalculator {
 	
 	private int randomInt(long seed,int x) {
 		Random random = new Random(seed*13*x);
-		return random.nextInt();
+		return random.nextInt(3)+1;
 	}
 	
 	private BufferedImage toBufferedImage(Image img) {
