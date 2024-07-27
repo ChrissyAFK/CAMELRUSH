@@ -8,9 +8,9 @@ public class Player {
 	private static int[] coordinates = {0,0};
 	private static boolean inSun = false;
 	private static boolean inMotion = false;
-	private static boolean falling = false;
+	private static boolean falling = true;
 	private static int gravity = 2;
-	private double velocityY = 0;
+	private static double velocityY = 0;
 	private int camelAnimation = 0;
 	private BufferedImage idleCamel;
 	private BufferedImage walkingCamel;
@@ -82,7 +82,7 @@ public class Player {
 	private void isNotFalling(){
 		falling = false;
 	}
-	private void fall(){
+	public static void fall(){
 		if (falling){
 			velocityY+=0.5;
 			changeYcoord(velocityY*gravity);
@@ -90,5 +90,6 @@ public class Player {
 		else{
 			velocityY = 0;
 		}
+		System.out.println(getCoordinates()[0]+" "+getCoordinates()[1]);
 	}
 }
