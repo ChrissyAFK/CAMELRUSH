@@ -38,7 +38,8 @@ public class Display extends JPanel {
 		this.animateCamel.start();
 		this.scrollTimer = new Timer(1,e->scroll());
 		this.scrollTimer.start();
-		this.spitCooldown = new Timer((0),e->spitCooldown.stop());
+		this.spitCooldown = new Timer((1000),e->spitCooldown.stop());
+		this.spitCooldown.start();
 		this.input = input;
 		this.player = player;
 		this.tile = new TileCalculator();
@@ -84,7 +85,6 @@ public class Display extends JPanel {
 		Player.fall();
 		if (this.input.spaceKeyPressed() && (!spitCooldown.isRunning())) {
 			this.projectiles.add(new Projectile((new int[]{400,275}), 10, 1.0, 1, 1, "spit_ball (5x5).png", (new int[]{20, 20})));
-			this.spitCooldown = new Timer((1000),e->spitCooldown.stop());
 			this.spitCooldown.start();
 		}
 		for (Projectile projectile : projectiles) {
