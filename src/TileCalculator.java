@@ -12,16 +12,23 @@ import javax.swing.ImageIcon;
 public class TileCalculator {
 	private long seed;
 	private int frameWidth;
-	private BufferedImage tile;
+	private BufferedImage sandTile;
+	private BufferedImage waterTile;
 	
 	TileCalculator(long seed) {
 		this.seed = seed;
 		this.frameWidth = 600;
-		this.tile = toBufferedImage(new ImageIcon("CAMELRUSH/assets/player/sandtile.png").getImage());
+		//this.tile = toBufferedImage(new ImageIcon("CAMELRUSH/assets/player/sandtile.png").getImage());
+		this.sandTile = toBufferedImage(new ImageIcon("CAMELRUSH/assets/player/test_sand_tile.png").getImage());
+		this.waterTile = toBufferedImage(new ImageIcon("CAMELRUSH/assets/player/test_water_tile.png").getImage());
 	}
 	
-	public BufferedImage getTile() {
-		return this.tile;
+	public BufferedImage getSandTile() {
+		return this.sandTile;
+	}
+	
+	public BufferedImage getWaterTile() {
+		return this.waterTile;
 	}
 	
 	public ArrayList<String[]> getViewingSlice() {
@@ -35,6 +42,11 @@ public class TileCalculator {
 	private ArrayList<String[]> generateViewingSlice(long seed,int width,int x) {
 		ArrayList<String[]> viewingSlice = new ArrayList<>();
 		for (int i=0;i<width/50+5;i++) {
+			//String[] stringToAdd = new String[randomInt(seed,x+i)];
+			//for (int j=0;j<stringToAdd.length;j++) {
+			//	stringToAdd[j] = "S";
+			//}
+			//viewingSlice.add(stringToAdd);
 			viewingSlice.add(new String[]{"S"});
 		}
 		return viewingSlice;
@@ -42,7 +54,7 @@ public class TileCalculator {
 	
 	private int randomInt(long seed,int x) {
 		Random random = new Random(seed*13*x);
-		return random.nextInt();
+		return random.nextInt(3)+1;
 	}
 	
 	private BufferedImage toBufferedImage(Image img) {
