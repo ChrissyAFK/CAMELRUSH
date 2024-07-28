@@ -1,7 +1,6 @@
 import java.awt.Image;
 import javax.swing.ImageIcon;
 import javax.swing.Timer;
-import java.util.ArrayList;
 
 public class Projectile{
     private int[] coordinates = {0,0};
@@ -24,7 +23,7 @@ public class Projectile{
 		this.spitDuration.start();
     }
     public void move(){
-        coordinates[0] += horizontal*speed - Player.getVelocity()[0];
+        coordinates[0] += horizontal*speed - (int)Player.getVelocity()[0];
         coordinates[1] += vertical*speed + (int)Player.getVelocity()[1];
     }
     public Image getSprite(){

@@ -18,6 +18,8 @@ public class Player {
 	private int fallingCamelAnimation = 0;
 	private int landingCamelAnimation = 0;
 	private boolean landingInProgress = false;
+	private static int headtilt = 0;
+	private int camelAnimation = 0;
 	private BufferedImage idleCamel;
 	private BufferedImage walkingCamel;
 	private BufferedImage jumpingCamel;
@@ -101,6 +103,14 @@ public class Player {
 	
 	public static void isFacingLeft() {
 		facingRight = false;
+	}
+
+	public static int headtilt() {
+		return headtilt;
+	}
+
+	public static void headtiltChange(int change) {
+		headtilt = change;
 	}
 	
 	public static void setCoordinates(int[] coordinates) {

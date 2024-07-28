@@ -4,7 +4,6 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.util.ArrayList;
-
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -48,7 +47,7 @@ public class Display extends JPanel {
 		
 		this.animateCamel = new Timer(1000/15,e->animate());
 		this.animateCamel.start();
-		this.scrollTimer = new Timer(1000/600,e->scroll());
+		this.scrollTimer = new Timer(1000/1000,e->scroll());
 		this.scrollTimer.start();
 		this.spitCooldown = new Timer(1000,e->spitCooldown.stop());
 		this.spitCooldown.start();
@@ -93,6 +92,15 @@ public class Display extends JPanel {
 		if (!this.input.aKeyPressed()&&!this.input.dKeyPressed()) {
 			Player.setVelocityX(0);
 		}
+		if (this.input.upKeyPressed()) {
+			Player.headtiltChange(-1);
+		}
+		if (this.input.downKeyPressed()) {
+			Player.headtiltChange(1);
+		}
+		if (!this.input.upKeyPressed()&&!this.input.downKeyPressed()) {
+			Player.headtiltChange(0);
+		}
 		if (this.input.eKeyPressed()) {
 			water_meter.drink();
 		}
@@ -115,7 +123,7 @@ public class Display extends JPanel {
 		Player.updateYCoordinates();
 		Player.fall();
 		if (this.input.spaceKeyPressed() && (this.water_meter.getAmount()>=20.0) && (!this.spitCooldown.isRunning())) {
-			this.projectiles.add(new Projectile((new int[]{displaySize[0]/2+100,displaySize[1]/2-35}),3000,1.0,1,1,"spit_ball (5x5).png",(new int[]{20,20})));
+			this.projectiles.add(new Projectile((new int[]{displaySize[0]/2+100,displaySize[1]/2-35}),3000,1.0,1,Player.headtilt(),"spit_ball (5x5).png",(new int[]{20,20})));
 			this.spitCooldown = new Timer((1000),e->spitCooldown.stop());
 			this.spitCooldown.start();
 			this.water_meter.setAmount(this.water_meter.getAmount()-20);
@@ -132,10 +140,10 @@ public class Display extends JPanel {
 	
 	public void paintComponent(Graphics g) {
 		g.clearRect(0,0,displaySize[0],displaySize[1]);
-		g.setColor(new Color(158,250,255));
+		g.setColor(new Color(200,255,250));
 		g.fillRect(0,0,displaySize[0],displaySize[1]);
 		for (int i=0;i<(displaySize[0]/(256*5/2))+1;i++) {
-			g.drawImage(this.background.getBackground(),i*256*5-(Player.getCoordinates()[0]/4)%(256*5),(Player.getCoordinates()[1]/4)%(160*5),256*5,160*5,this);
+			g.drawImage(this.background.getBackground(),i*256*5-(Player.getCoordinates()[0]/4)%(256*5),(Player.getCoordinates()[1]*6/5)+250,256*5,160*5,this);
 		}
 		try {
 			this.tileList = this.tile.getViewingSlice();
