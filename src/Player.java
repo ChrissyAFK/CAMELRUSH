@@ -12,6 +12,7 @@ public class Player {
 	private static int gravity = 2;
 	private static double velocityY = 0;
 	private static double velocityX = 0;
+	private static boolean facingRight = true;
 	private int camelAnimation = 0;
 	private BufferedImage idleCamel;
 	private BufferedImage walkingCamel;
@@ -41,6 +42,18 @@ public class Player {
 	
 	public static boolean inSun() {
 		return inSun;
+	}
+	
+	public static boolean facingRight() {
+		return facingRight;
+	}
+	
+	public static void isFacingRight() {
+		facingRight = true;
+	}
+	
+	public static void isFacingLeft() {
+		facingRight = false;
 	}
 	
 	public static int[] getCoordinates() {

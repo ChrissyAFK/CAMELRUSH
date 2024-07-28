@@ -1,7 +1,8 @@
 import java.util.ArrayList;
 
 public class CollisionHandler {
-	private static final int[][] camelFacingRight = {{235,270,18*5-3,26*5},{323,260,14*5,11*5}};
+	private static final int[][] camelFacingRight = {{255,270,18*5,26*5},{345,260,14*5,11*5}};
+	private static final int[][] camelFacingLeft = {{255,270,18*5,26*5},{185,260,14*5,11*5}};
 	public static boolean willCollide(int[] tileCoordinates,int[] entityCoordinates,String entityType,int[] direction,String axis) {
 		if (entityType.equals("Camel")) {
 			int[] updatedTileCoordinates = {};
@@ -10,14 +11,25 @@ public class CollisionHandler {
 			} else {
 				updatedTileCoordinates = new int[]{tileCoordinates[0]-direction[0],tileCoordinates[1]+direction[1]};
 			}
-			for (int[] hitbox:camelFacingRight) {
-				if (hitbox[0]+hitbox[2]>updatedTileCoordinates[0]&&
-						hitbox[0]<updatedTileCoordinates[0]+50&&
-						hitbox[1]+hitbox[3]>updatedTileCoordinates[1]&&
-						hitbox[1]<updatedTileCoordinates[1]+50) {
-					return true;
+			if (Player.facingRight()) {
+				for (int[] hitbox:camelFacingRight) {
+					if (hitbox[0]+hitbox[2]>updatedTileCoordinates[0]&&
+							hitbox[0]<updatedTileCoordinates[0]+50&&
+							hitbox[1]+hitbox[3]>updatedTileCoordinates[1]&&
+							hitbox[1]<updatedTileCoordinates[1]+50) {
+						return true;
+					}
+				}
+			} else {
+				for (int[] hitbox:camelFacingLeft) {
+					if (hitbox[0]+hitbox[2]>updatedTileCoordinates[0]&&
+							hitbox[0]<updatedTileCoordinates[0]+50&&
+							hitbox[1]+hitbox[3]>updatedTileCoordinates[1]&&
+							hitbox[1]<updatedTileCoordinates[1]+50) {
+						return true;
+					}
+				}
 			}
-		}
 		} else {
 			System.out.println("Error: Unknown entity type");
 		}

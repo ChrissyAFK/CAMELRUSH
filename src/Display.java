@@ -70,9 +70,11 @@ public class Display extends JPanel {
 		}
 		if (this.input.aKeyPressed()) {
 			Player.setVelocityX(-this.playerSpeed);
+			Player.isFacingLeft();
 		}
 		if (this.input.dKeyPressed()) {
 			Player.setVelocityX(this.playerSpeed);
+			Player.isFacingRight();
 		}
 		if (!this.input.aKeyPressed()&&!this.input.dKeyPressed()) {
 			Player.setVelocityX(0);
@@ -128,13 +130,25 @@ public class Display extends JPanel {
 			}
 		}
 		//g.drawImage(this.player.getCurrentAnimation(),100+Player.getCoordinates()[0],100-Player.getCoordinates()[1],220,160,this);
-		g.drawImage(this.player.getCurrentAnimation(),this.getWidth()/2-110,240,220,160,this);
+		if (Player.facingRight()) {
+			g.drawImage(this.player.getCurrentAnimation(),205,240,220,160,this);
+		} else {
+			g.drawImage(this.player.getCurrentAnimation(),395,240,-220,160,this);
+		}
 		for (Projectile proj : projectiles) {
 			g.drawImage(proj.getSprite(), proj.getCoordinates()[0], proj.getCoordinates()[1], proj.getSize()[0], proj.getSize()[1], this);
 		}	
-		//hitboxes
+		// hitboxes
 		g.setColor(new Color(255,0,0,90));
-		g.fillRect(200+25*5-2,260,14*5,11*5);
-		g.fillRect(235,270,18*5-3,26*5);
+		if (Player.facingRight()) {
+			g.fillRect(255,270,18*5,26*5);
+			g.fillRect(345,260,14*5,11*5);
+		} else {
+			g.fillRect(255,270,18*5,26*5);
+			g.fillRect(185,260,14*5,11*5);
+		}
+		// center line
+		//g.setColor(new Color(0,0,0,90));
+		//g.fillRect(299,0,2,600);
 	}
 }
