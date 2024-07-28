@@ -24,7 +24,6 @@ public class Projectile{
     public void move(){
         coordinates[0] += horizontal*speed;
         coordinates[1] += vertical*speed;
-        System.out.println(coordinates[0]+" "+coordinates[1]);
     }
     public static void moveFromWorld(ArrayList<Projectile> projectiles){
         for (Projectile proj : projectiles) {
