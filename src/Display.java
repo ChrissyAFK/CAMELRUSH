@@ -130,7 +130,7 @@ public class Display extends JPanel {
 	
 	public void paintComponent(Graphics g) {
 		g.clearRect(0,0,displaySize[0],displaySize[1]);
-		g.setColor(new Color(158,250,255));
+		g.setColor(new Color(200,255,250));
 		g.fillRect(0,0,displaySize[0],displaySize[1]);
 		for (int i=0;i<(displaySize[0]/(256*5/2))+1;i++) {
 			g.drawImage(this.background.getBackground(),i*256*5-(Player.getCoordinates()[0]/4)%(256*5),(Player.getCoordinates()[1]*6/5)+250,256*5,160*5,this);
