@@ -36,11 +36,11 @@ public class Display extends JPanel {
 		this.tile = new TileCalculator();
 		this.tileList = this.tile.getViewingSlice();
 		
-		this.animateCamel = new Timer((1000/15),e->animate());
+		this.animateCamel = new Timer(1000/15,e->animate());
 		this.animateCamel.start();
-		this.scrollTimer = new Timer((0),e->scroll());
+		this.scrollTimer = new Timer(1000/600,e->scroll());
 		this.scrollTimer.start();
-		this.spitCooldown = new Timer((1000),e->spitCooldown.stop());
+		this.spitCooldown = new Timer(1000,e->spitCooldown.stop());
 		this.spitCooldown.start();
 		this.input = input;
 		this.player = player;
@@ -55,8 +55,8 @@ public class Display extends JPanel {
 	
 	private void scroll() {
 		long currentTime = System.currentTimeMillis();
-		long delta = currentTime - this.prevTime;
-		System.out.println(delta);
+		//long delta = currentTime - this.prevTime;
+		//System.out.println(delta);
 		this.prevTime = currentTime;
 		this.frameCount++;
 		this.fpsCounter.setText("FPS: "+String.valueOf((double)Math.round(this.fps*100)/100));
@@ -69,10 +69,10 @@ public class Display extends JPanel {
 			Player.setVelocityY(10);
 		}
 		if (this.input.aKeyPressed()) {
-			Player.setVelocityX(-this.playerSpeed*delta/10);
+			Player.setVelocityX(-this.playerSpeed);
 		}
 		if (this.input.dKeyPressed()) {
-			Player.setVelocityX(this.playerSpeed*delta/10);
+			Player.setVelocityX(this.playerSpeed);
 		}
 		if (!this.input.aKeyPressed()&&!this.input.dKeyPressed()) {
 			Player.setVelocityX(0);
@@ -90,10 +90,10 @@ public class Display extends JPanel {
 		}
 		
 		if (!CollisionHandler.isColliding(this.tileList)) {
-			Player.updateXCoordinates(delta);
+			Player.updateXCoordinates();
 		}
-		Player.updateYCoordinates(delta);
-		Player.fall(delta);
+		Player.updateYCoordinates();
+		Player.fall();
 		if (this.input.spaceKeyPressed() && (!spitCooldown.isRunning())) {
 			this.projectiles.add(new Projectile((new int[]{400,275}),10,1.0,1,1,"spit_ball (5x5).png",(new int[]{20,20})));
 			this.spitCooldown = new Timer((1000),e->spitCooldown.stop());

@@ -5,7 +5,7 @@ import java.io.IOException;
 import javax.swing.ImageIcon;
 
 public class Player {
-	private static int[] coordinates = {0,4};
+	private static int[] coordinates = {0,0};
 	private static boolean inSun = false;
 	private static boolean inMotion = false;
 	private static boolean falling = false;
@@ -67,14 +67,14 @@ public class Player {
 		coordinates[1]=y;
 	}
 	
-	public static void updateYCoordinates(double delta) {
+	public static void updateYCoordinates() {
 		if (falling) {
-			coordinates[1]+=(int)(velocityY*delta/16);
+			coordinates[1]+=(int)(velocityY);
 		}
 	}
 	
-	public static void updateXCoordinates(double delta) {
-		coordinates[0]+=(int)(velocityX*delta/16);
+	public static void updateXCoordinates() {
+		coordinates[0]+=(int)(velocityX);
 	}
 	
 	public static void isMoving() {
@@ -108,9 +108,9 @@ public class Player {
 		return falling;
 	}
 
-	public static void fall(long delta) {
+	public static void fall() {
 		if (falling){
-			velocityY-=(double)delta/73;
+			velocityY-=0.22;
 		}
 		else{
 			velocityY = 0;
