@@ -60,7 +60,7 @@ class OverheatMeter{ //obj name: heat
     
     OverheatMeter() {
     	this.heatMeter = Display.toBufferedImage(new ImageIcon("CAMELRUSH/assets/other/Heat_Meter (12x32).png").getImage());
-        this.heat_rise_delay = new Timer(1000,e->heatRise(1f));
+        this.heat_rise_delay = new Timer(100,e->heatRise(1f));
         this.heat_rise_delay.start();
     }
     
