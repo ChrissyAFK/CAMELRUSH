@@ -107,14 +107,17 @@ public class Display extends JPanel {
 		Player.updateYCoordinates();
 		Player.fall();
 		if (this.input.spaceKeyPressed() && (!spitCooldown.isRunning())) {
-			this.projectiles.add(new Projectile((new int[]{displaySize[0]/2+100,displaySize[1]/2-35}),10,1.0,1,1,"spit_ball (5x5).png",(new int[]{20,20})));
+			this.projectiles.add(new Projectile((new int[]{displaySize[0]/2+100,displaySize[1]/2-35}),3000,1.0,1,1,"spit_ball (5x5).png",(new int[]{20,20})));
 			this.spitCooldown = new Timer((1000),e->spitCooldown.stop());
 			this.spitCooldown.start();
 		}
-		Projectile.moveFromWorld(projectiles);
-		for (Projectile projectile : projectiles) {
-			projectile.move();
+		for (int i = 0; i<projectiles.size(); i++) {
+			projectiles.get(i).move();
+			if (projectiles.get(i).getStopped()){
+				projectiles.remove(projectiles.get(i));
+			}
 		}
+
 		repaint();
 	}
 	
