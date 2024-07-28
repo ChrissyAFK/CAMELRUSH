@@ -1,5 +1,6 @@
 import java.awt.Image;
 import javax.swing.ImageIcon;
+import java.util.ArrayList;
 
 public class Projectile{
     private int[] coordinates = {0,0};
@@ -23,6 +24,12 @@ public class Projectile{
     public void move(){
         coordinates[0] += horizontal*speed;
         coordinates[1] += vertical*speed;
+    }
+    public static void moveFromWorld(ArrayList<Projectile> projectiles){
+        for (Projectile proj : projectiles) {
+            proj.coordinates[0] -= Player.getVelocityX();
+            proj.coordinates[1] -= Player.getVelocityY();
+        }
     }
     public Image getSprite(){
         return this.sprite;

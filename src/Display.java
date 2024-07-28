@@ -99,6 +99,7 @@ public class Display extends JPanel {
 			this.spitCooldown = new Timer((1000),e->spitCooldown.stop());
 			this.spitCooldown.start();
 		}
+		Projectile.moveFromWorld(projectiles);
 		for (Projectile projectile : projectiles) {
 			projectile.move();
 		}
