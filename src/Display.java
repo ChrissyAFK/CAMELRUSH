@@ -30,11 +30,13 @@ public class Display extends JPanel {
 	private ArrayList<String[]> tileList = new ArrayList<>();
 	private WaterMeter waterMeter;
 	private OverheatMeter heatMeter;
-	
+	private long shiftCooldownEndTime = 0;
+	private long shiftActiveEndTime = 0;
+
 	Display(InputHandler input,Player player) throws Exception {
 		this.setPreferredSize(new Dimension(1280,700));
 		displaySize = new int[]{this.getWidth(),this.getHeight()};
-		Player.setCoordinates(new int[]{0,displaySize[1]/2-300});
+		Player.setCoordinates(new int[]{0,displaySize[1]/250});
 		setLayout(null); //44x32
 		this.background = new Background();
 		
@@ -91,8 +93,12 @@ public class Display extends JPanel {
 			Player.setVelocityX(this.playerSpeed);
 			Player.isFacingRight();
 		}
-		if (this.input.altKeyPressed()) {
-			Player.setVelocityX(4);
+		if (this.input.shiftKeyPressed() && currentTime > shiftCooldownEndTime) {
+			shiftActiveEndTime = currentTime + 500; // 0.5 seconds
+			shiftCooldownEndTime = currentTime + 1000; // 1 second cooldown
+		}
+		if (currentTime < shiftActiveEndTime) {
+			Player.setVelocityX(Player.getVelocity()[0] * 6);
 		}
 		if (!this.input.aKeyPressed()&&!this.input.dKeyPressed()) {
 			Player.setVelocityX(0);
