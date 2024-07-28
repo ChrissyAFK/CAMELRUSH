@@ -13,8 +13,8 @@ public class TileCalculator {
 	
 	TileCalculator() {
 		//this.tile = toBufferedImage(new ImageIcon("CAMELRUSH/assets/player/sandtile.png").getImage());
-		this.sandTile = toBufferedImage(new ImageIcon("CAMELRUSH/assets/blocks/sand_tile (8x8).png").getImage());
-		this.waterTile = toBufferedImage(new ImageIcon("CAMELRUSH/assets/blocks/water_tile (8x8).png").getImage());
+		this.sandTile = Display.toBufferedImage(new ImageIcon("CAMELRUSH/assets/blocks/sand_tile (8x8).png").getImage());
+		this.waterTile = Display.toBufferedImage(new ImageIcon("CAMELRUSH/assets/blocks/water_tile (8x8).png").getImage());
 	}
 	
 	public void changeAnimationFrame() {
@@ -40,19 +40,6 @@ public class TileCalculator {
 	public int getOffset() {
 		return 50-Player.getCoordinates()[0]%50;
 	}
-	
-	private BufferedImage toBufferedImage(Image img) {
-        if (img instanceof BufferedImage) {
-            return (BufferedImage) img;
-        }
-
-        BufferedImage bimage = new BufferedImage(img.getWidth(null),img.getHeight(null),BufferedImage.TYPE_INT_ARGB);
-        Graphics2D bGr = bimage.createGraphics();
-        bGr.drawImage(img,0,0,null);
-        bGr.dispose();
-
-        return bimage;
-    }
 
 	private ArrayList<String[]> generateRoom(String level) throws Exception {
 		BufferedReader reader = new BufferedReader(new FileReader(level));
