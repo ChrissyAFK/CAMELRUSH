@@ -60,6 +60,10 @@ class OverheatMeter{ //obj name: heat
             this.setAmount(this.getAmount()+amount);
             //System.out.println("heat: "+this.getPercentFilled()); // debugging
         }
+        else{
+            this.setAmount(this.getAmount()-amount);
+            //System.out.println("heat: "+this.getPercentFilled()); // debugging
+        }
         if (this.getAmount() >= getMax()){
             System.out.println("Player has died."); // change this into a method which tells the player its dead
             this.heat_rise_delay.stop();

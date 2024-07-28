@@ -92,6 +92,13 @@ public class Player {
 	public static boolean inSun() {
 		return inSun;
 	}
+
+	public static void cooling(){
+		inSun = false;	
+	}
+	public static void heating(){
+		inSun = true;	
+	}
 	
 	public static boolean facingRight() {
 		return facingRight;
