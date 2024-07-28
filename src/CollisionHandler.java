@@ -1,8 +1,7 @@
 import java.util.ArrayList;
 
 public class CollisionHandler {
-	private static final int[][] camelFacingRight = {{235,270,18*5-3,26*5},{323,260,14*5,11*5}};//{{190+5*10,270,18*5,0},{190+5*10+17*5,260,14*5,11*5}};//{{275,270,14*5,26*5},{240+28*5,260,14*5,11*5}};//{{235,270,18*5,26*5},{240+17*5,260,14*5,11*5}}
-	//private static final int[][] camelFacingRight = {{190,240,220,160}};
+	private static final int[][] camelFacingRight = {{235,270,18*5-3,26*5},{323,260,14*5,11*5}};
 	public static boolean willCollide(int[] tileCoordinates,int[] entityCoordinates,String entityType,int[] direction,String axis) {
 		if (entityType.equals("Camel")) {
 			int[] updatedTileCoordinates = {};

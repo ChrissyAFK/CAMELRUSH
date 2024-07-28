@@ -55,7 +55,8 @@ public class Display extends JPanel {
 	
 	private void scroll() {
 		long currentTime = System.currentTimeMillis();
-		//long delta = currentTime - this.prevTime;
+		long delta = currentTime - this.prevTime;
+		System.out.println(delta);
 		this.prevTime = currentTime;
 		this.frameCount++;
 		this.fpsCounter.setText("FPS: "+String.valueOf((double)Math.round(this.fps*100)/100));
@@ -68,10 +69,10 @@ public class Display extends JPanel {
 			Player.setVelocityY(10);
 		}
 		if (this.input.aKeyPressed()) {
-			Player.setVelocityX(-this.playerSpeed);
+			Player.setVelocityX(-this.playerSpeed*delta/10);
 		}
 		if (this.input.dKeyPressed()) {
-			Player.setVelocityX(this.playerSpeed);
+			Player.setVelocityX(this.playerSpeed*delta/10);
 		}
 		if (!this.input.aKeyPressed()&&!this.input.dKeyPressed()) {
 			Player.setVelocityX(0);
@@ -92,7 +93,7 @@ public class Display extends JPanel {
 			Player.updateXCoordinates();
 		}
 		Player.updateYCoordinates();
-		Player.fall();
+		Player.fall(delta);
 		if (this.input.spaceKeyPressed() && (!spitCooldown.isRunning())) {
 			this.projectiles.add(new Projectile((new int[]{400,275}),10,1.0,1,1,"spit_ball (5x5).png",(new int[]{20,20})));
 			this.spitCooldown = new Timer((1000),e->spitCooldown.stop());
