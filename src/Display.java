@@ -8,6 +8,7 @@ import javax.swing.JPanel;
 import javax.swing.Timer;
 
 public class Display extends JPanel {
+	public static int[] displaySize;
 	private Timer animateCamel;
 	private Timer scrollTimer;
 	private Timer spitCooldown;
@@ -24,7 +25,9 @@ public class Display extends JPanel {
 	private ArrayList<String[]> tileList = new ArrayList<>();
 	
 	Display(InputHandler input,Player player) throws Exception {
-		this.setPreferredSize(new Dimension(600,600));
+		this.setPreferredSize(new Dimension(1280,700));
+		displaySize = new int[]{this.getWidth(),this.getHeight()};
+		Player.setCoordinates(new int[]{0,-305});
 		setLayout(null); //44x32
 		
 		this.startTime = System.currentTimeMillis();
@@ -54,6 +57,7 @@ public class Display extends JPanel {
 	}
 	
 	private void scroll() {
+		displaySize = new int[]{this.getWidth(),this.getHeight()};
 		long currentTime = System.currentTimeMillis();
 		//long delta = currentTime - this.prevTime;
 		//System.out.println(delta);
@@ -91,7 +95,7 @@ public class Display extends JPanel {
 			Player.isNotFalling();
 		}
 		
-		if (!CollisionHandler.isColliding(this.tileList)) {
+		if (!CollisionHandler.isColliding(this.tileList,"")) {
 			Player.updateXCoordinates();
 		}
 		Player.updateYCoordinates();
@@ -109,9 +113,9 @@ public class Display extends JPanel {
 	}
 	
 	public void paintComponent(Graphics g) {
-		g.clearRect(0,0,this.getWidth(),this.getHeight());
-		g.setColor(new Color(158, 250, 255));
-		g.fillRect(0,0,600,600);
+		g.clearRect(0,0,displaySize[0],displaySize[1]);
+		g.setColor(new Color(158,250,255));
+		g.fillRect(0,0,displaySize[0],displaySize[1]);
 		try {
 			this.tileList = this.tile.getViewingSlice();
 		} catch (Exception e) {
@@ -120,20 +124,20 @@ public class Display extends JPanel {
 		for (int j=0;j<this.tileList.get(0).length;j++) {
 			for (int i=0;i<this.tileList.size();i++) {
 				//g.drawImage(this.tile.getSandTile(),this.tile.getOffset()+50*(i-3),400-50*j,50,50,this);
-				if (i<Player.getCoordinates()[0]/50+15 && i>Player.getCoordinates()[0]/50-3){//render distance
+				if (i<Player.getCoordinates()[0]/50+displaySize[0]/50 && i>Player.getCoordinates()[0]/50-displaySize[0]/50){//render distance
 					if (this.tileList.get(i)[j].equals("S")) {
-						g.drawImage(this.tile.getSandTile(),i*50-Player.getCoordinates()[0],j*50-150+Player.getCoordinates()[1],50,50,this);
+						g.drawImage(this.tile.getSandTile(),displaySize[0]/2+i*50-Player.getCoordinates()[0],displaySize[1]/2+j*50-150+Player.getCoordinates()[1],50,50,this);
 					} else if (this.tileList.get(i)[j].equals("W")) {
-						g.drawImage(this.tile.getWaterTile(),i*50-Player.getCoordinates()[0],j*50-150+Player.getCoordinates()[1],50,50,this);
+						g.drawImage(this.tile.getWaterTile(),displaySize[0]/2+i*50-Player.getCoordinates()[0],displaySize[1]/2+j*50-150+Player.getCoordinates()[1],50,50,this);
 					}
 				}
 			}
 		}
 		//g.drawImage(this.player.getCurrentAnimation(),100+Player.getCoordinates()[0],100-Player.getCoordinates()[1],220,160,this);
 		if (Player.facingRight()) {
-			g.drawImage(this.player.getCurrentAnimation(),205,240,220,160,this);
+			g.drawImage(this.player.getCurrentAnimation(),displaySize[0]/2-95,displaySize[1]/2-68,220,160,this);
 		} else {
-			g.drawImage(this.player.getCurrentAnimation(),395,240,-220,160,this);
+			g.drawImage(this.player.getCurrentAnimation(),displaySize[0]/2+95,displaySize[1]/2-68,-220,160,this);
 		}
 		for (Projectile proj : projectiles) {
 			g.drawImage(proj.getSprite(), proj.getCoordinates()[0], proj.getCoordinates()[1], proj.getSize()[0], proj.getSize()[1], this);
@@ -141,14 +145,18 @@ public class Display extends JPanel {
 		// hitboxes
 		g.setColor(new Color(255,0,0,90));
 		if (Player.facingRight()) {
-			g.fillRect(255,270,18*5,26*5);
-			g.fillRect(345,260,14*5,11*5);
+			//g.fillRect(255,270,18*5,26*5);
+			g.fillRect(displaySize[0]/2-45,displaySize[1]/2-38,18*5,26*5);
+			//g.fillRect(345,260,14*5,11*5);
+			g.fillRect(displaySize[0]/2+45,displaySize[1]/2-48,14*5,11*5);
 		} else {
-			g.fillRect(255,270,18*5,26*5);
-			g.fillRect(185,260,14*5,11*5);
+			//g.fillRect(255,270,18*5,26*5);
+			g.fillRect(displaySize[0]/2-45,displaySize[1]/2-38,18*5,26*5);
+			//g.fillRect(185,260,14*5,11*5);
+			g.fillRect(displaySize[0]/2-115,displaySize[1]/2-48,14*5,11*5);
 		}
 		// center line
-		//g.setColor(new Color(0,0,0,90));
-		//g.fillRect(299,0,2,600);
+		g.setColor(new Color(0,0,0,90));
+		g.fillRect(this.getWidth()/2-1,0,2,this.getHeight());
 	}
 }
