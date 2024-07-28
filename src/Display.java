@@ -101,7 +101,7 @@ public class Display extends JPanel {
 		Player.updateYCoordinates();
 		Player.fall();
 		if (this.input.spaceKeyPressed() && (!spitCooldown.isRunning())) {
-			this.projectiles.add(new Projectile((new int[]{400,275}),10,1.0,1,1,"spit_ball (5x5).png",(new int[]{20,20})));
+			this.projectiles.add(new Projectile((new int[]{displaySize[0]/2+100,displaySize[1]/2-35}),10,1.0,1,1,"spit_ball (5x5).png",(new int[]{20,20})));
 			this.spitCooldown = new Timer((1000),e->spitCooldown.stop());
 			this.spitCooldown.start();
 		}
@@ -133,15 +133,14 @@ public class Display extends JPanel {
 				}
 			}
 		}
-		//g.drawImage(this.player.getCurrentAnimation(),100+Player.getCoordinates()[0],100-Player.getCoordinates()[1],220,160,this);
+		for (Projectile proj : projectiles) {
+				g.drawImage(proj.getSprite(), proj.getCoordinates()[0], proj.getCoordinates()[1], proj.getSize()[0], proj.getSize()[1], this);
+			}	
 		if (Player.facingRight()) {
 			g.drawImage(this.player.getCurrentAnimation(),displaySize[0]/2-95,displaySize[1]/2-68,220,160,this);
 		} else {
 			g.drawImage(this.player.getCurrentAnimation(),displaySize[0]/2+95,displaySize[1]/2-68,-220,160,this);
 		}
-		for (Projectile proj : projectiles) {
-			g.drawImage(proj.getSprite(), proj.getCoordinates()[0], proj.getCoordinates()[1], proj.getSize()[0], proj.getSize()[1], this);
-		}	
 		// hitboxes
 		g.setColor(new Color(255,0,0,90));
 		if (Player.facingRight()) {
@@ -156,7 +155,7 @@ public class Display extends JPanel {
 			g.fillRect(displaySize[0]/2-115,displaySize[1]/2-48,14*5,11*5);
 		}
 		// center line
-		g.setColor(new Color(0,0,0,90));
-		g.fillRect(this.getWidth()/2-1,0,2,this.getHeight());
+		//g.setColor(new Color(0,0,0,90));
+		//g.fillRect(this.getWidth()/2-1,0,2,this.getHeight());
 	}
 }
