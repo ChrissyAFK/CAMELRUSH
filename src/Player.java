@@ -56,6 +56,11 @@ public class Player {
 		facingRight = false;
 	}
 	
+	public static void setCoordinates(int[] coordinates) {
+		Player.coordinates = coordinates;
+		System.out.println(coordinates[1]);
+	}
+	
 	public static int[] getCoordinates() {
 		return coordinates;
 	}
