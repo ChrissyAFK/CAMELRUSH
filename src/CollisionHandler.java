@@ -4,12 +4,14 @@ public class CollisionHandler {
 	private static final int[][] camelFacingRight = {{Display.displaySize[0]/2-45,Display.displaySize[1]/2-38,18*5,26*5},{Display.displaySize[0]/2+45,Display.displaySize[1]/2-48,14*5,11*5}};
 	private static final int[][] camelFacingLeft = {{Display.displaySize[0]/2-45,Display.displaySize[1]/2-38,18*5,26*5},{Display.displaySize[0]/2-115,Display.displaySize[1]/2-48,14*5,11*5}};
 	private static final int[][] spitball = {{0,0,25,25}};
-	public static boolean willCollide(int[] tileCoordinates,int[] entityCoordinates,String entityType,double[] direction,String axis) {
+	public static boolean willCollide(int[] tileCoordinates,int[] entityCoordinates,String entityType,double[] direction,String blockType,String axis) {
 		int[] updatedTileCoordinates = {};
 		switch (entityType) {
 			case "Camel":
 				if (axis.toLowerCase().equals("y")) {
 					updatedTileCoordinates = new int[]{tileCoordinates[0],tileCoordinates[1]+(int)direction[1]};
+				} else if (blockType.equals("W")) {
+					updatedTileCoordinates = new int[]{tileCoordinates[0]-(int)direction[0],tileCoordinates[1]+(int)direction[1]+20};
 				} else {
 					updatedTileCoordinates = new int[]{tileCoordinates[0]-(int)direction[0],tileCoordinates[1]+(int)direction[1]};
 				}
@@ -59,7 +61,7 @@ public class CollisionHandler {
 				if (i<Player.getCoordinates()[0]/50+15 && i>entityCoordinate[0]/50-3){
 					if (tileList.get(i)[j].equals(blockType)) {
 						if (willCollide(new int[]{i*50-entityCoordinate[0],j*50-150+entityCoordinate[1]},entityCoordinate,entityType,
-								entityVelocity,axis)) {
+								entityVelocity,blockType,axis)) {
 							return true;
 						}
 					}

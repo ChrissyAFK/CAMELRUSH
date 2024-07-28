@@ -103,8 +103,8 @@ public class Display extends JPanel {
 		if (!this.input.upKeyPressed()&&!this.input.downKeyPressed()) {
 			Player.headtiltChange(0);
 		}
-		if (this.input.eKeyPressed()) {
-			waterMeter.drink();
+		if (this.input.eKeyPressed()&&CollisionHandler.isColliding(this.tileList,"Camel",Player.getCoordinates(),Player.getVelocity(),"W","")) {
+			this.waterMeter.drink();
 		}
 		if (this.input.inMotion()) {
 			Player.isMoving();
@@ -121,12 +121,12 @@ public class Display extends JPanel {
 		if (!CollisionHandler.isColliding(this.tileList,"Camel",Player.getCoordinates(),Player.getVelocity(),"S","")) {
 			Player.updateXCoordinates();
 		}
-		if (CollisionHandler.isColliding(this.tileList,"Camel",Player.getCoordinates(),Player.getVelocity(),"Z","")){
+		/*if (CollisionHandler.isColliding(this.tileList,"Camel",Player.getCoordinates(),Player.getVelocity(),"Z","")){
 			Player.cooling();
 		}
 		else{
 			Player.heating();
-		}
+		}*/
 		//System.out.println("Player is colliding with water: "+CollisionHandler.isColliding(this.tileList,"Camel",Player.getCoordinates(),Player.getVelocity(),"W",""));
 		Player.updateYCoordinates();
 		Player.fall();
@@ -136,7 +136,7 @@ public class Display extends JPanel {
 			this.spitCooldown.start();
 			this.waterMeter.setAmount(this.waterMeter.getAmount()-20);
 		}
-		for (int i = 0; i<projectiles.size(); i++) {
+		for (int i=0;i<projectiles.size();i++) {
 			projectiles.get(i).move();
 			if (projectiles.get(i).getStopped()){
 				projectiles.remove(projectiles.get(i));
@@ -161,7 +161,6 @@ public class Display extends JPanel {
 		}
 		for (int j=0;j<this.tileList.get(0).length;j++) {
 			for (int i=0;i<this.tileList.size();i++) {
-				//g.drawImage(this.tile.getSandTile(),this.tile.getOffset()+50*(i-3),400-50*j,50,50,this);
 				if (i<Player.getCoordinates()[0]/50+displaySize[0]/50 && i>Player.getCoordinates()[0]/50-displaySize[0]/50){//render distance
 					if (this.tileList.get(i)[j].equals("S")) {
 						g.drawImage(this.tile.getSandTile(),displaySize[0]/2+i*50-Player.getCoordinates()[0],displaySize[1]/2+j*50-150+Player.getCoordinates()[1],50,50,this);
@@ -193,6 +192,16 @@ public class Display extends JPanel {
 			g.fillRect(displaySize[0]/2-45,displaySize[1]/2-38,18*5,26*5);
 			//g.fillRect(185,260,14*5,11*5);
 			g.fillRect(displaySize[0]/2-115,displaySize[1]/2-48,14*5,11*5);
+		}
+		for (int j=0;j<this.tileList.get(0).length;j++) {
+			for (int i=0;i<this.tileList.size();i++) {
+				if (i<Player.getCoordinates()[0]/50+displaySize[0]/50 && i>Player.getCoordinates()[0]/50-displaySize[0]/50){//render distance
+					if (this.tileList.get(i)[j].equals("Z")) {
+						g.setColor(new Color(0,0,0,50));
+						g.fillRect(displaySize[0]/2+i*50-Player.getCoordinates()[0],displaySize[1]/2+j*50-150+Player.getCoordinates()[1],50,50);
+					}
+				}
+			}
 		}
 		g.drawImage(this.waterMeter.getWaterMeter(),13,40,12*5/2,32*5/2,this);
 		g.drawImage(this.heatMeter.getHeatMeter(),56,40,12*5/2,32*5/2,this);

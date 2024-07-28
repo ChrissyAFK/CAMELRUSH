@@ -59,8 +59,6 @@ public class Player {
 	}
 	
 	public BufferedImage getCurrentAnimation() {
-		System.out.println(velocity[1]);
-		//System.out.println(falling);
 		if (velocity[1]>0) {
 			return this.jumpingCamel.getSubimage(this.jumpingCamelAnimation*44,0,44,32);
 		} else if (this.landingInProgress) {
