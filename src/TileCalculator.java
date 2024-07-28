@@ -11,11 +11,20 @@ import javax.swing.ImageIcon;
 public class TileCalculator {
 	private BufferedImage sandTile;
 	private BufferedImage waterTile;
+	private int animationFrame = 0;
 	
 	TileCalculator() {
 		//this.tile = toBufferedImage(new ImageIcon("CAMELRUSH/assets/player/sandtile.png").getImage());
 		this.sandTile = toBufferedImage(new ImageIcon("CAMELRUSH/assets/player/test_sand_tile.png").getImage());
-		this.waterTile = toBufferedImage(new ImageIcon("CAMELRUSH/assets/player/test_water_tile.png").getImage());
+		this.waterTile = toBufferedImage(new ImageIcon("CAMELRUSH/assets/blocks/water_tile (8x8).png").getImage());
+	}
+	
+	public void changeAnimationFrame() {
+		if (this.animationFrame==6) {
+			this.animationFrame = 0;
+		} else {
+			this.animationFrame++;
+		}
 	}
 	
 	public BufferedImage getSandTile() {
@@ -23,7 +32,7 @@ public class TileCalculator {
 	}
 	
 	public BufferedImage getWaterTile() {
-		return this.waterTile;
+		return this.waterTile.getSubimage(animationFrame*8,0,8,8);
 	}
 	
 	public ArrayList<String[]> getViewingSlice() throws Exception {
