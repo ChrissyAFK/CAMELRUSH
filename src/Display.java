@@ -91,6 +91,9 @@ public class Display extends JPanel {
 			Player.setVelocityX(this.playerSpeed);
 			Player.isFacingRight();
 		}
+		if (this.input.altKeyPressed()) {
+			Player.setVelocityX(4);
+		}
 		if (!this.input.aKeyPressed()&&!this.input.dKeyPressed()) {
 			Player.setVelocityX(0);
 		}
