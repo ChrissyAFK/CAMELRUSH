@@ -27,11 +27,11 @@ public class Player {
 	private BufferedImage landingCamel;
 	
 	Player() throws IOException {
-		this.idleCamel = toBufferedImage(new ImageIcon("CAMELRUSH/assets/player/camel_idle_animation (44x32).png").getImage());
-        this.walkingCamel = toBufferedImage(new ImageIcon("CAMELRUSH/assets/player/camel_walking_animation (44x32).png").getImage());
-		this.jumpingCamel = toBufferedImage(new ImageIcon("CAMELRUSH/assets/player/camel_jump_animation (44x32).png").getImage());
-		this.fallingCamel = toBufferedImage(new ImageIcon("CAMELRUSH/assets/player/camel_fall_animation (44x32).png").getImage());
-		this.landingCamel = toBufferedImage(new ImageIcon("CAMELRUSH/assets/player/camel_land_animation (44x32).png").getImage());
+		this.idleCamel = Display.toBufferedImage(new ImageIcon("CAMELRUSH/assets/player/camel_idle_animation (44x32).png").getImage());
+        this.walkingCamel = Display.toBufferedImage(new ImageIcon("CAMELRUSH/assets/player/camel_walking_animation (44x32).png").getImage());
+		this.jumpingCamel = Display.toBufferedImage(new ImageIcon("CAMELRUSH/assets/player/camel_jump_animation (44x32).png").getImage());
+		this.fallingCamel = Display.toBufferedImage(new ImageIcon("CAMELRUSH/assets/player/camel_fall_animation (44x32).png").getImage());
+		this.landingCamel = Display.toBufferedImage(new ImageIcon("CAMELRUSH/assets/player/camel_land_animation (44x32).png").getImage());
 	}
 	
 	public void changeCamelAnimation() {
@@ -161,18 +161,6 @@ public class Player {
 	public static void isNotMoving() {
 		inMotion = false;
 	}
-	
-	private BufferedImage toBufferedImage(Image img) {
-        if (img instanceof BufferedImage) {
-            return (BufferedImage) img;
-        }
-        BufferedImage bimage = new BufferedImage(img.getWidth(null),img.getHeight(null),BufferedImage.TYPE_INT_ARGB);
-        Graphics2D bGr = bimage.createGraphics();
-        bGr.drawImage(img,0,0,null);
-        bGr.dispose();
-        
-        return bimage;
-    }
 	
 	public static void isFalling() {
 		falling = true;

@@ -2,7 +2,9 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -26,8 +28,8 @@ public class Display extends JPanel {
 	private JLabel fpsCounter;
 	private ArrayList<Projectile> projectiles;
 	private ArrayList<String[]> tileList = new ArrayList<>();
-	private WaterMeter water_meter;
-	private OverheatMeter heat_meter;
+	private WaterMeter waterMeter;
+	private OverheatMeter heatMeter;
 	
 	Display(InputHandler input,Player player) throws Exception {
 		this.setPreferredSize(new Dimension(1280,700));
@@ -54,8 +56,8 @@ public class Display extends JPanel {
 		this.input = input;
 		this.player = player;
 		this.projectiles = new ArrayList<>();
-		this.water_meter = new WaterMeter(); 
-		this.heat_meter = new OverheatMeter(); 
+		this.waterMeter = new WaterMeter(); 
+		this.heatMeter = new OverheatMeter(); 
 	}
 	
 	private void animate() {
@@ -102,7 +104,7 @@ public class Display extends JPanel {
 			Player.headtiltChange(0);
 		}
 		if (this.input.eKeyPressed()) {
-			water_meter.drink();
+			waterMeter.drink();
 		}
 		if (this.input.inMotion()) {
 			Player.isMoving();
@@ -128,11 +130,11 @@ public class Display extends JPanel {
 		//System.out.println("Player is colliding with water: "+CollisionHandler.isColliding(this.tileList,"Camel",Player.getCoordinates(),Player.getVelocity(),"W",""));
 		Player.updateYCoordinates();
 		Player.fall();
-		if (this.input.spaceKeyPressed() && (this.water_meter.getAmount()>=20.0) && (!this.spitCooldown.isRunning())) {
+		if (this.input.spaceKeyPressed() && (this.waterMeter.getAmount()>=20.0) && (!this.spitCooldown.isRunning())) {
 			this.projectiles.add(new Projectile((new int[]{(Player.facingRight()?displaySize[0]/2+100:displaySize[0]/2-100),displaySize[1]/2-35}),3000,1.0,(Player.facingRight()?1:-1),Player.headtilt(),"spit_ball (5x5).png",(new int[]{20,20})));
 			this.spitCooldown = new Timer((1000),e->spitCooldown.stop());
 			this.spitCooldown.start();
-			this.water_meter.setAmount(this.water_meter.getAmount()-20);
+			this.waterMeter.setAmount(this.waterMeter.getAmount()-20);
 		}
 		for (int i = 0; i<projectiles.size(); i++) {
 			projectiles.get(i).move();
@@ -140,7 +142,8 @@ public class Display extends JPanel {
 				projectiles.remove(projectiles.get(i));
 			}
 		}
-
+		this.waterMeter.updateWaterMeter();
+		this.heatMeter.updateHeatMeter();
 		repaint();
 	}
 	
@@ -191,10 +194,25 @@ public class Display extends JPanel {
 			//g.fillRect(185,260,14*5,11*5);
 			g.fillRect(displaySize[0]/2-115,displaySize[1]/2-48,14*5,11*5);
 		}
+		g.drawImage(this.waterMeter.getWaterMeter(),13,40,12*5/2,32*5/2,this);
+		g.drawImage(this.heatMeter.getHeatMeter(),56,40,12*5/2,32*5/2,this);
 		// center line
 		//g.setColor(new Color(0,0,0,90));
 		//g.fillRect(this.getWidth()/2-1,0,2,this.getHeight());
 	}
+	
+	public static BufferedImage toBufferedImage(Image img) {
+        if (img instanceof BufferedImage) {
+            return (BufferedImage) img;
+        }
+
+        BufferedImage bimage = new BufferedImage(img.getWidth(null),img.getHeight(null),BufferedImage.TYPE_INT_ARGB);
+        Graphics2D bGr = bimage.createGraphics();
+        bGr.drawImage(img,0,0,null);
+        bGr.dispose();
+
+        return bimage;
+    }
 }
 
 class Background {
