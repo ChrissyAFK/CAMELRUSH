@@ -97,22 +97,20 @@ public class Player {
         return bimage;
     }
 	
-	public static void isFalling(){
+	public static void isFalling() {
 		falling = true;
 	}
 
-	public static void isNotFalling(){
+	public static void isNotFalling() {
 		falling = false;
 	}
-	public static boolean getFallingStatus(){
+	public static boolean getFallingStatus() {
 		return falling;
 	}
 
-	public static void fall(){
+	public static void fall(long delta) {
 		if (falling){
-			/*velocityY-=0.9;
-			setVelocityY(velocityY*gravity);*/
-			velocityY-=0.22;
+			velocityY-=(double)delta/73;
 		}
 		else{
 			velocityY = 0;

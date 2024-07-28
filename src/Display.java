@@ -3,7 +3,6 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.util.ArrayList;
-
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.Timer;
@@ -56,7 +55,8 @@ public class Display extends JPanel {
 	
 	private void scroll() {
 		long currentTime = System.currentTimeMillis();
-		//long delta = currentTime - this.prevTime;
+		long delta = currentTime - this.prevTime;
+		System.out.println(delta);
 		this.prevTime = currentTime;
 		this.frameCount++;
 		this.fpsCounter.setText("FPS: "+String.valueOf((double)Math.round(this.fps*100)/100));
@@ -65,15 +65,14 @@ public class Display extends JPanel {
 			this.startTime = System.currentTimeMillis();
 			this.frameCount = 0;
 		}
-		boolean collidingY = CollisionHandler.isColliding(this.tileList,"y");
 		if (this.input.wKeyPressed()&&!Player.getFallingStatus()) {
 			Player.setVelocityY(10);
 		}
 		if (this.input.aKeyPressed()) {
-			Player.setVelocityX(-this.playerSpeed);
+			Player.setVelocityX(-this.playerSpeed*delta/10);
 		}
 		if (this.input.dKeyPressed()) {
-			Player.setVelocityX(this.playerSpeed);
+			Player.setVelocityX(this.playerSpeed*delta/10);
 		}
 		if (!this.input.aKeyPressed()&&!this.input.dKeyPressed()) {
 			Player.setVelocityX(0);
@@ -83,17 +82,18 @@ public class Display extends JPanel {
 		} else {
 			Player.isNotMoving();
 		}
-		if (!collidingY) {
+		
+		if (!CollisionHandler.isColliding(this.tileList,"y")) {
 			Player.isFalling();
 		} else {
 			Player.isNotFalling();
 		}
-		boolean collidingX = CollisionHandler.isColliding(this.tileList,"x");
-		if (!collidingX) {
+		
+		if (!CollisionHandler.isColliding(this.tileList)) {
 			Player.updateXCoordinates();
 		}
 		Player.updateYCoordinates();
-		Player.fall();
+		Player.fall(delta);
 		if (this.input.spaceKeyPressed() && (!spitCooldown.isRunning())) {
 			this.projectiles.add(new Projectile((new int[]{400,275}),10,1.0,1,1,"spit_ball (5x5).png",(new int[]{20,20})));
 			this.spitCooldown = new Timer((1000),e->spitCooldown.stop());
@@ -108,7 +108,7 @@ public class Display extends JPanel {
 	
 	public void paintComponent(Graphics g) {
 		g.clearRect(0,0,this.getWidth(),this.getHeight());
-		g.setColor(new Color(18, 192, 227));
+		g.setColor(new Color(158, 250, 255));
 		g.fillRect(0,0,600,600);
 		try {
 			this.tileList = this.tile.getViewingSlice();
@@ -133,8 +133,8 @@ public class Display extends JPanel {
 			g.drawImage(proj.getSprite(), proj.getCoordinates()[0], proj.getCoordinates()[1], proj.getSize()[0], proj.getSize()[1], this);
 		}	
 		//hitboxes
-		/*g.setColor(new Color(255,0,0,90));
-		g.fillRect(235,270,18*5,26*5);
-		g.fillRect(240+28*5,260,14*5,11*5);*/
+		g.setColor(new Color(255,0,0,90));
+		g.fillRect(200+25*5-2,260,14*5,11*5);
+		g.fillRect(235,270,18*5-3,26*5);
 	}
 }

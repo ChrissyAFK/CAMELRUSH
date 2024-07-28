@@ -55,7 +55,7 @@ public class InputHandler extends JPanel implements KeyListener {
 	
 	// return if the player is moving
 	public boolean inMotion() {
-		return this.wKeyPressed||this.aKeyPressed||this.sKeyPressed||this.dKeyPressed;
+		return this.wKeyPressed||this.aKeyPressed||this.dKeyPressed;
 	}
 	
 	@Override
