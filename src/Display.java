@@ -2,13 +2,17 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.Image;
 import java.util.ArrayList;
+
+import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
 public class Display extends JPanel {
 	public static int[] displaySize;
+	private Background background;
 	private Timer animateCamel;
 	private Timer scrollTimer;
 	private Timer spitCooldown;
@@ -29,6 +33,7 @@ public class Display extends JPanel {
 		displaySize = new int[]{this.getWidth(),this.getHeight()};
 		Player.setCoordinates(new int[]{0,-305});
 		setLayout(null); //44x32
+		this.background = new Background();
 		
 		this.startTime = System.currentTimeMillis();
 		this.prevTime = this.startTime;
@@ -114,8 +119,11 @@ public class Display extends JPanel {
 	
 	public void paintComponent(Graphics g) {
 		g.clearRect(0,0,displaySize[0],displaySize[1]);
-		g.setColor(new Color(158,250,255));
-		g.fillRect(0,0,displaySize[0],displaySize[1]);
+		//g.setColor(new Color(158,250,255));
+		//g.fillRect(0,0,displaySize[0],displaySize[1]);
+		for (int i=0;i<(displaySize[0]/(256*5/2))+1;i++) {
+			g.drawImage(this.background.getBackground(),i*256*5-(Player.getCoordinates()[0]/4)%(256*5),0,256*5,160*5,this);
+		}
 		try {
 			this.tileList = this.tile.getViewingSlice();
 		} catch (Exception e) {
@@ -157,5 +165,17 @@ public class Display extends JPanel {
 		// center line
 		//g.setColor(new Color(0,0,0,90));
 		//g.fillRect(this.getWidth()/2-1,0,2,this.getHeight());
+	}
+}
+
+class Background {
+	private Image background;
+	
+	Background() {
+		this.background = new ImageIcon("CAMELRUSH/assets/background (256x160).png").getImage();
+	}
+	
+	public Image getBackground() {
+		return this.background;
 	}
 }
