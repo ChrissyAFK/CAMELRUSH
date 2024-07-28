@@ -91,6 +91,9 @@ public class Display extends JPanel {
 			Player.setVelocityX(this.playerSpeed);
 			Player.isFacingRight();
 		}
+		if (this.input.altKeyPressed()) {
+			Player.setVelocityX(4);
+		}
 		if (!this.input.aKeyPressed()&&!this.input.dKeyPressed()) {
 			Player.setVelocityX(0);
 		}
@@ -121,13 +124,12 @@ public class Display extends JPanel {
 		if (!CollisionHandler.isColliding(this.tileList,"Camel",Player.getCoordinates(),Player.getVelocity(),"S","")) {
 			Player.updateXCoordinates();
 		}
-		/*if (CollisionHandler.isColliding(this.tileList,"Camel",Player.getCoordinates(),Player.getVelocity(),"Z","")){
+		if (CollisionHandler.isColliding(this.tileList,"Camel Body",Player.getCoordinates(),Player.getVelocity(),"Z","")){
 			Player.cooling();
 		}
 		else{
 			Player.heating();
-		}*/
-		//System.out.println("Player is colliding with water: "+CollisionHandler.isColliding(this.tileList,"Camel",Player.getCoordinates(),Player.getVelocity(),"W",""));
+		}
 		Player.updateYCoordinates();
 		Player.fall();
 		if (this.input.spaceKeyPressed() && (this.waterMeter.getAmount()>=20.0) && (!this.spitCooldown.isRunning())) {
