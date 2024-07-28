@@ -65,16 +65,13 @@ public class Display extends JPanel {
 			this.startTime = System.currentTimeMillis();
 			this.frameCount = 0;
 		}
-		boolean colliding = CollisionHandler.isColliding(this.tileList);
+		boolean collidingY = CollisionHandler.isColliding(this.tileList,"y");
 		if (this.input.wKeyPressed()&&!Player.getFallingStatus()) {
 			Player.setVelocityY(10);
 		}
 		if (this.input.aKeyPressed()) {
 			Player.setVelocityX(-this.playerSpeed);
 		}
-		/*if (this.input.sKeyPressed()) {
-			Player.setVelocityY(-2);
-		}*/
 		if (this.input.dKeyPressed()) {
 			Player.setVelocityX(this.playerSpeed);
 		}
@@ -86,16 +83,16 @@ public class Display extends JPanel {
 		} else {
 			Player.isNotMoving();
 		}
-		//System.out.println("Is colliding: " + CollisionHandler.isColliding(this.tileList));
-		if (!colliding) {
+		if (!collidingY) {
 			Player.isFalling();
 		} else {
 			Player.isNotFalling();
-			//Player.setYCoordinate(0);
-			//Player.setYCoordinate(-550+(colliding)*50);
-			System.out.println(colliding);
 		}
-		Player.updateCoordinates();
+		boolean collidingX = CollisionHandler.isColliding(this.tileList,"x");
+		if (!collidingX) {
+			Player.updateXCoordinates();
+		}
+		Player.updateYCoordinates();
 		Player.fall();
 		if (this.input.spaceKeyPressed() && (!spitCooldown.isRunning())) {
 			this.projectiles.add(new Projectile((new int[]{400,275}),10,1.0,1,1,"spit_ball (5x5).png",(new int[]{20,20})));
