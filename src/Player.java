@@ -67,14 +67,14 @@ public class Player {
 		coordinates[1]=y;
 	}
 	
-	public static void updateYCoordinates() {
+	public static void updateYCoordinates(double delta) {
 		if (falling) {
-			coordinates[1]+=(int)velocityY;
+			coordinates[1]+=(int)(velocityY*delta/16);
 		}
 	}
 	
-	public static void updateXCoordinates() {
-		coordinates[0]+=(int)velocityX;
+	public static void updateXCoordinates(double delta) {
+		coordinates[0]+=(int)(velocityX*delta/16);
 	}
 	
 	public static void isMoving() {

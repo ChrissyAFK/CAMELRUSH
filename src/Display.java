@@ -90,9 +90,9 @@ public class Display extends JPanel {
 		}
 		
 		if (!CollisionHandler.isColliding(this.tileList)) {
-			Player.updateXCoordinates();
+			Player.updateXCoordinates(delta);
 		}
-		Player.updateYCoordinates();
+		Player.updateYCoordinates(delta);
 		Player.fall(delta);
 		if (this.input.spaceKeyPressed() && (!spitCooldown.isRunning())) {
 			this.projectiles.add(new Projectile((new int[]{400,275}),10,1.0,1,1,"spit_ball (5x5).png",(new int[]{20,20})));
