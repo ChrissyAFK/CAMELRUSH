@@ -12,31 +12,79 @@ public class Player {
 	private static int gravity = 2;
 	private static double[] velocity = {0,0};
 	private static boolean facingRight = true;
-	private int camelAnimation = 0;
+	private int defaultCamelAnimation = 0;
+	private int jumpingCamelAnimation = 0;
+	private int openingCamelAnimation = 4;
+	private int fallingCamelAnimation = 0;
+	private int landingCamelAnimation = 0;
+	private boolean landingInProgress = false;
 	private BufferedImage idleCamel;
 	private BufferedImage walkingCamel;
 	private BufferedImage jumpingCamel;
+	private BufferedImage fallingCamel;
+	private BufferedImage landingCamel;
 	
 	Player() throws IOException {
 		this.idleCamel = toBufferedImage(new ImageIcon("CAMELRUSH/assets/player/camel_idle_animation (44x32).png").getImage());
         this.walkingCamel = toBufferedImage(new ImageIcon("CAMELRUSH/assets/player/camel_walking_animation (44x32).png").getImage());
 		this.jumpingCamel = toBufferedImage(new ImageIcon("CAMELRUSH/assets/player/camel_jump_animation (44x32).png").getImage());
+		this.fallingCamel = toBufferedImage(new ImageIcon("CAMELRUSH/assets/player/camel_fall_animation (44x32).png").getImage());
+		this.landingCamel = toBufferedImage(new ImageIcon("CAMELRUSH/assets/player/camel_land_animation (44x32).png").getImage());
 	}
 	
 	public void changeCamelAnimation() {
-		if (camelAnimation==14) {
-			this.camelAnimation=0;
+		if (this.defaultCamelAnimation==14) {
+			this.defaultCamelAnimation=0;
 		} else {
-			this.camelAnimation++;
+			this.defaultCamelAnimation++;
+		}
+		if (!(this.jumpingCamelAnimation==3)) {
+			this.jumpingCamelAnimation++;
+		}
+		if (!(this.openingCamelAnimation==7)) {
+			this.openingCamelAnimation++;
+		}
+		if (this.fallingCamelAnimation==3) {
+			this.fallingCamelAnimation=0;
+		} else {
+			this.fallingCamelAnimation++;
+		}
+		if (!(this.landingCamelAnimation==8)) {
+			this.landingCamelAnimation++;
+		} else {
+			this.landingInProgress = false;
 		}
 	}
 	
 	public BufferedImage getCurrentAnimation() {
-		if (inMotion) {
-			return this.walkingCamel.getSubimage(this.camelAnimation*44,0,44,32);
+		System.out.println(velocity[1]);
+		//System.out.println(falling);
+		if (velocity[1]>0) {
+			return this.jumpingCamel.getSubimage(this.jumpingCamelAnimation*44,0,44,32);
+		} else if (this.landingInProgress) {
+			return this.landingCamel.getSubimage(this.landingCamelAnimation*44,0,44,32);
+		} else if (velocity[1]==-10.020000000000007) {
+			this.landingInProgress = true;
+			this.landingCamelAnimation = 2;
+			return this.landingCamel.getSubimage(0,0,44,32);
+		} else if (velocity[1]<-6) {
+			this.openingCamelAnimation = 4;
+			return this.fallingCamel.getSubimage(this.fallingCamelAnimation*44,0,44,32);
+		} else if (velocity[1]<-2.65) {
+			this.jumpingCamelAnimation = 0;
+			return this.jumpingCamel.getSubimage(this.openingCamelAnimation*44,0,44,32);
+		} else if (velocity[1]<-2.4&&velocity[1]!=-2.4200000000000004&&velocity[1]!=-2.6400000000000006) {
+			this.openingCamelAnimation = 4;
+			return this.jumpingCamel.getSubimage(this.openingCamelAnimation*44,0,44,32);
+		} else if (inMotion) {
+			return this.walkingCamel.getSubimage(this.defaultCamelAnimation*44,0,44,32);
 		} else {
-			return this.idleCamel.getSubimage(this.camelAnimation*44,0,44,32);
+			return this.idleCamel.getSubimage(this.fallingCamelAnimation*44,0,44,32);
 		}
+	}
+	
+	public void resetJumpingAnimation() {
+		this.jumpingCamelAnimation = 0;
 	}
 	
 	public static boolean inSun() {
@@ -57,7 +105,6 @@ public class Player {
 	
 	public static void setCoordinates(int[] coordinates) {
 		Player.coordinates = coordinates;
-		System.out.println(coordinates[1]);
 	}
 	
 	public static int[] getCoordinates() {

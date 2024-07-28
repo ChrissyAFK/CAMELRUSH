@@ -33,7 +33,7 @@ public class Display extends JPanel {
 	Display(InputHandler input,Player player) throws Exception {
 		this.setPreferredSize(new Dimension(1280,700));
 		displaySize = new int[]{this.getWidth(),this.getHeight()};
-		Player.setCoordinates(new int[]{0,-305});
+		Player.setCoordinates(new int[]{0,displaySize[1]/2-308});
 		setLayout(null); //44x32
 		this.background = new Background();
 		
@@ -79,6 +79,7 @@ public class Display extends JPanel {
 			this.frameCount = 0;
 		}
 		if (this.input.wKeyPressed()&&!Player.getFallingStatus()) {
+			this.player.resetJumpingAnimation();
 			Player.setVelocityY(10);
 		}
 		if (this.input.aKeyPressed()) {
@@ -155,12 +156,14 @@ public class Display extends JPanel {
 		}
 		for (Projectile proj : projectiles) {
 				g.drawImage(proj.getSprite(), proj.getCoordinates()[0], proj.getCoordinates()[1], proj.getSize()[0], proj.getSize()[1], this);
-			}	
+			}
+		int[] camelDisplayAttributes = {};
 		if (Player.facingRight()) {
-			g.drawImage(this.player.getCurrentAnimation(),displaySize[0]/2-95,displaySize[1]/2-68,220,160,this);
+			camelDisplayAttributes = new int[]{displaySize[0]/2-95,displaySize[1]/2-68,220,160};
 		} else {
-			g.drawImage(this.player.getCurrentAnimation(),displaySize[0]/2+95,displaySize[1]/2-68,-220,160,this);
+			camelDisplayAttributes = new int[]{displaySize[0]/2+95,displaySize[1]/2-68,-220,160};
 		}
+		g.drawImage(this.player.getCurrentAnimation(),camelDisplayAttributes[0],camelDisplayAttributes[1],camelDisplayAttributes[2],camelDisplayAttributes[3],this);
 		// hitboxes
 		g.setColor(new Color(255,0,0,90));
 		if (Player.facingRight()) {
