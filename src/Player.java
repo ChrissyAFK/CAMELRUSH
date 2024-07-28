@@ -5,7 +5,7 @@ import java.io.IOException;
 import javax.swing.ImageIcon;
 
 public class Player {
-	private static int[] coordinates = {0,3};
+	private static int[] coordinates = {0,4};
 	private static boolean inSun = false;
 	private static boolean inMotion = false;
 	private static boolean falling = false;
