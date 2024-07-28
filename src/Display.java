@@ -4,7 +4,6 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.util.ArrayList;
-
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -48,7 +47,7 @@ public class Display extends JPanel {
 		
 		this.animateCamel = new Timer(1000/15,e->animate());
 		this.animateCamel.start();
-		this.scrollTimer = new Timer(1000/600,e->scroll());
+		this.scrollTimer = new Timer(1000/1000,e->scroll());
 		this.scrollTimer.start();
 		this.spitCooldown = new Timer(1000,e->spitCooldown.stop());
 		this.spitCooldown.start();
@@ -134,7 +133,7 @@ public class Display extends JPanel {
 		g.setColor(new Color(158,250,255));
 		g.fillRect(0,0,displaySize[0],displaySize[1]);
 		for (int i=0;i<(displaySize[0]/(256*5/2))+1;i++) {
-			g.drawImage(this.background.getBackground(),i*256*5-(Player.getCoordinates()[0]/4)%(256*5),(Player.getCoordinates()[1]/4)%(160*5),256*5,160*5,this);
+			g.drawImage(this.background.getBackground(),i*256*5-(Player.getCoordinates()[0]/4)%(256*5),(Player.getCoordinates()[1]*6/5)+250,256*5,160*5,this);
 		}
 		try {
 			this.tileList = this.tile.getViewingSlice();
