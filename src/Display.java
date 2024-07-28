@@ -3,7 +3,6 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.util.ArrayList;
-
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.Timer;
@@ -108,7 +107,7 @@ public class Display extends JPanel {
 	
 	public void paintComponent(Graphics g) {
 		g.clearRect(0,0,this.getWidth(),this.getHeight());
-		g.setColor(new Color(18, 192, 227));
+		g.setColor(new Color(158, 250, 255));
 		g.fillRect(0,0,600,600);
 		try {
 			this.tileList = this.tile.getViewingSlice();
