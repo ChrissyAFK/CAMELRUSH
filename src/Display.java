@@ -65,7 +65,7 @@ public class Display extends JPanel {
 			this.startTime = System.currentTimeMillis();
 			this.frameCount = 0;
 		}
-		boolean colliding = CollisionHandler.isColliding(this.tileList);
+		boolean collidingY = CollisionHandler.isColliding(this.tileList,"y");
 		if (this.input.wKeyPressed()&&!Player.getFallingStatus()) {
 			Player.setVelocityY(10);
 		}
@@ -83,11 +83,15 @@ public class Display extends JPanel {
 		} else {
 			Player.isNotMoving();
 		}
-		if (!colliding) {
-			Player.updateXCoordinates();
+		
+		if (!collidingY) {
 			Player.isFalling();
 		} else {
 			Player.isNotFalling();
+		}
+		
+		if (!CollisionHandler.isColliding(this.tileList)) {
+			Player.updateXCoordinates();
 		}
 		Player.updateYCoordinates();
 		Player.fall();
