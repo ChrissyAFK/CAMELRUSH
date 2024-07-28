@@ -156,7 +156,7 @@ public class Display extends JPanel {
 			g.fillRect(displaySize[0]/2-115,displaySize[1]/2-48,14*5,11*5);
 		}
 		// center line
-		g.setColor(new Color(0,0,0,90));
-		g.fillRect(this.getWidth()/2-1,0,2,this.getHeight());
+		//g.setColor(new Color(0,0,0,90));
+		//g.fillRect(this.getWidth()/2-1,0,2,this.getHeight());
 	}
 }
