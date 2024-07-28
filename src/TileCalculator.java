@@ -1,11 +1,9 @@
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
-import java.util.ArrayList;
 import java.io.BufferedReader;
 import java.io.FileReader;
-
-
+import java.util.ArrayList;
 import javax.swing.ImageIcon;
 
 public class TileCalculator {
@@ -15,7 +13,7 @@ public class TileCalculator {
 	
 	TileCalculator() {
 		//this.tile = toBufferedImage(new ImageIcon("CAMELRUSH/assets/player/sandtile.png").getImage());
-		this.sandTile = toBufferedImage(new ImageIcon("CAMELRUSH/assets/player/test_sand_tile.png").getImage());
+		this.sandTile = toBufferedImage(new ImageIcon("CAMELRUSH/assets/blocks/sand_tile (8x8).png").getImage());
 		this.waterTile = toBufferedImage(new ImageIcon("CAMELRUSH/assets/blocks/water_tile (8x8).png").getImage());
 	}
 	
