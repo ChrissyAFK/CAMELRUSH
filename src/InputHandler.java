@@ -64,50 +64,56 @@ public class InputHandler extends JPanel implements KeyListener {
 	@Override
 	// when a key is pressed, instance variable is set to true
 	public void keyPressed(KeyEvent e) {
-            switch (e.getKeyCode()) {
-                case KeyEvent.VK_W:
-                    this.wKeyPressed = true;
-                    break;
-                case KeyEvent.VK_A:
-                    this.aKeyPressed = true;
-                    break;
-                case KeyEvent.VK_S:
-                    this.sKeyPressed = true;
-                    break;
-                case KeyEvent.VK_D:
-                    this.dKeyPressed = true;
-                    break;
-                case KeyEvent.VK_SPACE:
-                    this.spaceKeyPressed = true;
-                    break;
-				case KeyEvent.VK_UP:
-                    this.upKeyPressed = true;
-                    break;
-				case KeyEvent.VK_DOWN:
-                    this.downKeyPressed = true;
-                    break;
-                default:
-                    break;
-            }
+		switch (e.getKeyCode()) {
+        	case KeyEvent.VK_W:
+            	this.wKeyPressed = true;
+                break;
+            case KeyEvent.VK_A:
+                this.aKeyPressed = true;
+                break;
+            case KeyEvent.VK_S:
+                this.sKeyPressed = true;
+                break;
+            case KeyEvent.VK_D:
+                this.dKeyPressed = true;
+                break;
+            case KeyEvent.VK_SPACE:
+                this.spaceKeyPressed = true;
+                break;
+			case KeyEvent.VK_UP:
+                this.upKeyPressed = true;
+                break;
+			case KeyEvent.VK_DOWN:
+                this.downKeyPressed = true;
+                break;
+        }
 	}
 
 	@Override
 	// when a key is released, instance variable is set to false
 	public void keyReleased(KeyEvent e) {
-		if (e.getKeyCode() == KeyEvent.VK_W) {
-			this.wKeyPressed = false;
-        } else if (e.getKeyCode() == KeyEvent.VK_A) {
-			this.aKeyPressed = false;
-        } else if (e.getKeyCode() == KeyEvent.VK_S) {
-			this.sKeyPressed = false;
-        } else if (e.getKeyCode() == KeyEvent.VK_D) {
-			this.dKeyPressed = false;
-        } else if (e.getKeyCode() == KeyEvent.VK_SPACE) {
-			this.spaceKeyPressed = false;
-        } else if (e.getKeyCode() == KeyEvent.VK_UP) {
-			this.upKeyPressed = false;
-        } else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
-			this.downKeyPressed = false;
+		switch (e.getKeyCode()) {
+    	case KeyEvent.VK_W:
+        	this.wKeyPressed = false;
+            break;
+        case KeyEvent.VK_A:
+            this.aKeyPressed = false;
+            break;
+        case KeyEvent.VK_S:
+            this.sKeyPressed = false;
+            break;
+        case KeyEvent.VK_D:
+            this.dKeyPressed = false;
+            break;
+        case KeyEvent.VK_SPACE:
+            this.spaceKeyPressed = false;
+            break;
+		case KeyEvent.VK_UP:
+            this.upKeyPressed = false;
+            break;
+		case KeyEvent.VK_DOWN:
+            this.downKeyPressed = false;
+            break;
         }
 	}
 	

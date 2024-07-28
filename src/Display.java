@@ -94,15 +94,16 @@ public class Display extends JPanel {
 			Player.isNotMoving();
 		}
 		
-		if (!CollisionHandler.isColliding(this.tileList,"Camel",Player.getCoordinates(),Player.getVelocity(),"y")) {
+		if (!CollisionHandler.isColliding(this.tileList,"Camel",Player.getCoordinates(),Player.getVelocity(),"S","y")) {
 			Player.isFalling();
 		} else {
 			Player.isNotFalling();
 		}
 		
-		if (!CollisionHandler.isColliding(this.tileList,"Camel",Player.getCoordinates(),Player.getVelocity(),"")) {
+		if (!CollisionHandler.isColliding(this.tileList,"Camel",Player.getCoordinates(),Player.getVelocity(),"S","")) {
 			Player.updateXCoordinates();
 		}
+		System.out.println("Player is colliding with water: "+CollisionHandler.isColliding(this.tileList,"Camel",Player.getCoordinates(),Player.getVelocity(),"W",""));
 		Player.updateYCoordinates();
 		Player.fall();
 		if (this.input.spaceKeyPressed() && (!spitCooldown.isRunning())) {
