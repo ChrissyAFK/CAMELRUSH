@@ -64,7 +64,6 @@ public class Display extends JPanel {
 			this.startTime = System.currentTimeMillis();
 			this.frameCount = 0;
 		}
-		boolean collidingY = CollisionHandler.isColliding(this.tileList,"y");
 		if (this.input.wKeyPressed()&&!Player.getFallingStatus()) {
 			Player.setVelocityY(10);
 		}
@@ -83,7 +82,7 @@ public class Display extends JPanel {
 			Player.isNotMoving();
 		}
 		
-		if (!collidingY) {
+		if (!CollisionHandler.isColliding(this.tileList,"y")) {
 			Player.isFalling();
 		} else {
 			Player.isNotFalling();

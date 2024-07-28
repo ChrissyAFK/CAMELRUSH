@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 
 public class CollisionHandler {
-	private static final int[][] camelFacingRight = {{270,270,18*5-3,26*5},{240+28*5,260,10*5,11*5}};//{{190+5*10,270,18*5,0},{190+5*10+17*5,260,14*5,11*5}};//{{275,270,14*5,26*5},{240+28*5,260,14*5,11*5}};//{{235,270,18*5,26*5},{240+17*5,260,14*5,11*5}}
+	private static final int[][] camelFacingRight = {{235,260,18*5-3,28*5},{200+29*5-2,265,10*5,10*5}};//{{190+5*10,270,18*5,0},{190+5*10+17*5,260,14*5,11*5}};//{{275,270,14*5,26*5},{240+28*5,260,14*5,11*5}};//{{235,270,18*5,26*5},{240+17*5,260,14*5,11*5}}
 	//private static final int[][] camelFacingRight = {{190,240,220,160}};
 	public static boolean willCollide(int[] tileCoordinates,int[] entityCoordinates,String entityType,int[] direction,String axis) {
 		if (entityType.equals("Camel")) {
@@ -12,15 +12,15 @@ public class CollisionHandler {
 				updatedTileCoordinates = new int[]{tileCoordinates[0]-direction[0],tileCoordinates[1]+direction[1]};
 			}
 			for (int[] hitbox:camelFacingRight) {
-				if (hitbox[0]+hitbox[2]>updatedTileCoordinates[0]+35&&
-						hitbox[0]<updatedTileCoordinates[0]+85&&
+				if (hitbox[0]+hitbox[2]>updatedTileCoordinates[0]&&
+						hitbox[0]<updatedTileCoordinates[0]+50&&
 						hitbox[1]+hitbox[3]>updatedTileCoordinates[1]&&
 						hitbox[1]<updatedTileCoordinates[1]+50) {
 					return true;
 			}
 		}
 		} else {
-			System.out.println("Error: Unknown untity type");
+			System.out.println("Error: Unknown entity type");
 		}
 		return false;
 	}
