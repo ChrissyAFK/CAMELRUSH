@@ -12,6 +12,7 @@ public class Player {
 	private static int gravity = 2;
 	private static double[] velocity = {0,0};
 	private static boolean facingRight = true;
+	private static int headtilt = 0;
 	private int camelAnimation = 0;
 	private BufferedImage idleCamel;
 	private BufferedImage walkingCamel;
@@ -53,6 +54,14 @@ public class Player {
 	
 	public static void isFacingLeft() {
 		facingRight = false;
+	}
+
+	public static int headtilt() {
+		return headtilt;
+	}
+
+	public static void headtiltChange(int change) {
+		headtilt = change;
 	}
 	
 	public static void setCoordinates(int[] coordinates) {

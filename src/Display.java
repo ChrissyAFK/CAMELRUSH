@@ -48,7 +48,7 @@ public class Display extends JPanel {
 		
 		this.animateCamel = new Timer(1000/15,e->animate());
 		this.animateCamel.start();
-		this.scrollTimer = new Timer(1000/600,e->scroll());
+		this.scrollTimer = new Timer(1,e->scroll());
 		this.scrollTimer.start();
 		this.spitCooldown = new Timer(1000,e->spitCooldown.stop());
 		this.spitCooldown.start();
@@ -92,6 +92,15 @@ public class Display extends JPanel {
 		if (!this.input.aKeyPressed()&&!this.input.dKeyPressed()) {
 			Player.setVelocityX(0);
 		}
+		if (this.input.upKeyPressed()) {
+			Player.headtiltChange(-1);
+		}
+		if (this.input.downKeyPressed()) {
+			Player.headtiltChange(1);
+		}
+		if (!this.input.upKeyPressed()&&!this.input.downKeyPressed()) {
+			Player.headtiltChange(0);
+		}
 		if (this.input.eKeyPressed()) {
 			water_meter.drink();
 		}
@@ -114,7 +123,7 @@ public class Display extends JPanel {
 		Player.updateYCoordinates();
 		Player.fall();
 		if (this.input.spaceKeyPressed() && (this.water_meter.getAmount()>=20.0) && (!this.spitCooldown.isRunning())) {
-			this.projectiles.add(new Projectile((new int[]{displaySize[0]/2+100,displaySize[1]/2-35}),3000,1.0,1,1,"spit_ball (5x5).png",(new int[]{20,20})));
+			this.projectiles.add(new Projectile((new int[]{displaySize[0]/2+100,displaySize[1]/2-35}),3000,1.0,1,Player.headtilt(),"spit_ball (5x5).png",(new int[]{20,20})));
 			this.spitCooldown = new Timer((1000),e->spitCooldown.stop());
 			this.spitCooldown.start();
 			this.water_meter.setAmount(this.water_meter.getAmount()-20);
