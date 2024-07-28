@@ -6,7 +6,7 @@ import javax.swing.ImageIcon;
 
 public class Player {
 	private static int[] coordinates = {0,0};
-	private static boolean inSun = false;
+	private static boolean inSun = true;
 	private static boolean inMotion = false;
 	private static boolean falling = false;
 	private static int gravity = 2;

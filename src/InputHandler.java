@@ -8,6 +8,7 @@ public class InputHandler extends JPanel implements KeyListener {
 	private boolean aKeyPressed = false;
 	private boolean sKeyPressed = false;
 	private boolean dKeyPressed = false;
+	private boolean eKeyPressed = false;
 	private boolean spaceKeyPressed = false;
 	private boolean upKeyPressed = false;
 	private boolean downKeyPressed = false;
@@ -36,6 +37,11 @@ public class InputHandler extends JPanel implements KeyListener {
 	// returns if d is pressed
 	public boolean dKeyPressed() {
 		return this.dKeyPressed;
+	}
+
+	// returns if e is pressed
+	public boolean eKeyPressed() {
+		return this.eKeyPressed;
 	}
 
 	// return if space is pressed
@@ -77,6 +83,9 @@ public class InputHandler extends JPanel implements KeyListener {
             case KeyEvent.VK_D:
                 this.dKeyPressed = true;
                 break;
+			case KeyEvent.VK_E:
+                this.eKeyPressed = true;
+                break;
             case KeyEvent.VK_SPACE:
                 this.spaceKeyPressed = true;
                 break;
@@ -104,6 +113,9 @@ public class InputHandler extends JPanel implements KeyListener {
             break;
         case KeyEvent.VK_D:
             this.dKeyPressed = false;
+            break;
+		case KeyEvent.VK_E:
+            this.eKeyPressed = false;
             break;
         case KeyEvent.VK_SPACE:
             this.spaceKeyPressed = false;

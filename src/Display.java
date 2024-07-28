@@ -27,6 +27,8 @@ public class Display extends JPanel {
 	private JLabel fpsCounter;
 	private ArrayList<Projectile> projectiles;
 	private ArrayList<String[]> tileList = new ArrayList<>();
+	private WaterMeter water_meter;
+	private OverheatMeter heat_meter;
 	
 	Display(InputHandler input,Player player) throws Exception {
 		this.setPreferredSize(new Dimension(1280,700));
@@ -53,6 +55,8 @@ public class Display extends JPanel {
 		this.input = input;
 		this.player = player;
 		this.projectiles = new ArrayList<>();
+		this.water_meter = new WaterMeter(); 
+		this.heat_meter = new OverheatMeter(); 
 	}
 	
 	private void animate() {
@@ -88,6 +92,9 @@ public class Display extends JPanel {
 		if (!this.input.aKeyPressed()&&!this.input.dKeyPressed()) {
 			Player.setVelocityX(0);
 		}
+		if (this.input.eKeyPressed()) {
+			water_meter.drink();
+		}
 		if (this.input.inMotion()) {
 			Player.isMoving();
 		} else {
@@ -103,13 +110,14 @@ public class Display extends JPanel {
 		if (!CollisionHandler.isColliding(this.tileList,"Camel",Player.getCoordinates(),Player.getVelocity(),"S","")) {
 			Player.updateXCoordinates();
 		}
-		System.out.println("Player is colliding with water: "+CollisionHandler.isColliding(this.tileList,"Camel",Player.getCoordinates(),Player.getVelocity(),"W",""));
+		//System.out.println("Player is colliding with water: "+CollisionHandler.isColliding(this.tileList,"Camel",Player.getCoordinates(),Player.getVelocity(),"W",""));
 		Player.updateYCoordinates();
 		Player.fall();
-		if (this.input.spaceKeyPressed() && (!spitCooldown.isRunning())) {
+		if (this.input.spaceKeyPressed() && (this.water_meter.getAmount()>=20.0) && (!this.spitCooldown.isRunning())) {
 			this.projectiles.add(new Projectile((new int[]{displaySize[0]/2+100,displaySize[1]/2-35}),3000,1.0,1,1,"spit_ball (5x5).png",(new int[]{20,20})));
 			this.spitCooldown = new Timer((1000),e->spitCooldown.stop());
 			this.spitCooldown.start();
+			this.water_meter.setAmount(this.water_meter.getAmount()-20);
 		}
 		for (int i = 0; i<projectiles.size(); i++) {
 			projectiles.get(i).move();
