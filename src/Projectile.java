@@ -27,8 +27,8 @@ public class Projectile{
     }
     public static void moveFromWorld(ArrayList<Projectile> projectiles){
         for (Projectile proj : projectiles) {
-            proj.coordinates[0] -= Player.getVelocityX();
-            proj.coordinates[1] -= Player.getVelocityY();
+            proj.coordinates[0] -= Player.getVelocity()[0];
+            proj.coordinates[1] -= Player.getVelocity()[1];
         }
     }
     public Image getSprite(){

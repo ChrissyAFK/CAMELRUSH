@@ -10,8 +10,7 @@ public class Player {
 	private static boolean inMotion = false;
 	private static boolean falling = false;
 	private static int gravity = 2;
-	private static double velocityY = 0;
-	private static double velocityX = 0;
+	private static double[] velocity = {0,0};
 	private static boolean facingRight = true;
 	private int camelAnimation = 0;
 	private BufferedImage idleCamel;
@@ -65,20 +64,16 @@ public class Player {
 		return coordinates;
 	}
 	
-	public static double getVelocityY() {
-		return velocityY;
-	}
-	
-	public static double getVelocityX() {
-		return velocityX;
+	public static double[] getVelocity() {
+		return velocity;
 	}
 	
 	public static void setVelocityX(double velocity) {
-		velocityX = velocity;
+		Player.velocity[0] = velocity;
 	}
 	
 	public static void setVelocityY(double velocity) {
-		velocityY = velocity;
+		Player.velocity[1] = velocity;
 	}
 	
 	public static void setYCoordinate(int y) {
@@ -87,12 +82,12 @@ public class Player {
 	
 	public static void updateYCoordinates() {
 		if (falling) {
-			coordinates[1]+=(int)(velocityY);
+			coordinates[1]+=(int)(velocity[1]);
 		}
 	}
 	
 	public static void updateXCoordinates() {
-		coordinates[0]+=(int)(velocityX);
+		coordinates[0]+=(int)(velocity[0]);
 	}
 	
 	public static void isMoving() {
@@ -128,10 +123,10 @@ public class Player {
 
 	public static void fall() {
 		if (falling){
-			velocityY-=0.22;
+			velocity[1]-=0.22;
 		}
 		else{
-			velocityY = 0;
+			velocity[1] = 0;
 		}
 	}
 }

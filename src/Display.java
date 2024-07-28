@@ -94,13 +94,13 @@ public class Display extends JPanel {
 			Player.isNotMoving();
 		}
 		
-		if (!CollisionHandler.isColliding(this.tileList,"y")) {
+		if (!CollisionHandler.isColliding(this.tileList,"Camel",Player.getCoordinates(),Player.getVelocity(),"y")) {
 			Player.isFalling();
 		} else {
 			Player.isNotFalling();
 		}
 		
-		if (!CollisionHandler.isColliding(this.tileList,"")) {
+		if (!CollisionHandler.isColliding(this.tileList,"Camel",Player.getCoordinates(),Player.getVelocity(),"")) {
 			Player.updateXCoordinates();
 		}
 		Player.updateYCoordinates();
