@@ -32,7 +32,7 @@ public class Display extends JPanel {
 	Display(InputHandler input,Player player) throws Exception {
 		this.setPreferredSize(new Dimension(1280,700));
 		displaySize = new int[]{this.getWidth(),this.getHeight()};
-		Player.setCoordinates(new int[]{0,displaySize[1]/2-308});
+		Player.setCoordinates(new int[]{0,displaySize[1]/2-300});
 		setLayout(null); //44x32
 		this.background = new Background();
 		
