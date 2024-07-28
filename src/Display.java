@@ -131,8 +131,8 @@ public class Display extends JPanel {
 			g.drawImage(proj.getSprite(), proj.getCoordinates()[0], proj.getCoordinates()[1], proj.getSize()[0], proj.getSize()[1], this);
 		}	
 		//hitboxes
-		/*g.setColor(new Color(255,0,0,90));
-		g.fillRect(235,270,18*5,26*5);
-		g.fillRect(240+28*5,260,14*5,11*5);*/
+		g.setColor(new Color(255,0,0,90));
+		g.fillRect(200+25*5-2,260,14*5,11*5);
+		g.fillRect(235,270,18*5-3,26*5);
 	}
 }
