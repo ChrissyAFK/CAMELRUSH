@@ -63,6 +63,8 @@ public class Display extends JPanel {
 		this.currentLevel = 0;
 		this.tileList = this.tile.getViewingSlice(levels.get(currentLevel));
 		//this.levelSwitchCooldown = new Timer(1000, e->this.levelSwitchCooldown.stop());
+		this.waterMeter = new WaterMeter(); 
+		this.heatMeter = new OverheatMeter();
 		this.animateCamel = new Timer(1000/15,e->animate());
 		this.animateCamel.start();
 		this.scrollTimer = new Timer(1000/500,e->scroll());
@@ -72,8 +74,7 @@ public class Display extends JPanel {
 		this.input = input;
 		this.player = player;
 		this.projectiles = new ArrayList<>();
-		this.waterMeter = new WaterMeter(); 
-		this.heatMeter = new OverheatMeter();
+		
 	}
 	
 	private void animate() {
