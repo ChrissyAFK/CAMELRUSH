@@ -9,12 +9,19 @@ import javax.swing.ImageIcon;
 public class TileCalculator {
 	private BufferedImage sandTile;
 	private BufferedImage waterTile;
+	
+	private BufferedImage baseOfPalm;
+	private BufferedImage trunkOfPalm;
+	private BufferedImage headOfPalm;
 	private int animationFrame = 0;
 	
 	TileCalculator() {
-		//this.tile = toBufferedImage(new ImageIcon("CAMELRUSH/assets/player/sandtile.png").getImage());
 		this.sandTile = Display.toBufferedImage(new ImageIcon("CAMELRUSH/assets/blocks/sand_tile (8x8).png").getImage());
 		this.waterTile = Display.toBufferedImage(new ImageIcon("CAMELRUSH/assets/blocks/water_tile (8x8).png").getImage());
+		
+		this.baseOfPalm = Display.toBufferedImage(new ImageIcon("CAMELRUSH/assets/blocks/palm_base (32x16).png").getImage());
+		this.trunkOfPalm = Display.toBufferedImage(new ImageIcon("CAMELRUSH/assets/blocks/palm_trunk (32x8).png").getImage());
+		this.headOfPalm = Display.toBufferedImage(new ImageIcon("CAMELRUSH/assets/blocks/palm_head (32x20).png").getImage());
 	}
 	
 	public void changeAnimationFrame() {
@@ -31,6 +38,18 @@ public class TileCalculator {
 	
 	public BufferedImage getWaterTile() {
 		return this.waterTile.getSubimage(animationFrame*8,0,8,8);
+	}
+	
+	public BufferedImage getPalmBase() {
+		return this.baseOfPalm;
+	}
+	
+	public BufferedImage getPalmTrunk() {
+		return this.trunkOfPalm;
+	}
+	
+	public BufferedImage getPalmHead() {
+		return this.headOfPalm;
 	}
 	
 	public ArrayList<String[]> getViewingSlice(String level) throws Exception {

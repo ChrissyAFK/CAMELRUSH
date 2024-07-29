@@ -206,6 +206,12 @@ public class Display extends JPanel {
 						g.drawImage(this.tile.getSandTile(),displaySize[0]/2+i*50-Player.getCoordinates()[0],displaySize[1]/2+j*50-150+Player.getCoordinates()[1],50,50,this);
 					} else if (this.tileList.get(i)[j].equals("W")) {
 						g.drawImage(this.tile.getWaterTile(),displaySize[0]/2+i*50-Player.getCoordinates()[0],displaySize[1]/2+j*50-150+Player.getCoordinates()[1],50,50,this);
+					} else if (this.tileList.get(i)[j].equals("B")) {
+						g.drawImage(this.tile.getPalmBase(),displaySize[0]/2+i*50-Player.getCoordinates()[0],displaySize[1]/2+j*50-150+Player.getCoordinates()[1],50*4,50,this);
+					} else if (this.tileList.get(i)[j].equals("T")) {
+						g.drawImage(this.tile.getPalmTrunk(),displaySize[0]/2+i*50-Player.getCoordinates()[0],displaySize[1]/2+j*50-150+Player.getCoordinates()[1],50*4,50,this);
+					} else if (this.tileList.get(i)[j].equals("H")) {
+						g.drawImage(this.tile.getPalmHead(),displaySize[0]/2+i*50-Player.getCoordinates()[0],displaySize[1]/2+j*50-150+Player.getCoordinates()[1],50*4,50,this);
 					}
 				}
 			}
