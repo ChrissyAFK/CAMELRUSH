@@ -63,8 +63,6 @@ public class Display extends JPanel {
 		this.currentLevel = 0;
 		this.tileList = this.tile.getViewingSlice(levels.get(currentLevel));
 		//this.levelSwitchCooldown = new Timer(1000, e->this.levelSwitchCooldown.stop());
-		this.waterMeter = new WaterMeter(); 
-		this.heatMeter = new OverheatMeter();
 		this.animateCamel = new Timer(1000/15,e->animate());
 		this.animateCamel.start();
 		this.scrollTimer = new Timer(1000/500,e->scroll());
@@ -74,7 +72,8 @@ public class Display extends JPanel {
 		this.input = input;
 		this.player = player;
 		this.projectiles = new ArrayList<>();
-		
+		this.waterMeter = new WaterMeter(); 
+		this.heatMeter = new OverheatMeter();
 	}
 	
 	private void animate() {
@@ -231,7 +230,7 @@ public class Display extends JPanel {
 		for (int j=0;j<this.tileList.get(0).length;j++) {
 			for (int i=0;i<this.tileList.size();i++) {
 				if (i<Player.getCoordinates()[0]/50+displaySize[0]/50 && i>Player.getCoordinates()[0]/50-displaySize[0]/50){//render distance
-					if (this.tileList.get(i)[j].equals("Z")) {
+					if (this.tileList.get(i)[j].equals("Z")||this.tileList.get(i)[j].equals("B")||this.tileList.get(i)[j].equals("T")) {
 						g.setColor(new Color(0,0,0,50));
 						g.fillRect(displaySize[0]/2+i*50-Player.getCoordinates()[0],displaySize[1]/2+j*50-150+Player.getCoordinates()[1],50,50);
 					}
