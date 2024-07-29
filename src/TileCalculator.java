@@ -33,8 +33,8 @@ public class TileCalculator {
 		return this.waterTile.getSubimage(animationFrame*8,0,8,8);
 	}
 	
-	public ArrayList<String[]> getViewingSlice() throws Exception {
-		return generateRoom("CAMELRUSH/levels/ftest_level.txt");
+	public ArrayList<String[]> getViewingSlice(String level) throws Exception {
+		return generateRoom("CAMELRUSH/levels/"+level);
 	}
 	
 	public int getOffset() {

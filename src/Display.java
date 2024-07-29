@@ -6,14 +6,20 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Collections;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
+
 public class Display extends JPanel {
 	public static int[] displaySize;
 	private Background background;
+	private List<String> levels;
+	private int currentLevel;
+	//private Timer levelSwitchCooldown;
 	private Timer animateCamel;
 	private Timer scrollTimer;
 	private Timer spitCooldown;
@@ -48,8 +54,15 @@ public class Display extends JPanel {
 		this.fpsCounter.setBounds(10,10,120,20);
 		this.add(fpsCounter);
 		this.tile = new TileCalculator();
-		this.tileList = this.tile.getViewingSlice();
-		
+		this.levels = new ArrayList<>();
+		levels.add("flevel01.txt");
+		levels.add("flevel02.txt");
+		levels.add("flevel03.txt");
+		Collections.shuffle(this.levels);
+		levels.add("flevel0b.txt");
+		this.currentLevel = 0;
+		this.tileList = this.tile.getViewingSlice(levels.get(currentLevel));
+		//this.levelSwitchCooldown = new Timer(1000, e->this.levelSwitchCooldown.stop());
 		this.animateCamel = new Timer(1000/15,e->animate());
 		this.animateCamel.start();
 		this.scrollTimer = new Timer(1000/500,e->scroll());
@@ -162,6 +175,13 @@ public class Display extends JPanel {
 		}
 		this.waterMeter.updateWaterMeter();
 		this.heatMeter.updateHeatMeter();
+		if (CollisionHandler.isColliding(this.tileList,"Camel",Player.getCoordinates(),Player.getVelocity(),"X","")/*&&!this.levelSwitchCooldown.isRunning()*/){
+			Player.setCoordinates(new int[]{0,displaySize[1]/2-300});
+			this.currentLevel++;
+			if (this.currentLevel==levels.size()){
+				currentLevel = 0;
+			}
+		}
 		repaint();
 	}
 	
@@ -172,10 +192,12 @@ public class Display extends JPanel {
 		for (int i=0;i<(displaySize[0]/(256*5/2))+1;i++) {
 			g.drawImage(this.background.getBackground(),i*256*5-(Player.getCoordinates()[0]/4)%(256*5),(Player.getCoordinates()[1]*6/5)+250,256*5,160*5,this);
 		}
+		
 		try {
-			this.tileList = this.tile.getViewingSlice();
+			this.tileList = this.tile.getViewingSlice(levels.get(currentLevel));
 		} catch (Exception e) {
 			e.printStackTrace();
+			System.out.println("Error");
 		}
 		for (int j=0;j<this.tileList.get(0).length;j++) {
 			for (int i=0;i<this.tileList.size();i++) {
