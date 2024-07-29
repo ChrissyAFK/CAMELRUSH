@@ -43,7 +43,8 @@ public class Display extends JPanel {
 		this.setPreferredSize(new Dimension(1280,700));
 		displaySize = new int[]{this.getWidth(),this.getHeight()};
 		//Player.setCoordinates(new int[]{0,displaySize[1]/2-250});
-		Player.setCoordinates(new int[]{0,displaySize[1]/250});
+		//Player.setCoordinates(new int[]{0,displaySize[1]/250});
+		Player.setCoordinates(new int[]{0,-300});
 		setLayout(null); //44x32
 		this.background = new Background();
 		
@@ -53,15 +54,18 @@ public class Display extends JPanel {
 		this.fpsCounter.setFont(new Font("Dialog",Font.BOLD,20));
 		this.fpsCounter.setBounds(10,10,120,20);
 		this.add(fpsCounter);
+		this.player = player;
 		this.tile = new TileCalculator();
 		this.levels = new ArrayList<>();
 		levels.add("flevel01.txt");
 		levels.add("flevel02.txt");
 		levels.add("flevel03.txt");
-		Collections.shuffle(this.levels);
+		//Collections.shuffle(this.levels);
 		levels.add("flevel0b.txt");
 		this.currentLevel = 0;
 		this.tileList = this.tile.getViewingSlice(levels.get(currentLevel));
+		this.waterMeter = new WaterMeter(); 
+		this.heatMeter = new OverheatMeter();
 		//this.levelSwitchCooldown = new Timer(1000, e->this.levelSwitchCooldown.stop());
 		this.animateCamel = new Timer(1000/15,e->animate());
 		this.animateCamel.start();
@@ -70,10 +74,7 @@ public class Display extends JPanel {
 		this.spitCooldown = new Timer(1000,e->spitCooldown.stop());
 		this.spitCooldown.start();
 		this.input = input;
-		this.player = player;
 		this.projectiles = new ArrayList<>();
-		this.waterMeter = new WaterMeter(); 
-		this.heatMeter = new OverheatMeter();
 	}
 	
 	private void animate() {
@@ -157,8 +158,7 @@ public class Display extends JPanel {
 				CollisionHandler.isColliding(this.tileList,"Camel Body",Player.getCoordinates(),Player.getVelocity(),"B","")||
 				CollisionHandler.isColliding(this.tileList,"Camel Body",Player.getCoordinates(),Player.getVelocity(),"T","")){
 			Player.cooling();
-		}
-		else{
+		} else {
 			Player.heating();
 		}
 		Player.updateYCoordinates();
@@ -213,12 +213,15 @@ public class Display extends JPanel {
 					} else if (this.tileList.get(i)[j].equals("T")) {
 						g.drawImage(this.tile.getPalmTrunk(),displaySize[0]/2+i*50-Player.getCoordinates()[0],displaySize[1]/2+j*50-150+Player.getCoordinates()[1],50*4,50,this);
 					} else if (this.tileList.get(i)[j].equals("H")) {
-						g.drawImage(this.tile.getPalmHead(),displaySize[0]/2+i*50-Player.getCoordinates()[0],displaySize[1]/2+j*50-150+Player.getCoordinates()[1],50*4,50,this);
+						g.drawImage(this.tile.getPalmHead(),displaySize[0]/2+i*50-Player.getCoordinates()[0],displaySize[1]/2+j*50-210+Player.getCoordinates()[1],50*4,110,this);
+					} else if (this.tileList.get(i)[j].equals("X")) {
+						g.setColor(new Color(255,0,0,90));
+						g.fillRect(displaySize[0]/2+i*50-Player.getCoordinates()[0],displaySize[1]/2+j*50-150+Player.getCoordinates()[1],50,50);
 					}
 				}
 			}
 		}
-		for (Projectile proj : projectiles) {
+		for (Projectile proj : this.projectiles) {
 			g.drawImage(proj.getSprite(), proj.getCoordinates()[0], proj.getCoordinates()[1], proj.getSize()[0], proj.getSize()[1], this);
 		}
 		if (Player.facingRight()) {
@@ -227,15 +230,15 @@ public class Display extends JPanel {
 			g.drawImage(this.player.getCurrentAnimation(),displaySize[0]/2+95,displaySize[1]/2-68,-220,160,this);
 		}
 		// hitboxes
-		g.setColor(new Color(255,0,0,90));
+		/*g.setColor(new Color(255,0,0,90));
 		if (Player.facingRight()) {
 			g.fillRect(displaySize[0]/2-45,displaySize[1]/2-38,18*5,26*5);
 			g.fillRect(displaySize[0]/2+45,displaySize[1]/2-48,14*5,11*5);
 		} else {
 			g.fillRect(displaySize[0]/2-45,displaySize[1]/2-38,18*5,26*5);
 			g.fillRect(displaySize[0]/2-115,displaySize[1]/2-48,14*5,11*5);
-		}
-		for (int j=0;j<this.tileList.get(0).length;j++) {
+		}*/
+		/*for (int j=0;j<this.tileList.get(0).length;j++) {
 			for (int i=0;i<this.tileList.size();i++) {
 				if (i<Player.getCoordinates()[0]/50+displaySize[0]/50 && i>Player.getCoordinates()[0]/50-displaySize[0]/50){//render distance
 					if (this.tileList.get(i)[j].equals("Z")||this.tileList.get(i)[j].equals("B")||this.tileList.get(i)[j].equals("T")) {
@@ -244,7 +247,7 @@ public class Display extends JPanel {
 					}
 				}
 			}
-		}
+		}*/
 		g.drawImage(this.waterMeter.getWaterMeter(),13,40,12*5/2,32*5/2,this);
 		g.drawImage(this.heatMeter.getHeatMeter(),56,40,12*5/2,32*5/2,this);
 		// center line
