@@ -86,11 +86,11 @@ class OverheatMeter{ //obj name: heat
     }
     private void heatRise(float amount){
         if (Player.inSun()){
-            this.setAmount(this.getAmount()+amount);
+            this.setAmount(this.getAmount()+amount<getMax()?this.getAmount()+amount:getMax());
             //System.out.println("heat: "+this.getPercentFilled()); // debugging
         }
         else{
-            this.setAmount(this.getAmount()-amount);
+            this.setAmount(this.getAmount()-amount>0?this.getAmount()-amount:0);
             //System.out.println("heat: "+this.getPercentFilled()); // debugging
         }
         if (this.getAmount() >= getMax()){
