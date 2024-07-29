@@ -12,6 +12,7 @@ public class InputHandler extends JPanel implements KeyListener {
 	private boolean spaceKeyPressed = false;
 	private boolean upKeyPressed = false;
 	private boolean downKeyPressed = false;
+	private boolean shiftKeyPressed = false;
 	
 	// to ensure the class can get key input
 	InputHandler() {
@@ -58,6 +59,12 @@ public class InputHandler extends JPanel implements KeyListener {
 	public boolean downKeyPressed() {
 		return this.downKeyPressed;
 	}
+	public boolean shiftKeyPressed(){
+		return this.shiftKeyPressed;
+	}
+	public boolean shiftKeyReleased(){
+		return !this.shiftKeyPressed;
+	}
 	
 	// return if the player is moving
 	public boolean inMotion() {
@@ -71,30 +78,15 @@ public class InputHandler extends JPanel implements KeyListener {
 	// when a key is pressed, instance variable is set to true
 	public void keyPressed(KeyEvent e) {
 		switch (e.getKeyCode()) {
-        	case KeyEvent.VK_W:
-            	this.wKeyPressed = true;
-                break;
-            case KeyEvent.VK_A:
-                this.aKeyPressed = true;
-                break;
-            case KeyEvent.VK_S:
-                this.sKeyPressed = true;
-                break;
-            case KeyEvent.VK_D:
-                this.dKeyPressed = true;
-                break;
-			case KeyEvent.VK_E:
-                this.eKeyPressed = true;
-                break;
-            case KeyEvent.VK_SPACE:
-                this.spaceKeyPressed = true;
-                break;
-			case KeyEvent.VK_UP:
-                this.upKeyPressed = true;
-                break;
-			case KeyEvent.VK_DOWN:
-                this.downKeyPressed = true;
-                break;
+        	case KeyEvent.VK_W -> this.wKeyPressed = true;
+            case KeyEvent.VK_A -> this.aKeyPressed = true;
+            case KeyEvent.VK_S -> this.sKeyPressed = true;
+            case KeyEvent.VK_D -> this.dKeyPressed = true;
+			case KeyEvent.VK_E -> this.eKeyPressed = true;
+            case KeyEvent.VK_SPACE -> this.spaceKeyPressed = true;
+			case KeyEvent.VK_UP -> this.upKeyPressed = true;
+			case KeyEvent.VK_DOWN -> this.downKeyPressed = true;
+			case KeyEvent.VK_SHIFT -> this.shiftKeyPressed = true;
         }
 	}
 
@@ -102,31 +94,15 @@ public class InputHandler extends JPanel implements KeyListener {
 	// when a key is released, instance variable is set to false
 	public void keyReleased(KeyEvent e) {
 		switch (e.getKeyCode()) {
-    	case KeyEvent.VK_W:
-        	this.wKeyPressed = false;
-            break;
-        case KeyEvent.VK_A:
-            this.aKeyPressed = false;
-            break;
-        case KeyEvent.VK_S:
-            this.sKeyPressed = false;
-            break;
-        case KeyEvent.VK_D:
-            this.dKeyPressed = false;
-            break;
-		case KeyEvent.VK_E:
-            this.eKeyPressed = false;
-            break;
-        case KeyEvent.VK_SPACE:
-            this.spaceKeyPressed = false;
-            break;
-		case KeyEvent.VK_UP:
-            this.upKeyPressed = false;
-            break;
-		case KeyEvent.VK_DOWN:
-            this.downKeyPressed = false;
-            break;
+    	case KeyEvent.VK_W -> this.wKeyPressed = false;
+        case KeyEvent.VK_A -> this.aKeyPressed = false;
+        case KeyEvent.VK_S -> this.sKeyPressed = false;
+        case KeyEvent.VK_D -> this.dKeyPressed = false;
+		case KeyEvent.VK_E -> this.eKeyPressed = false;
+        case KeyEvent.VK_SPACE -> this.spaceKeyPressed = false;
+		case KeyEvent.VK_UP -> this.upKeyPressed = false;
+		case KeyEvent.VK_DOWN -> this.downKeyPressed = false;
+		case KeyEvent.VK_SHIFT -> this.shiftKeyPressed = false;
         }
 	}
-	
 }

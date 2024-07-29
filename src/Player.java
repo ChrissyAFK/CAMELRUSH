@@ -28,6 +28,9 @@ public class Player {
 	private int inDrinkingAnimation = 0;
 	private int endDrinkingAnimation = 0;
 	
+	private boolean dashingInProgress;
+	private int dashingCamelAnimation = 0;
+	
 	private BufferedImage idleCamel;
 	private BufferedImage walkingCamel;
 	
@@ -38,6 +41,8 @@ public class Player {
 	private BufferedImage startDrinkingCamel;
 	private BufferedImage inDrinkingCamel;
 	private BufferedImage endDrinkingCamel;
+	
+	private BufferedImage dashingCamel;
 	
 	Player() throws IOException {
 		this.idleCamel = Display.toBufferedImage(new ImageIcon("CAMELRUSH/assets/player/camel_idle_animation (44x32).png").getImage());
@@ -50,6 +55,8 @@ public class Player {
 		this.startDrinkingCamel = Display.toBufferedImage(new ImageIcon("CAMELRUSH/assets/player/camel_start_drinking (44x32).png").getImage());
 		this.inDrinkingCamel = Display.toBufferedImage(new ImageIcon("CAMELRUSH/assets/player/camel_in_drinking (44x32).png").getImage());
 		this.endDrinkingCamel = Display.toBufferedImage(new ImageIcon("CAMELRUSH/assets/player/camel_end_drinking (44x32).png").getImage());
+		
+		this.dashingCamel = Display.toBufferedImage(new ImageIcon("CAMELRUSH/assets/player/camel_dash_animation (44x32).png").getImage());
 	}
 	
 	public void changeCamelAnimation() {
@@ -92,10 +99,18 @@ public class Player {
 		if (!(this.endDrinkingAnimation==13)) {
 			this.endDrinkingAnimation++;
 		}
+		
+		if (this.dashingCamelAnimation==14) {
+			this.dashingInProgress = false;
+		} else {
+			this.dashingCamelAnimation++;
+		}
 	}
 	
 	public BufferedImage getCurrentAnimation() {
-		if (startDrinkingInProgress) {
+		if (this.dashingInProgress) {
+			return this.dashingCamel.getSubimage(this.dashingCamelAnimation*44,0,44,32);
+		} else if (startDrinkingInProgress) {
 			return this.startDrinkingCamel.getSubimage(this.startDrinkingAnimation*44,0,44,32);
 		} else if (drinkingInProgress) {
 			return this.inDrinkingCamel.getSubimage(this.inDrinkingAnimation*44,0,44,32);
@@ -123,6 +138,13 @@ public class Player {
 		} else {
 			return this.idleCamel.getSubimage(this.defaultCamelAnimation*44,0,44,32);
 		}
+	}
+	
+	public void startDashingAnimation() {
+		if (!this.dashingInProgress) {
+			this.dashingCamelAnimation = 0;
+		}
+		this.dashingInProgress = true;
 	}
 	
 	public void isDrinking() {
@@ -157,6 +179,10 @@ public class Player {
 	
 	public static boolean drinking() {
 		return Player.drinkingInProgress;
+	}
+	
+	public boolean inDrinkingInProgress() {
+		return this.inDrinkingInProgress;
 	}
 	
 	public void resetJumpingAnimation() {
