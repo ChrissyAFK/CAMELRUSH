@@ -12,7 +12,7 @@ public class InputHandler extends JPanel implements KeyListener {
 	private boolean spaceKeyPressed = false;
 	private boolean upKeyPressed = false;
 	private boolean downKeyPressed = false;
-	private boolean altKeyPressed = false;
+	private boolean shiftKeyPressed = false;
 	
 	// to ensure the class can get key input
 	InputHandler() {
@@ -59,8 +59,11 @@ public class InputHandler extends JPanel implements KeyListener {
 	public boolean downKeyPressed() {
 		return this.downKeyPressed;
 	}
-	public boolean altKeyPressed(){
-		return this.altKeyPressed;
+	public boolean shiftKeyPressed(){
+		return this.shiftKeyPressed;
+	}
+	public boolean shiftKeyReleased(){
+		return !this.shiftKeyPressed;
 	}
 	
 	// return if the player is moving
@@ -83,7 +86,7 @@ public class InputHandler extends JPanel implements KeyListener {
             case KeyEvent.VK_SPACE -> this.spaceKeyPressed = true;
 			case KeyEvent.VK_UP -> this.upKeyPressed = true;
 			case KeyEvent.VK_DOWN -> this.downKeyPressed = true;
-			case KeyEvent.VK_ALT -> this.altKeyPressed = true;
+			case KeyEvent.VK_SHIFT -> this.shiftKeyPressed = true;
         }
 	}
 
@@ -99,7 +102,7 @@ public class InputHandler extends JPanel implements KeyListener {
         case KeyEvent.VK_SPACE -> this.spaceKeyPressed = false;
 		case KeyEvent.VK_UP -> this.upKeyPressed = false;
 		case KeyEvent.VK_DOWN -> this.downKeyPressed = false;
-		case KeyEvent.VK_ALT -> this.altKeyPressed = false;
+		case KeyEvent.VK_SHIFT -> this.shiftKeyPressed = false;
         }
 	}
 }
