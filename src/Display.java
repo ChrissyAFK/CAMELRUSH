@@ -42,6 +42,7 @@ public class Display extends JPanel {
 	Display(InputHandler input,Player player) throws Exception {
 		this.setPreferredSize(new Dimension(1280,700));
 		displaySize = new int[]{this.getWidth(),this.getHeight()};
+		//Player.setCoordinates(new int[]{0,displaySize[1]/2-250});
 		Player.setCoordinates(new int[]{0,displaySize[1]/250});
 		setLayout(null); //44x32
 		this.background = new Background();
@@ -64,7 +65,7 @@ public class Display extends JPanel {
 		//this.levelSwitchCooldown = new Timer(1000, e->this.levelSwitchCooldown.stop());
 		this.animateCamel = new Timer(1000/15,e->animate());
 		this.animateCamel.start();
-		this.scrollTimer = new Timer(1000/1000,e->scroll());
+		this.scrollTimer = new Timer(1000/500,e->scroll());
 		this.scrollTimer.start();
 		this.spitCooldown = new Timer(1000,e->spitCooldown.stop());
 		this.spitCooldown.start();
@@ -72,7 +73,7 @@ public class Display extends JPanel {
 		this.player = player;
 		this.projectiles = new ArrayList<>();
 		this.waterMeter = new WaterMeter(); 
-		this.heatMeter = new OverheatMeter(); 
+		this.heatMeter = new OverheatMeter();
 	}
 	
 	private void animate() {
@@ -94,24 +95,28 @@ public class Display extends JPanel {
 			this.startTime = System.currentTimeMillis();
 			this.frameCount = 0;
 		}
-		if (this.input.wKeyPressed()&&!Player.getFallingStatus()) {
+		if (this.input.wKeyPressed()&&!Player.getFallingStatus()&&!Player.drinking()) {
 			this.player.resetJumpingAnimation();
 			Player.setVelocityY(10);
 		}
-		if (this.input.aKeyPressed()) {
+		if (this.input.aKeyPressed()&&!Player.drinking()) {
 			Player.setVelocityX(-this.playerSpeed);
 			Player.isFacingLeft();
 		}
-		if (this.input.dKeyPressed()) {
+		if (this.input.dKeyPressed()&&!Player.drinking()) {
 			Player.setVelocityX(this.playerSpeed);
 			Player.isFacingRight();
 		}
-		if (this.input.shiftKeyPressed() && currentTime > shiftCooldownEndTime) {
-			shiftActiveEndTime = currentTime + 500; // 0.5 seconds
-			shiftCooldownEndTime = currentTime + 1000; // 1 second cooldown
+		if (!this.input.aKeyPressed()&&!this.input.dKeyPressed()&&!Player.drinking()) {
+			Player.setVelocityX(0);
 		}
-		if (currentTime < shiftActiveEndTime) {
-			Player.setVelocityX(Player.getVelocity()[0] * 6);
+		if (this.input.shiftKeyPressed()&&currentTime>shiftCooldownEndTime) {
+			shiftActiveEndTime = currentTime+500; // 0.5 seconds
+			shiftCooldownEndTime = currentTime+1000; // 1 second cooldown
+		}
+		if (currentTime<shiftActiveEndTime&&(this.input.aKeyPressed()||this.input.dKeyPressed())) {
+			this.player.startDashingAnimation();
+			Player.setVelocityX(Player.getVelocity()[0]*6);
 		}
 		if (!this.input.aKeyPressed()&&!this.input.dKeyPressed()) {
 			Player.setVelocityX(0);
@@ -126,7 +131,12 @@ public class Display extends JPanel {
 			Player.headtiltChange(0);
 		}
 		if (this.input.eKeyPressed()&&CollisionHandler.isColliding(this.tileList,"Camel",Player.getCoordinates(),Player.getVelocity(),"W","")) {
-			this.waterMeter.drink();
+			if (this.player.inDrinkingInProgress()) {
+				this.waterMeter.drink();
+			}
+			this.player.isDrinking();
+		} else {
+			this.player.isNotDrinking();
 		}
 		if (this.input.inMotion()) {
 			Player.isMoving();
@@ -151,7 +161,7 @@ public class Display extends JPanel {
 		}
 		Player.updateYCoordinates();
 		Player.fall();
-		if (this.input.spaceKeyPressed() && (this.waterMeter.getAmount()>=20.0) && (!this.spitCooldown.isRunning())) {
+		if (this.input.spaceKeyPressed()&&(this.waterMeter.getAmount()>=20.0)&&(!this.spitCooldown.isRunning())&&!Player.drinking()) {
 			this.projectiles.add(new Projectile((new int[]{(Player.facingRight()?displaySize[0]/2+100:displaySize[0]/2-100),displaySize[1]/2-35}),3000,1.0,(Player.facingRight()?1:-1),Player.headtilt(),"spit_ball (5x5).png",(new int[]{20,20})));
 			this.spitCooldown = new Timer((1000),e->spitCooldown.stop());
 			this.spitCooldown.start();
@@ -201,26 +211,20 @@ public class Display extends JPanel {
 			}
 		}
 		for (Projectile proj : projectiles) {
-				g.drawImage(proj.getSprite(), proj.getCoordinates()[0], proj.getCoordinates()[1], proj.getSize()[0], proj.getSize()[1], this);
-			}
-		int[] camelDisplayAttributes = {};
-		if (Player.facingRight()) {
-			camelDisplayAttributes = new int[]{displaySize[0]/2-95,displaySize[1]/2-68,220,160};
-		} else {
-			camelDisplayAttributes = new int[]{displaySize[0]/2+95,displaySize[1]/2-68,-220,160};
+			g.drawImage(proj.getSprite(), proj.getCoordinates()[0], proj.getCoordinates()[1], proj.getSize()[0], proj.getSize()[1], this);
 		}
-		g.drawImage(this.player.getCurrentAnimation(),camelDisplayAttributes[0],camelDisplayAttributes[1],camelDisplayAttributes[2],camelDisplayAttributes[3],this);
+		if (Player.facingRight()) {
+			g.drawImage(this.player.getCurrentAnimation(),displaySize[0]/2-95,displaySize[1]/2-68,220,160,this);
+		} else {
+			g.drawImage(this.player.getCurrentAnimation(),displaySize[0]/2+95,displaySize[1]/2-68,-220,160,this);
+		}
 		// hitboxes
 		g.setColor(new Color(255,0,0,90));
 		if (Player.facingRight()) {
-			//g.fillRect(255,270,18*5,26*5);
 			g.fillRect(displaySize[0]/2-45,displaySize[1]/2-38,18*5,26*5);
-			//g.fillRect(345,260,14*5,11*5);
 			g.fillRect(displaySize[0]/2+45,displaySize[1]/2-48,14*5,11*5);
 		} else {
-			//g.fillRect(255,270,18*5,26*5);
 			g.fillRect(displaySize[0]/2-45,displaySize[1]/2-38,18*5,26*5);
-			//g.fillRect(185,260,14*5,11*5);
 			g.fillRect(displaySize[0]/2-115,displaySize[1]/2-48,14*5,11*5);
 		}
 		for (int j=0;j<this.tileList.get(0).length;j++) {
