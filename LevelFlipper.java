@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 public class LevelFlipper {
     public static void main(String[] args) throws Exception{
-        String level = "level02.txt";
+        String level = "level03.txt";
         BufferedReader reader = new BufferedReader(new FileReader("CAMELRUSH/levels/"+level));
         String line;
         ArrayList<String[]> list = new ArrayList<>();
