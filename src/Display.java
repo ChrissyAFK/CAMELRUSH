@@ -148,13 +148,13 @@ public class Display extends JPanel {
 			Player.isNotMoving();
 		}
 		
-		if (!CollisionHandler.isColliding(this.tileList,"Camel",Player.getCoordinates(),Player.getVelocity(),"S","y")) {
+		if (!CollisionHandler.isColliding(this.tileList,"Camel",Player.getCoordinates(),Player.getVelocity(),"S","y") && !CollisionHandler.isColliding(this.tileList,"Camel",Player.getCoordinates(),Player.getVelocity(),"V","y")) {
 			Player.isFalling();
 		} else {
 			Player.isNotFalling();
 		}
 		
-		if (!CollisionHandler.isColliding(this.tileList,"Camel",Player.getCoordinates(),Player.getVelocity(),"S","")) {
+		if (!CollisionHandler.isColliding(this.tileList,"Camel",Player.getCoordinates(),Player.getVelocity(),"S","") && !CollisionHandler.isColliding(this.tileList,"Camel",Player.getCoordinates(),Player.getVelocity(),"V","")) {
 			Player.updateXCoordinates();
 		}
 		if (CollisionHandler.isColliding(this.tileList,"Camel Body",Player.getCoordinates(),Player.getVelocity(),"Z","")||
