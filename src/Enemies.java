@@ -1,15 +1,19 @@
+import java.awt.image.BufferedImage;
+import javax.swing.ImageIcon;
 public class Enemies {
     private int health;
-    private static boolean inMotion = false;
-    public static int[] coordinates = new int[2];
-    public static double[] velocity = new double[2];
-    private static boolean falling = false;
-
+    private boolean inMotion = false;
+    private int[] coordinates = new int[2];
+    private double[] velocity = new double[2];
+    private boolean falling = false;
+    private int enemynum;
+    private BufferedImage enemyImage;
     // Constructor
-    Enemies(int startX, int startY) {
+    Enemies(int[] coordinates, int health, int enemyNum) {
         this.health = 100;
-        coordinates[0] = startX;
-        coordinates[1] = startY;
+        this.coordinates = coordinates;
+        this.enemynum = enemyNum;
+        this.enemyImage = Display.toBufferedImage(new ImageIcon("CAMELRUSH/assets/enemy/Test_Enemy (32x32).png").getImage());
     }
 
     // Method to update the enemy's position
@@ -65,5 +69,8 @@ public class Enemies {
 
     public int getHealth() {
         return health;
+    }
+    public BufferedImage getEnemyImage() {
+        return enemyImage;
     }
 }

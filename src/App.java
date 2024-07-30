@@ -1,5 +1,4 @@
 import javax.swing.JFrame;
-
 public class App {
     public static void main(String[] args) throws Exception {
         JFrame frame = new JFrame("Camel Rush");
@@ -13,8 +12,8 @@ public class App {
         frame.add(input);
         
         Player player = new Player();
-        
-        Display display = new Display(input,player);
+        Enemies enemy = new Enemies(new int[]{0,0},100,1);
+        Display display = new Display(input,player,enemy);
         frame.add(display);
 
         frame.setVisible(true);

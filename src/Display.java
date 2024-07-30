@@ -6,8 +6,8 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
-import java.util.Collections;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -25,6 +25,7 @@ public class Display extends JPanel {
 	private Timer spitCooldown;
 	private InputHandler input;
 	private Player player;
+	private Enemies enemy;
 	private TileCalculator tile;
 	private int playerSpeed = 2;
 	private int frameCount;
@@ -38,8 +39,7 @@ public class Display extends JPanel {
 	private OverheatMeter heatMeter;
 	private long shiftCooldownEndTime = 0;
 	private long shiftActiveEndTime = 0;
-
-	Display(InputHandler input,Player player) throws Exception {
+	Display(InputHandler input,Player player, Enemies enemyr) throws Exception {
 		this.setPreferredSize(new Dimension(1280,700));
 		displaySize = new int[]{this.getWidth(),this.getHeight()};
 		//Player.setCoordinates(new int[]{0,displaySize[1]/2-250});
@@ -47,7 +47,7 @@ public class Display extends JPanel {
 		Player.setCoordinates(new int[]{0,-300});
 		setLayout(null); //44x32
 		this.background = new Background();
-		
+		this.enemy = enemyr;
 		this.startTime = System.currentTimeMillis();
 		this.prevTime = this.startTime;
 		this.fpsCounter = new JLabel("");
@@ -107,6 +107,7 @@ public class Display extends JPanel {
 		if (this.input.dKeyPressed()&&!Player.drinking()) {
 			Player.setVelocityX(this.playerSpeed);
 			Player.isFacingRight();
+			System.out.println(Arrays.toString(Player.getCoordinates()));
 		}
 		if (!this.input.aKeyPressed()&&!this.input.dKeyPressed()&&!Player.drinking()) {
 			Player.setVelocityX(0);
@@ -228,6 +229,9 @@ public class Display extends JPanel {
 			g.drawImage(this.player.getCurrentAnimation(),displaySize[0]/2-95,displaySize[1]/2-68,220,160,this);
 		} else {
 			g.drawImage(this.player.getCurrentAnimation(),displaySize[0]/2+95,displaySize[1]/2-68,-220,160,this);
+		}
+		if (enemy.getEnemyImage() != null) {
+			g.drawImage(enemy.getEnemyImage(), enemy.getCoordinates()[0], enemy.getCoordinates()[1], null);
 		}
 		// hitboxes
 		/*g.setColor(new Color(255,0,0,90));
