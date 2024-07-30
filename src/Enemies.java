@@ -8,12 +8,13 @@ public class Enemies {
     private boolean falling = false;
     private int enemynum;
     private BufferedImage enemyImage;
+    public int enemyWalkingAnimation;
     // Constructor
     Enemies(int[] coordinates, int health, int enemyNum) {
         this.health = 100;
         this.coordinates = coordinates;
         this.enemynum = enemyNum;
-        this.enemyImage = Display.toBufferedImage(new ImageIcon("CAMELRUSH/assets/enemy/Test_Enemy (32x32).png").getImage());
+        this.enemyImage = Display.toBufferedImage(new ImageIcon("CAMELRUSH/assets/enemy/cactus_enemy_walking (24x24).png").getImage());
     }
 
     // Method to update the enemy's position
@@ -72,5 +73,15 @@ public class Enemies {
     }
     public BufferedImage getEnemyImage() {
         return enemyImage;
+    }
+    public void changeEnemyAnimation(){
+        if (enemyWalkingAnimation == 6){
+            enemyWalkingAnimation = 0;
+        } else {
+            enemyWalkingAnimation++;
+        }
+    }
+    public BufferedImage getEnemyCurrentAnimation(){
+        return enemyImage.getSubimage(enemyWalkingAnimation*24, 0, 24, 24);
     }
 }

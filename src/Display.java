@@ -81,6 +81,7 @@ public class Display extends JPanel {
 	private void animate() {
 		this.player.changeCamelAnimation();
 		this.tile.changeAnimationFrame();
+		this.enemy.changeEnemyAnimation();
 		repaint();
 	}
 	
@@ -246,7 +247,7 @@ public class Display extends JPanel {
 			g.drawImage(this.player.getCurrentAnimation(),displaySize[0]/2+95,displaySize[1]/2-68,-220,160,this);
 		}
 		if (enemy.getEnemyImage() != null) {
-			g.drawImage(enemy.getEnemyImage(), enemy.getCoordinates()[0], enemy.getCoordinates()[1], null);
+			g.drawImage(enemy.getEnemyCurrentAnimation(), enemy.getCoordinates()[0], enemy.getCoordinates()[1], null);
 		}
 		// hitboxes
 		/*g.setColor(new Color(255,0,0,90));
