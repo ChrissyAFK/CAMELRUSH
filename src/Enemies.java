@@ -6,9 +6,10 @@ public class Enemies {
     private int[] coordinates = new int[2];
     private double[] velocity = new double[2];
     private boolean falling = false;
+    private boolean facingRight = true;
     private int enemynum;
     private BufferedImage enemyImage;
-    public int enemyWalkingAnimation;
+    private int enemyWalkingAnimation;
     // Constructor
     Enemies(int[] coordinates, int health, int enemyNum) {
         this.health = 100;
@@ -75,13 +76,25 @@ public class Enemies {
         return enemyImage;
     }
     public void changeEnemyAnimation(){
-        if (enemyWalkingAnimation == 6){
+        if (enemyWalkingAnimation==6){
             enemyWalkingAnimation = 0;
         } else {
             enemyWalkingAnimation++;
         }
     }
     public BufferedImage getEnemyCurrentAnimation(){
-        return enemyImage.getSubimage(enemyWalkingAnimation*24, 0, 24, 24);
+        return enemyImage.getSubimage(enemyWalkingAnimation*24,0,24,24);
+    }
+    
+    public void faceRight() {
+    	this.facingRight = true;
+    }
+    
+    public void faceLeft() {
+    	this.facingRight = false;
+    }
+    
+    public boolean facingRight() {
+    	return this.facingRight;
     }
 }
