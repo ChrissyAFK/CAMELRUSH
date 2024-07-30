@@ -234,6 +234,8 @@ public class Display extends JPanel {
 					} else if (this.tileList.get(i)[j].equals("X")) {
 						g.setColor(new Color(255,0,0,90));
 						g.fillRect(displaySize[0]/2+i*50-Player.getCoordinates()[0],displaySize[1]/2+j*50-150+Player.getCoordinates()[1],50,50);
+					} else if (this.tileList.get(i)[j].equals("V")) {
+						g.drawImage(this.tile.getSandBrickTile(),displaySize[0]/2+i*50-Player.getCoordinates()[0],displaySize[1]/2+j*50-150+Player.getCoordinates()[1],50,50,this);
 					}
 				}
 			}
