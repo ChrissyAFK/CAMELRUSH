@@ -45,7 +45,7 @@ public class Display extends JPanel {
 		displaySize = new int[]{this.getWidth(),this.getHeight()};
 		//Player.setCoordinates(new int[]{0,displaySize[1]/2-250});
 		//Player.setCoordinates(new int[]{0,displaySize[1]/250});
-		Player.setCoordinates(new int[]{0,-300});
+		Player.setCoordinates(new int[]{0,-200});
 		setLayout(null); //44x32
 		this.background = new Background();
 		this.enemy = enemyr;
@@ -192,6 +192,9 @@ public class Display extends JPanel {
 					e.printStackTrace();
 				}
 			}
+			if (this.currentLevel == 3) {
+				background.setBossLvl();
+			}
 		}
 		repaint();
 	}
@@ -202,7 +205,11 @@ public class Display extends JPanel {
 		g.fillRect(0,0,displaySize[0],displaySize[1]);
 		for (int i=0;i<(displaySize[0]/(256*5/2))+1;i++) {
 			g.drawImage(this.background.getBackground(),i*256*5-(Player.getCoordinates()[0]/4)%(256*5),(Player.getCoordinates()[1]*6/5)+250,256*5,160*5,this);
+			if (currentLevel == 3) {
+				g.drawImage(this.background.getBackground(),i*256*5-(Player.getCoordinates()[0]/4)%(256*5),(Player.getCoordinates()[1]*6/5)-144*5+250,256*5,144*5,this);
+			}
 		}
+
 		
 		try {
 			this.tileList = this.tile.getViewingSlice(levels.get(currentLevel));
@@ -291,4 +298,9 @@ class Background {
 	public Image getBackground() {
 		return this.background;
 	}
+
+	public void setBossLvl () {
+		this.background = new ImageIcon("CAMELRUSH/assets/boss_background (256x144).png").getImage();
+	}
+
 }
