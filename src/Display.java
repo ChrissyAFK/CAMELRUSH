@@ -40,6 +40,7 @@ public class Display extends JPanel {
 	private OverheatMeter heatMeter;
 	private long shiftCooldownEndTime = 0;
 	private long shiftActiveEndTime = 0;
+
 	Display(InputHandler input,Player player, Enemies enemyr) throws Exception {
 		this.setPreferredSize(new Dimension(1280,700));
 		displaySize = new int[]{this.getWidth(),this.getHeight()};
@@ -165,7 +166,9 @@ public class Display extends JPanel {
 			Player.heating();
 		}
 		Player.updateYCoordinates();
+		enemy.updatePosition();
 		Player.fall();
+		enemy.Enemyfall();
 		if (this.input.spaceKeyPressed()&&(this.waterMeter.getAmount()>=20.0)&&(!this.spitCooldown.isRunning())&&!Player.drinking()) {
 			this.projectiles.add(new Projectile((new int[]{(Player.facingRight()?displaySize[0]/2+100:displaySize[0]/2-100),displaySize[1]/2-35}),3000,1.0,(Player.facingRight()?1:-1),Player.headtilt(),"spit_ball (5x5).png",(new int[]{20,20})));
 			this.spitCooldown = new Timer((1000),e->spitCooldown.stop());
