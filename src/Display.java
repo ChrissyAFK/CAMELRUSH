@@ -5,6 +5,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -183,6 +184,13 @@ public class Display extends JPanel {
 			this.currentLevel++;
 			if (this.currentLevel==levels.size()){
 				currentLevel = 0;
+			}
+			if (this.currentLevel == 3){
+				try {
+					leaderboard.insertdata("TEST", "1:00");
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
 			}
 		}
 		repaint();

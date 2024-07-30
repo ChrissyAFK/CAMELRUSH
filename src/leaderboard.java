@@ -2,7 +2,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 public class leaderboard {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException{
         String filepath = "CAMELRUSH/local/leaderboard.csv";
         File file = new File(filepath);
         try {
