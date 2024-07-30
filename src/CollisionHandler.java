@@ -5,6 +5,7 @@ public class CollisionHandler {
 	private static final int[][] camelFacingLeft = {{Display.displaySize[0]/2-45,Display.displaySize[1]/2-38,18*5,26*5},{Display.displaySize[0]/2-115,Display.displaySize[1]/2-48,14*5,11*5}};
 	private static final int[][] camelBody = {{Display.displaySize[0]/2-45,Display.displaySize[1]/2-38,18*5,26*5}};
 	private static final int[][] spitball = {{0,0,25,25}};
+	private static final int[][] enemyCactus = {{25,25,15*5,19*5}};
 	public static boolean willCollide(int[] tileCoordinates,int[] entityCoordinates,String entityType,double[] direction,String blockType,String axis) {
 		int[] updatedTileCoordinates = {};
 		switch (entityType) {
@@ -60,6 +61,32 @@ public class CollisionHandler {
 					}
 				}
 				break;
+			case "Enemy Cactus vs Tile":
+				updatedTileCoordinates = new int[]{tileCoordinates[0]-(int)direction[0],tileCoordinates[1]+(int)direction[1]};
+				if (Player.facingRight()) {
+					for (int[] hitbox:enemyCactus) {
+						if (entityCoordinates[0]+hitbox[2]>updatedTileCoordinates[0]&&
+								entityCoordinates[0]<updatedTileCoordinates[0]+50&&
+								entityCoordinates[1]+hitbox[3]>updatedTileCoordinates[1]&&
+								entityCoordinates[1]<updatedTileCoordinates[1]+50) {
+							return true;
+						}
+					}
+				}
+				break;
+			/*case "Enemy Cactus vs Camel":
+				updatedTileCoordinates = new int[]{tileCoordinates[0]-(int)direction[0],tileCoordinates[1]+(int)direction[1]};
+				if (Player.facingRight()) {
+					for (int[] hitbox:enemyCactus) {
+						if (entityCoordinates[0]+hitbox[2]>updatedTileCoordinates[0]&&
+								entityCoordinates[0]<updatedTileCoordinates[0]+50&&
+								entityCoordinates[1]+hitbox[3]>updatedTileCoordinates[1]&&
+								entityCoordinates[1]<updatedTileCoordinates[1]+50) {
+							return true;
+						}
+					}
+				}
+				break;*/
 			default:
 				System.out.println("Error: Unknown entity type");
 				return false;

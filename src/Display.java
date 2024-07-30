@@ -240,16 +240,26 @@ public class Display extends JPanel {
 				}
 			}
 		}
-		for (Projectile proj : this.projectiles) {
-			g.drawImage(proj.getSprite(), proj.getCoordinates()[0], proj.getCoordinates()[1], proj.getSize()[0], proj.getSize()[1], this);
+		for (Projectile proj:this.projectiles) {
+			g.drawImage(proj.getSprite(),proj.getCoordinates()[0],proj.getCoordinates()[1],proj.getSize()[0],proj.getSize()[1],this);
 		}
 		if (Player.facingRight()) {
 			g.drawImage(this.player.getCurrentAnimation(),displaySize[0]/2-95,displaySize[1]/2-68,220,160,this);
+			enemy.faceRight();
 		} else {
 			g.drawImage(this.player.getCurrentAnimation(),displaySize[0]/2+95,displaySize[1]/2-68,-220,160,this);
+			enemy.faceLeft();
 		}
-		if (enemy.getEnemyImage() != null) {
-			g.drawImage(enemy.getEnemyCurrentAnimation(), enemy.getCoordinates()[0], enemy.getCoordinates()[1], null);
+		if (enemy.getEnemyImage()!=null) {
+			if (enemy.facingRight()) {
+				g.drawImage(enemy.getEnemyCurrentAnimation(),displaySize[0]/2+enemy.getCoordinates()[0]-Player.getCoordinates()[0],displaySize[1]/2+enemy.getCoordinates()[1]+Player.getCoordinates()[1],24*5,24*5,this);
+				g.setColor(new Color(255,0,0,50));
+				g.fillRect(displaySize[0]/2+enemy.getCoordinates()[0]-Player.getCoordinates()[0]+5*5,displaySize[1]/2+enemy.getCoordinates()[1]+Player.getCoordinates()[1]+5*5,15*5,19*5);
+			} else {
+				g.drawImage(enemy.getEnemyCurrentAnimation(),displaySize[0]/2+enemy.getCoordinates()[0]-Player.getCoordinates()[0],displaySize[1]/2+enemy.getCoordinates()[1]+Player.getCoordinates()[1],24*5,24*5,this);
+				g.setColor(new Color(255,0,0,50));
+				g.fillRect(displaySize[0]/2+enemy.getCoordinates()[0]-Player.getCoordinates()[0]+5*5,displaySize[1]/2+enemy.getCoordinates()[1]+Player.getCoordinates()[1]+5*5,15*5,19*5);
+			}
 		}
 		// hitboxes
 		/*g.setColor(new Color(255,0,0,90));
