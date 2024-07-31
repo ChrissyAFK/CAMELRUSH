@@ -110,7 +110,14 @@ public class CollisionHandler {
 	public static boolean isColliding(ArrayList<String[]> tileList,String entityType,int[] entityCoordinate,double[] entityVelocity,String blockType,String axis) {
 		for (int j=0;j<tileList.get(0).length;j++) {
 			for (int i=0;i<tileList.size();i++) {
-				if (i<Player.getCoordinates()[0]/50+15 && i>entityCoordinate[0]/50-3){
+				if (entityType.equals("Enemy Cactus vs Tile")) {
+					if (tileList.get(i)[j].equals(blockType)) {
+						if (willCollide(new int[]{i*50-entityCoordinate[0],j*50-150+entityCoordinate[1]},entityCoordinate,entityType,
+								entityVelocity,blockType,axis)) {
+							return true;
+						}
+					}
+				} else if (i<Player.getCoordinates()[0]/50+Display.displaySize[0]/50 && i>Player.getCoordinates()[0]/50-Display.displaySize[0]/50) {
 					if (tileList.get(i)[j].equals(blockType)) {
 						if (willCollide(new int[]{i*50-entityCoordinate[0],j*50-150+entityCoordinate[1]},entityCoordinate,entityType,
 								entityVelocity,blockType,axis)) {
