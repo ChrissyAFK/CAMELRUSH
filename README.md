@@ -6,3 +6,4 @@ WELCOME TO CAMEL RUSH
 
 froggytato, hansenhsu, pengwuin, and chrissyafk
 
+![alt text](<CamelRush Flowchart.png>)
