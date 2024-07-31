@@ -80,12 +80,13 @@ public class Display extends JPanel {
 		//this.levelSwitchCooldown = new Timer(1000, e->this.levelSwitchCooldown.stop());
 		this.animateCamel = new Timer(1000/15,e->animate());
 		this.animateCamel.start();
-		this.scrollTimer = new Timer(1000/500,e->scroll());
+		this.scrollTimer = new Timer(1000/600,e->scroll());
 		this.scrollTimer.start();
 		this.spitCooldown = new Timer(1000,e->spitCooldown.stop());
 		this.spitCooldown.start();
 		this.input = input;
 		this.projectiles = new ArrayList<>();
+		this.enemy.startMoving(2,0);
 		startStopwatch();
 	}
 	public void startStopwatch() {
@@ -149,7 +150,6 @@ public class Display extends JPanel {
 		if (this.input.dKeyPressed()&&!Player.drinking()) {
 			Player.setVelocityX(this.playerSpeed);
 			Player.isFacingRight();
-			System.out.println(Arrays.toString(Player.getCoordinates()));
 		}
 		if (!this.input.aKeyPressed()&&!this.input.dKeyPressed()&&!Player.drinking()) {
 			Player.setVelocityX(0);
@@ -209,7 +209,18 @@ public class Display extends JPanel {
 			Player.heating();
 		}
 		Player.updateYCoordinates();
-		enemy.updatePosition();
+		if (!CollisionHandler.isColliding(this.tileList,"Enemy Cactus vs Tile",enemy.getCoordinates(),enemy.getVelocity(),"S","y")) {
+			enemy.isFalling();
+		} else {
+			enemy.isNotFalling();
+		}
+		enemy.updateYPosition();
+		/*if (CollisionHandler.isColliding(this.tileList,"Enemy Cactus vs Tile",enemy.getCoordinates(),enemy.getVelocity(),"S","")) {
+			enemy.stopMoving();
+		} else {
+			enemy.startMoving(2,0);
+		}*/
+		enemy.updateXPosition();
 		Player.fall();
 		enemy.Enemyfall();
 		if (this.input.spaceKeyPressed()&&(this.waterMeter.getAmount()>=20.0)&&(!this.spitCooldown.isRunning())&&!Player.drinking()) {
@@ -296,8 +307,7 @@ public class Display extends JPanel {
 				g.setColor(new Color(255,0,0,50));
 				g.fillRect(displaySize[0]/2+enemy.getCoordinates()[0]-Player.getCoordinates()[0]+5*5,displaySize[1]/2+enemy.getCoordinates()[1]+Player.getCoordinates()[1]+5*5,15*5,19*5);
 			} else {
-				g.drawImage(enemy.getEnemyCurrentAnimation(),displaySize[0]/2+enemy.getCoordinates()[0]-Player.getCoordinates()[0],displaySize[1]/2+enemy.getCoordinates()[1]+Player.getCoordinates()[1],24*5,24*5,this);
-				g.setColor(new Color(255,0,0,50));
+				g.drawImage(enemy.getEnemyCurrentAnimation(),displaySize[0]/2+enemy.getCoordinates()[0]-Player.getCoordinates()[0],displaySize[1]/2+enemy.getCoordinates()[1]+Player.getCoordinates()[1],-24*5,24*5,this);g.setColor(new Color(255,0,0,50));
 				g.fillRect(displaySize[0]/2+enemy.getCoordinates()[0]-Player.getCoordinates()[0]+5*5,displaySize[1]/2+enemy.getCoordinates()[1]+Player.getCoordinates()[1]+5*5,15*5,19*5);
 			}
 		}
