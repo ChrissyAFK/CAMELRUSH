@@ -63,7 +63,7 @@ public class Display extends JPanel {
 		levels.add("flevel03.txt");
 		//Collections.shuffle(this.levels);
 		levels.add("flevel0b.txt");
-		this.currentLevel = 0;
+		this.currentLevel = 2;
 		this.tileList = this.tile.getViewingSlice(levels.get(currentLevel));
 		this.waterMeter = new WaterMeter(); 
 		this.heatMeter = new OverheatMeter();
