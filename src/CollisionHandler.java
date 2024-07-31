@@ -10,6 +10,8 @@ public class CollisionHandler {
 		int[] updatedTileCoordinates = {};
 		switch (entityType) {
 			case "Camel":
+				//System.out.println(entityCoordinates[0]);
+				//System.out.println(entityCoordinates[1]+"\n-------");
 				if (axis.toLowerCase().equals("y")) {
 					updatedTileCoordinates = new int[]{tileCoordinates[0],tileCoordinates[1]+(int)direction[1]};
 				} else if (blockType.equals("W")) {
@@ -62,15 +64,26 @@ public class CollisionHandler {
 				}
 				break;
 			case "Enemy Cactus vs Tile":
-				updatedTileCoordinates = new int[]{tileCoordinates[0]-(int)direction[0],tileCoordinates[1]+(int)direction[1]};
+				if (axis.toLowerCase().equals("y")) {
+					updatedTileCoordinates = new int[]{tileCoordinates[0],tileCoordinates[1]+(int)direction[1]};
+				} else {
+					updatedTileCoordinates = new int[]{tileCoordinates[0]-(int)direction[0],tileCoordinates[1]+(int)direction[1]};
+				}
 				if (Player.facingRight()) {
 					for (int[] hitbox:enemyCactus) {
-						if (entityCoordinates[0]+hitbox[2]>updatedTileCoordinates[0]&&
-								entityCoordinates[0]<updatedTileCoordinates[0]+50&&
-								entityCoordinates[1]+hitbox[3]>updatedTileCoordinates[1]&&
-								entityCoordinates[1]<updatedTileCoordinates[1]+50) {
+						if (entityCoordinates[0]+hitbox[2]+hitbox[0]>updatedTileCoordinates[0]&&
+								entityCoordinates[0]+hitbox[0]<updatedTileCoordinates[0]+50&&
+								-entityCoordinates[1]+hitbox[1]+hitbox[3]>-updatedTileCoordinates[1]+375&&
+								-entityCoordinates[1]+hitbox[1]<(-300)+50) {
 							return true;
 						}
+						/*if (entityCoordinates[0]+hitbox[2]+hitbox[0]>0&&
+								entityCoordinates[0]+hitbox[0]<0+50&&
+								-entityCoordinates[1]+hitbox[1]+hitbox[3]>-300+0&&
+								-entityCoordinates[1]+hitbox[1]<-300+50) {
+							System.out.println("colliding");
+							return true;
+						}*/
 					}
 				}
 				break;

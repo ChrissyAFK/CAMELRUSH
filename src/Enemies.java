@@ -4,7 +4,7 @@ public class Enemies {
     private int health;
     private boolean inMotion = false;
     private int[] coordinates = new int[2];
-    private double[] velocity = {0,0};
+    private double[] velocity = {2,0};
     private boolean falling = true;
     private boolean facingRight = true;
     private int enemynum;
@@ -20,16 +20,18 @@ public class Enemies {
     }
 
     // Method to update the enemy's position
-    public void updatePosition() {
+    public void updateXPosition() {
         if (inMotion) {
             coordinates[0] += velocity[0];
-            coordinates[1] += velocity[1];
         }
-        // Handle falling logic if needed
-        if (falling) {
+    }
+    
+    public void updateYPosition() {
+    	if (falling) {
             coordinates[1] -= (int)velocity[1]; // Example gravity effect
         }
     }
+    
     public void Enemyfall() {
 		if (falling){
 			velocity[1]-=0.22;
@@ -61,20 +63,32 @@ public class Enemies {
         velocity[1] = 0;
         inMotion = false;
     }
+    
+    public void stopXMotion() {
+    	velocity[0] = 0;
+    }
 
     // Method to check if the enemy is falling
-    public boolean isFalling() {
+    public boolean falling() {
         return falling;
     }
 
     // Method to set the falling state
-    public void setFalling(boolean isFalling) {
-        falling = isFalling;
+    public void isFalling() {
+        falling = true;
+    }
+    
+    public void isNotFalling() {
+        falling = false;
     }
 
     // Getters for coordinates and health
     public int[] getCoordinates() {
         return coordinates;
+    }
+    
+    public double[] getVelocity() {
+    	return this.velocity;
     }
 
     public int getHealth() {
