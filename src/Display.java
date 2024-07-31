@@ -40,7 +40,11 @@ public class Display extends JPanel {
 	private OverheatMeter heatMeter;
 	private long shiftCooldownEndTime = 0;
 	private long shiftActiveEndTime = 0;
-
+	private Timer stopwatchTimer;
+	private long stopwatchStartTime;
+	private long elapsedStopwatchTime;
+	private JLabel stopwatchLabel;
+	private boolean leaderboardhasupdated = false;
 	Display(InputHandler input,Player player, Enemies enemyr) throws Exception {
 		this.setPreferredSize(new Dimension(1280,700));
 		displaySize = new int[]{this.getWidth(),this.getHeight()};
@@ -48,6 +52,11 @@ public class Display extends JPanel {
 		//Player.setCoordinates(new int[]{0,displaySize[1]/250});
 		Player.setCoordinates(new int[]{0,-200});
 		setLayout(null); //44x32
+		stopwatchTimer = new Timer(1000, e -> updateStopwatch());
+        elapsedStopwatchTime = 0;
+		stopwatchLabel = new JLabel("0:00");
+		stopwatchLabel.setBounds(10, 40, 200, 20);
+    	this.add(stopwatchLabel);
 		this.background = new Background();
 		this.enemy = enemyr;
 		this.startTime = System.currentTimeMillis();
@@ -64,7 +73,7 @@ public class Display extends JPanel {
 		levels.add("flevel03.txt");
 		//Collections.shuffle(this.levels);
 		levels.add("flevel0b.txt");
-		this.currentLevel = 0;
+		this.currentLevel = 2;
 		this.tileList = this.tile.getViewingSlice(levels.get(currentLevel));
 		this.waterMeter = new WaterMeter(); 
 		this.heatMeter = new OverheatMeter();
@@ -78,8 +87,37 @@ public class Display extends JPanel {
 		this.input = input;
 		this.projectiles = new ArrayList<>();
 		this.enemy.startMoving(2,0);
+		startStopwatch();
 	}
-	
+	public void startStopwatch() {
+		stopwatchStartTime = System.currentTimeMillis();
+		elapsedStopwatchTime = 0; // Reset elapsed time when starting
+		stopwatchTimer.start();
+	}
+
+	public void resetStopwatch() {
+		elapsedStopwatchTime = 0;
+	}
+
+	private void updateStopwatch() {
+		long currentTime = System.currentTimeMillis();
+		long timeElapsed = elapsedStopwatchTime + (currentTime - stopwatchStartTime);
+		long totalSeconds = timeElapsed / 1000;
+		long minutes = totalSeconds / 60;
+		long seconds = totalSeconds % 60;
+		
+		String formattedTime = String.format("%d:%02d", minutes, seconds);
+		
+		stopwatchLabel.setText("Stopwatch Time: " + formattedTime);
+		if (currentLevel == 3 && !leaderboardhasupdated) {
+			try {
+				leaderboard.insertdata("TEST", formattedTime);
+				leaderboardhasupdated = true;
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+	}
 	private void animate() {
 		this.player.changeCamelAnimation();
 		this.tile.changeAnimationFrame();
@@ -93,6 +131,7 @@ public class Display extends JPanel {
 		//long delta = currentTime - this.prevTime;
 		//System.out.println(delta);
 		this.prevTime = currentTime;
+		updateStopwatch();
 		this.frameCount++;
 		this.fpsCounter.setText("FPS: "+String.valueOf((double)Math.round(this.fps*100)/100));
 		if (currentTime-this.startTime>1000) {
@@ -149,13 +188,13 @@ public class Display extends JPanel {
 			Player.isNotMoving();
 		}
 		
-		if (!CollisionHandler.isColliding(this.tileList,"Camel",Player.getCoordinates(),Player.getVelocity(),"S","y")) {
+		if (!CollisionHandler.isColliding(this.tileList,"Camel",Player.getCoordinates(),Player.getVelocity(),"S","y") && !CollisionHandler.isColliding(this.tileList,"Camel",Player.getCoordinates(),Player.getVelocity(),"V","y")) {
 			Player.isFalling();
 		} else {
 			Player.isNotFalling();
 		}
 		
-		if (!CollisionHandler.isColliding(this.tileList,"Camel",Player.getCoordinates(),Player.getVelocity(),"S","")) {
+		if (!CollisionHandler.isColliding(this.tileList,"Camel",Player.getCoordinates(),Player.getVelocity(),"S","") && !CollisionHandler.isColliding(this.tileList,"Camel",Player.getCoordinates(),Player.getVelocity(),"V","")) {
 			Player.updateXCoordinates();
 		}
 		if (CollisionHandler.isColliding(this.tileList,"Camel Body",Player.getCoordinates(),Player.getVelocity(),"Z","")||
@@ -199,13 +238,6 @@ public class Display extends JPanel {
 			this.currentLevel++;
 			if (this.currentLevel==levels.size()){
 				currentLevel = 0;
-			}
-			if (this.currentLevel == 3){
-				try {
-					leaderboard.insertdata("TEST", "1:00");
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
 			}
 			if (this.currentLevel == 3) {
 				background.setBossLvl();
