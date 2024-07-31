@@ -1,5 +1,3 @@
-import java.awt.Graphics2D;
-import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -9,6 +7,7 @@ import javax.swing.ImageIcon;
 public class TileCalculator {
 	private BufferedImage sandTile;
 	private BufferedImage waterTile;
+	private BufferedImage sandBrickTile;
 	
 	private BufferedImage baseOfPalm;
 	private BufferedImage trunkOfPalm;
@@ -18,6 +17,7 @@ public class TileCalculator {
 	TileCalculator() {
 		this.sandTile = Display.toBufferedImage(new ImageIcon("CAMELRUSH/assets/blocks/sand_tile (8x8).png").getImage());
 		this.waterTile = Display.toBufferedImage(new ImageIcon("CAMELRUSH/assets/blocks/water_tile (8x8).png").getImage());
+		this.sandBrickTile = Display.toBufferedImage(new ImageIcon("CAMELRUSH/assets/blocks/sand_brick_tile (8x8).png").getImage());
 		
 		this.baseOfPalm = Display.toBufferedImage(new ImageIcon("CAMELRUSH/assets/blocks/palm_base (32x16).png").getImage());
 		this.trunkOfPalm = Display.toBufferedImage(new ImageIcon("CAMELRUSH/assets/blocks/palm_trunk (32x8).png").getImage());
@@ -50,6 +50,9 @@ public class TileCalculator {
 	
 	public BufferedImage getPalmHead() {
 		return this.headOfPalm;
+	}
+	public BufferedImage getSandBrickTile() {
+		return this.sandBrickTile;
 	}
 	
 	public ArrayList<String[]> getViewingSlice(String level) throws Exception {

@@ -4,11 +4,13 @@ public class Enemies {
     private int health;
     private boolean inMotion = false;
     private int[] coordinates = new int[2];
-    private double[] velocity = new double[2];
-    private boolean falling = false;
+    private double[] velocity = {0,0};
+    private boolean falling = true;
+    private boolean facingRight = true;
     private int enemynum;
     private BufferedImage enemyImage;
-    public int enemyWalkingAnimation;
+    private int enemyWalkingAnimation;
+    private int gravity = 2;
     // Constructor
     Enemies(int[] coordinates, int health, int enemyNum) {
         this.health = 100;
@@ -25,10 +27,17 @@ public class Enemies {
         }
         // Handle falling logic if needed
         if (falling) {
-            coordinates[1] += 1; // Example gravity effect
+            coordinates[1] -= (int)velocity[1]; // Example gravity effect
         }
     }
-
+    public void Enemyfall() {
+		if (falling){
+			velocity[1]-=0.22;
+		}
+		else{
+			velocity[1] = 0;
+		}
+	}
     // Method to take damage
     public void takeDamage(int damage) {
         this.health -= damage;
@@ -75,13 +84,25 @@ public class Enemies {
         return enemyImage;
     }
     public void changeEnemyAnimation(){
-        if (enemyWalkingAnimation == 6){
+        if (enemyWalkingAnimation==6){
             enemyWalkingAnimation = 0;
         } else {
             enemyWalkingAnimation++;
         }
     }
     public BufferedImage getEnemyCurrentAnimation(){
-        return enemyImage.getSubimage(enemyWalkingAnimation*24, 0, 24, 24);
+        return enemyImage.getSubimage(enemyWalkingAnimation*24,0,24,24);
+    }
+    
+    public void faceRight() {
+    	this.facingRight = true;
+    }
+    
+    public void faceLeft() {
+    	this.facingRight = false;
+    }
+    
+    public boolean facingRight() {
+    	return this.facingRight;
     }
 }

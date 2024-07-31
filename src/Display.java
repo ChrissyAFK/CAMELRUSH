@@ -40,12 +40,13 @@ public class Display extends JPanel {
 	private OverheatMeter heatMeter;
 	private long shiftCooldownEndTime = 0;
 	private long shiftActiveEndTime = 0;
+
 	Display(InputHandler input,Player player, Enemies enemyr) throws Exception {
 		this.setPreferredSize(new Dimension(1280,700));
 		displaySize = new int[]{this.getWidth(),this.getHeight()};
 		//Player.setCoordinates(new int[]{0,displaySize[1]/2-250});
 		//Player.setCoordinates(new int[]{0,displaySize[1]/250});
-		Player.setCoordinates(new int[]{0,-300});
+		Player.setCoordinates(new int[]{0,-200});
 		setLayout(null); //44x32
 		this.background = new Background();
 		this.enemy = enemyr;
@@ -148,13 +149,13 @@ public class Display extends JPanel {
 			Player.isNotMoving();
 		}
 		
-		if (!CollisionHandler.isColliding(this.tileList,"Camel",Player.getCoordinates(),Player.getVelocity(),"S","y")) {
+		if (!CollisionHandler.isColliding(this.tileList,"Camel",Player.getCoordinates(),Player.getVelocity(),"S","y") && !CollisionHandler.isColliding(this.tileList,"Camel",Player.getCoordinates(),Player.getVelocity(),"V","y")) {
 			Player.isFalling();
 		} else {
 			Player.isNotFalling();
 		}
 		
-		if (!CollisionHandler.isColliding(this.tileList,"Camel",Player.getCoordinates(),Player.getVelocity(),"S","")) {
+		if (!CollisionHandler.isColliding(this.tileList,"Camel",Player.getCoordinates(),Player.getVelocity(),"S","") && !CollisionHandler.isColliding(this.tileList,"Camel",Player.getCoordinates(),Player.getVelocity(),"V","")) {
 			Player.updateXCoordinates();
 		}
 		if (CollisionHandler.isColliding(this.tileList,"Camel Body",Player.getCoordinates(),Player.getVelocity(),"Z","")||
@@ -165,7 +166,9 @@ public class Display extends JPanel {
 			Player.heating();
 		}
 		Player.updateYCoordinates();
+		enemy.updatePosition();
 		Player.fall();
+		enemy.Enemyfall();
 		if (this.input.spaceKeyPressed()&&(this.waterMeter.getAmount()>=20.0)&&(!this.spitCooldown.isRunning())&&!Player.drinking()) {
 			this.projectiles.add(new Projectile((new int[]{(Player.facingRight()?displaySize[0]/2+100:displaySize[0]/2-100),displaySize[1]/2-35}),3000,1.0,(Player.facingRight()?1:-1),Player.headtilt(),"spit_ball (5x5).png",(new int[]{20,20})));
 			this.spitCooldown = new Timer((1000),e->spitCooldown.stop());
@@ -193,6 +196,9 @@ public class Display extends JPanel {
 					e.printStackTrace();
 				}
 			}
+			if (this.currentLevel == 3) {
+				background.setBossLvl();
+			}
 		}
 		repaint();
 	}
@@ -203,7 +209,11 @@ public class Display extends JPanel {
 		g.fillRect(0,0,displaySize[0],displaySize[1]);
 		for (int i=0;i<(displaySize[0]/(256*5/2))+1;i++) {
 			g.drawImage(this.background.getBackground(),i*256*5-(Player.getCoordinates()[0]/4)%(256*5),(Player.getCoordinates()[1]*6/5)+250,256*5,160*5,this);
+			if (currentLevel == 3) {
+				g.drawImage(this.background.getBackground(),i*256*5-(Player.getCoordinates()[0]/4)%(256*5),(Player.getCoordinates()[1]*6/5)-144*5+250,256*5,144*5,this);
+			}
 		}
+
 		
 		try {
 			this.tileList = this.tile.getViewingSlice(levels.get(currentLevel));
@@ -227,20 +237,32 @@ public class Display extends JPanel {
 					} else if (this.tileList.get(i)[j].equals("X")) {
 						g.setColor(new Color(255,0,0,90));
 						g.fillRect(displaySize[0]/2+i*50-Player.getCoordinates()[0],displaySize[1]/2+j*50-150+Player.getCoordinates()[1],50,50);
+					} else if (this.tileList.get(i)[j].equals("V")) {
+						g.drawImage(this.tile.getSandBrickTile(),displaySize[0]/2+i*50-Player.getCoordinates()[0],displaySize[1]/2+j*50-150+Player.getCoordinates()[1],50,50,this);
 					}
 				}
 			}
 		}
-		for (Projectile proj : this.projectiles) {
-			g.drawImage(proj.getSprite(), proj.getCoordinates()[0], proj.getCoordinates()[1], proj.getSize()[0], proj.getSize()[1], this);
+		for (Projectile proj:this.projectiles) {
+			g.drawImage(proj.getSprite(),proj.getCoordinates()[0],proj.getCoordinates()[1],proj.getSize()[0],proj.getSize()[1],this);
 		}
 		if (Player.facingRight()) {
 			g.drawImage(this.player.getCurrentAnimation(),displaySize[0]/2-95,displaySize[1]/2-68,220,160,this);
+			enemy.faceRight();
 		} else {
 			g.drawImage(this.player.getCurrentAnimation(),displaySize[0]/2+95,displaySize[1]/2-68,-220,160,this);
+			enemy.faceLeft();
 		}
-		if (enemy.getEnemyImage() != null) {
-			g.drawImage(enemy.getEnemyCurrentAnimation(), enemy.getCoordinates()[0], enemy.getCoordinates()[1], null);
+		if (enemy.getEnemyImage()!=null) {
+			if (enemy.facingRight()) {
+				g.drawImage(enemy.getEnemyCurrentAnimation(),displaySize[0]/2+enemy.getCoordinates()[0]-Player.getCoordinates()[0],displaySize[1]/2+enemy.getCoordinates()[1]+Player.getCoordinates()[1],24*5,24*5,this);
+				g.setColor(new Color(255,0,0,50));
+				g.fillRect(displaySize[0]/2+enemy.getCoordinates()[0]-Player.getCoordinates()[0]+5*5,displaySize[1]/2+enemy.getCoordinates()[1]+Player.getCoordinates()[1]+5*5,15*5,19*5);
+			} else {
+				g.drawImage(enemy.getEnemyCurrentAnimation(),displaySize[0]/2+enemy.getCoordinates()[0]-Player.getCoordinates()[0],displaySize[1]/2+enemy.getCoordinates()[1]+Player.getCoordinates()[1],24*5,24*5,this);
+				g.setColor(new Color(255,0,0,50));
+				g.fillRect(displaySize[0]/2+enemy.getCoordinates()[0]-Player.getCoordinates()[0]+5*5,displaySize[1]/2+enemy.getCoordinates()[1]+Player.getCoordinates()[1]+5*5,15*5,19*5);
+			}
 		}
 		// hitboxes
 		/*g.setColor(new Color(255,0,0,90));
@@ -292,4 +314,9 @@ class Background {
 	public Image getBackground() {
 		return this.background;
 	}
+
+	public void setBossLvl () {
+		this.background = new ImageIcon("CAMELRUSH/assets/boss_background (256x144).png").getImage();
+	}
+
 }
